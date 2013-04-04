@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AjiPDFLib.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
-
+{
+    APLibrary * library;
+}
 @property (strong, nonatomic) UIWindow *window;
 
 @end
