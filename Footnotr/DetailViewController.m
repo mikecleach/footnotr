@@ -40,10 +40,70 @@
     }
 }
 
+
+-(id)initWithPDFDocument:(APPDFDocument *)document
+{
+    if (self = [super initWithNibName:@"PDFAnnotationSampleViewController" bundle:nil]) {
+        NSAssert(nil != document, @"cannot initialize with nil document");
+        pdfDocument = document;    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    
+//    if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) {
+//        /* on iphone, we have to use a stripped-down UI which only supports viewing of annotations */
+//        [self adjustInterfaceForiPhone];
+//    }
+    
+    
+    /* for this sample, we store the PDF in the Documents area, and the information file in the Library area. */
+    NSArray *docPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *pdfPath = [[docPaths objectAtIndex:0] stringByAppendingPathComponent:@"test.pdf"];
+    
+    if (![[NSFileManager defaultManager] fileExistsAtPath:pdfPath]) {
+        /* get the PDF from the application bundle */
+        NSString *pdfBundlePath = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"pdf"];
+        NSAssert(nil != pdfPath, @"missing pdf in bundle?");
+        [[NSFileManager defaultManager] copyItemAtPath:pdfBundlePath toPath:pdfPath error:nil];
+    }
+    
+    NSArray *libPaths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+    NSString *infoPath = [[libPaths objectAtIndex:0] stringByAppendingPathComponent:@"test.pdf.info"];
+    
+    /* create the PDF information object; this will load the cached
+     * file if it exists, or prepare it if it does not yet exist. */
+    APPDFInformation *info = [[APPDFInformation alloc] initWithPath:infoPath];
+    
+    /* now the APPDFDocument object */
+    APPDFDocument *pdfFile = [[APPDFDocument alloc] initWithPath:pdfPath information:info];
+    
+    
+    pdfDocument = pdfFile;
+    /* create and launch the view controller */
+//    PDFAnnotationSampleViewController * pdfView = [[PDFAnnotationSampleViewController alloc] initWithPDFDocument:pdfFile];
+    
+    
+    /* create the view controller -- interactive on the iPad, read-only on the iPhone/iPod Touch... */
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        pdfView = [[APAnnotatingPDFViewController alloc] initWithPDF:pdfDocument];
+    else
+        pdfView = (id)[[APPDFViewController alloc] initWithPDF:pdfDocument];
+    //fixme: make this support annotating protocol so next line is used.
+    //pdfView.delegate = self;
+    
+    /* ...and load it into the view heirarchy */
+    pdfView.view.frame = self.view.bounds;
+    //pdfView.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+    [self.view addSubview:pdfView.view];
+    
+    [pdfView fitToWidth];
+    
+    
     [self configureView];
 }
 

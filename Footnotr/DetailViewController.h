@@ -7,9 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AjiPDFLib.h"
 
 @interface DetailViewController : UIViewController <UISplitViewControllerDelegate>
-
+{
+    APPDFDocument *pdfDocument;
+    APAnnotatingPDFViewController *pdfView;
+}
 @property (strong, nonatomic) id detailItem;
 
 @property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;

@@ -192,6 +192,7 @@
 		AE74BE91170E23160040F14A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE74BE90170E23160040F14A /* AVFoundation.framework */; };
 		AE74BE93170E23200040F14A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE74BE92170E23200040F14A /* Security.framework */; };
 		AE74BE95170E23A70040F14A /* license.xml in Resources */ = {isa = PBXBuildFile; fileRef = AE74BE94170E23A70040F14A /* license.xml */; };
+		AE74BE99170E2AAC0040F14A /* test.pdf in Resources */ = {isa = PBXBuildFile; fileRef = AE74BE98170E2AAC0040F14A /* test.pdf */; };
 		AEE656871703DEEB000D3C57 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEE656861703DEEB000D3C57 /* UIKit.framework */; };
 		AEE656891703DEEB000D3C57 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEE656881703DEEB000D3C57 /* Foundation.framework */; };
 		AEE6568B1703DEEC000D3C57 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEE6568A1703DEEB000D3C57 /* CoreGraphics.framework */; };
@@ -407,6 +408,7 @@
 		AE74BE90170E23160040F14A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		AE74BE92170E23200040F14A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		AE74BE94170E23A70040F14A /* license.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = license.xml; path = "../../../Downloads/iAnnotate_PDF_SDK-2.4-RC2-demo/samples/MultipleDocumentSample/license.xml"; sourceTree = "<group>"; };
+		AE74BE98170E2AAC0040F14A /* test.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = test.pdf; sourceTree = "<group>"; };
 		AEE656831703DEEB000D3C57 /* Footnotr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Footnotr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEE656861703DEEB000D3C57 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AEE656881703DEEB000D3C57 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -676,10 +678,6 @@
 		AEE6567A1703DEEB000D3C57 = {
 			isa = PBXGroup;
 			children = (
-				AE74BE92170E23200040F14A /* Security.framework */,
-				AE74BE90170E23160040F14A /* AVFoundation.framework */,
-				AE74BE8E170E230C0040F14A /* MessageUI.framework */,
-				AE74BE8C170E23020040F14A /* AudioToolbox.framework */,
 				AE74BE89170E22090040F14A /* AjiPDF */,
 				AEE6568C1703DEEC000D3C57 /* Footnotr */,
 				AEE656851703DEEB000D3C57 /* Frameworks */,
@@ -698,6 +696,10 @@
 		AEE656851703DEEB000D3C57 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AE74BE92170E23200040F14A /* Security.framework */,
+				AE74BE90170E23160040F14A /* AVFoundation.framework */,
+				AE74BE8E170E230C0040F14A /* MessageUI.framework */,
+				AE74BE8C170E23020040F14A /* AudioToolbox.framework */,
 				AEE656861703DEEB000D3C57 /* UIKit.framework */,
 				AEE656881703DEEB000D3C57 /* Foundation.framework */,
 				AEE6568A1703DEEB000D3C57 /* CoreGraphics.framework */,
@@ -708,6 +710,7 @@
 		AEE6568C1703DEEC000D3C57 /* Footnotr */ = {
 			isa = PBXGroup;
 			children = (
+				AE74BE98170E2AAC0040F14A /* test.pdf */,
 				AEE656951703DEEC000D3C57 /* AppDelegate.h */,
 				AEE656961703DEEC000D3C57 /* AppDelegate.m */,
 				AEE6569E1703DEEC000D3C57 /* MainStoryboard_iPhone.storyboard */,
@@ -973,6 +976,7 @@
 				AE74BE76170E207D0040F14A /* AP_verticalDragger.png in Resources */,
 				AE74BE77170E207D0040F14A /* SimpleFontInfo.txt in Resources */,
 				AE74BE95170E23A70040F14A /* license.xml in Resources */,
+				AE74BE99170E2AAC0040F14A /* test.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
