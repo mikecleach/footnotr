@@ -10,6 +10,7 @@
 
 @interface DetailViewController ()
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
+
 - (void)configureView;
 @end
 
@@ -94,17 +95,53 @@
     else
         pdfView = (id)[[APPDFViewController alloc] initWithPDF:pdfDocument];
     //fixme: make this support annotating protocol so next line is used.
-    //pdfView.delegate = self;
+    pdfView.delegate = self;
     
     /* ...and load it into the view heirarchy */
-    pdfView.view.frame = self.view.bounds;
-    //pdfView.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-    [self.view addSubview:pdfView.view];
+    //pdfView.view.frame = self.view.bounds;
+    pdfView.view.frame = hostView.bounds;
+    pdfView.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+    [hostView addSubview:pdfView.view];
     
     [pdfView fitToWidth];
     
     
     [self configureView];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [pdfView viewWillAppear:animated];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [pdfView viewDidAppear:animated];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [pdfView viewWillDisappear:animated];
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [pdfView viewWillDisappear:animated];
+}
+
+-(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return (nil == pdfView ? YES : [pdfView shouldAutorotateToInterfaceOrientation:interfaceOrientation]);
+}
+
+-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [pdfView willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+}
+
+-(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [pdfView didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
 - (void)didReceiveMemoryWarning
