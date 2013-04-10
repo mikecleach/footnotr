@@ -29,52 +29,21 @@
 
     if (self.masterPopoverController != nil) {
         [self.masterPopoverController dismissPopoverAnimated:YES];
-    }        
+    }
 }
 
 - (void)configureView
 {
     // Update the user interface for the detail item.
-
     if (self.detailItem) {
         self.detailDescriptionLabel.text = [self.detailItem description];
     }
-}
-
-
--(id)initWithPDFDocument:(APPDFDocument *)document
-{
-    if (self = [super initWithNibName:@"PDFAnnotationSampleViewController" bundle:nil]) {
-        NSAssert(nil != document, @"cannot initialize with nil document");
-        pdfDocument = document;    }
-    return self;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
     
-    
-//    if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) {
-//        /* on iphone, we have to use a stripped-down UI which only supports viewing of annotations */
-//        [self adjustInterfaceForiPhone];
-//    }
-    
-    
-    /* for this sample, we store the PDF in the Documents area, and the information file in the Library area. */
-    NSArray *docPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *pdfPath = [[docPaths objectAtIndex:0] stringByAppendingPathComponent:@"test.pdf"];
-    
-    if (![[NSFileManager defaultManager] fileExistsAtPath:pdfPath]) {
-        /* get the PDF from the application bundle */
-        NSString *pdfBundlePath = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"pdf"];
-        NSAssert(nil != pdfPath, @"missing pdf in bundle?");
-        [[NSFileManager defaultManager] copyItemAtPath:pdfBundlePath toPath:pdfPath error:nil];
-    }
+    NSString *pdfPath = [self.documentDir stringByAppendingPathComponent:self.detailItem];
     
     NSArray *libPaths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
-    NSString *infoPath = [[libPaths objectAtIndex:0] stringByAppendingPathComponent:@"test.pdf.info"];
+    NSString *infoFileName = [self.detailItem stringByAppendingString:@".info"];
+    NSString *infoPath = [[libPaths objectAtIndex:0] stringByAppendingPathComponent:infoFileName];
     
     /* create the PDF information object; this will load the cached
      * file if it exists, or prepare it if it does not yet exist. */
@@ -86,7 +55,7 @@
     
     pdfDocument = pdfFile;
     /* create and launch the view controller */
-//    PDFAnnotationSampleViewController * pdfView = [[PDFAnnotationSampleViewController alloc] initWithPDFDocument:pdfFile];
+    //    PDFAnnotationSampleViewController * pdfView = [[PDFAnnotationSampleViewController alloc] initWithPDFDocument:pdfFile];
     
     
     /* create the view controller -- interactive on the iPad, read-only on the iPhone/iPod Touch... */
@@ -105,6 +74,26 @@
     
     [pdfView fitToWidth];
     
+}
+
+
+-(id)initWithPDFDocument:(APPDFDocument *)document
+{
+    if (self = [super initWithNibName:@"PDFAnnotationSampleViewController" bundle:nil]) {
+        NSAssert(nil != document, @"cannot initialize with nil document");
+        pdfDocument = document;    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+	// Do any additional setup after loading the view, typically from a nib.
+    if (!_documentDir) {
+        NSArray *docPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        
+        _documentDir = [docPaths objectAtIndex:0];
+    }
     
     [self configureView];
 }

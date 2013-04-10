@@ -35,6 +35,25 @@
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
     self.navigationItem.rightBarButtonItem = addButton;
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+    
+    NSArray *docPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDir = [docPaths objectAtIndex:0];
+
+    
+    self.detailViewController.documentDir = documentsDir;
+    
+    NSError *error;
+    NSArray *docs = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsDir error:&error];
+    
+    NSString *match = @".pdf";
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF endswith %@", match];
+    NSArray *results = [docs filteredArrayUsingPredicate:predicate];
+    
+    if (!_objects) {
+        _objects = [[NSMutableArray alloc] initWithArray:results];
+    }
+    
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -109,8 +128,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        NSDate *object = _objects[indexPath.row];
-        self.detailViewController.detailItem = object;
+        NSString *pdfFileName = _objects[indexPath.row];
+        self.detailViewController.detailItem = pdfFileName;
     }
 }
 

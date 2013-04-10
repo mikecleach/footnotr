@@ -17,6 +17,7 @@
     APAnnotatingPDFViewController *pdfView;
 }
 @property (strong, nonatomic) id detailItem;
+@property (strong, nonatomic) NSString *documentDir;
 
 @property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
 
