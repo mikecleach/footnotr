@@ -193,6 +193,7 @@
 		AE74BE93170E23200040F14A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE74BE92170E23200040F14A /* Security.framework */; };
 		AE74BE95170E23A70040F14A /* license.xml in Resources */ = {isa = PBXBuildFile; fileRef = AE74BE94170E23A70040F14A /* license.xml */; };
 		AE74BE99170E2AAC0040F14A /* test.pdf in Resources */ = {isa = PBXBuildFile; fileRef = AE74BE98170E2AAC0040F14A /* test.pdf */; };
+		AE98B0CA171923A100807CB0 /* ArticleCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = AE98B0C9171923A100807CB0 /* ArticleCoordinator.m */; };
 		AEE656871703DEEB000D3C57 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEE656861703DEEB000D3C57 /* UIKit.framework */; };
 		AEE656891703DEEB000D3C57 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEE656881703DEEB000D3C57 /* Foundation.framework */; };
 		AEE6568B1703DEEC000D3C57 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEE6568A1703DEEB000D3C57 /* CoreGraphics.framework */; };
@@ -409,6 +410,8 @@
 		AE74BE92170E23200040F14A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		AE74BE94170E23A70040F14A /* license.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = license.xml; path = "../../../Downloads/iAnnotate_PDF_SDK-2.4-RC2-demo/samples/MultipleDocumentSample/license.xml"; sourceTree = "<group>"; };
 		AE74BE98170E2AAC0040F14A /* test.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = test.pdf; sourceTree = "<group>"; };
+		AE98B0C8171923A100807CB0 /* ArticleCoordinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArticleCoordinator.h; sourceTree = "<group>"; };
+		AE98B0C9171923A100807CB0 /* ArticleCoordinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArticleCoordinator.m; sourceTree = "<group>"; };
 		AEE656831703DEEB000D3C57 /* Footnotr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Footnotr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEE656861703DEEB000D3C57 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AEE656881703DEEB000D3C57 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -719,6 +722,8 @@
 				AEE656A51703DEEC000D3C57 /* MasterViewController.m */,
 				AEE656A71703DEEC000D3C57 /* DetailViewController.h */,
 				AEE656A81703DEEC000D3C57 /* DetailViewController.m */,
+				AE98B0C8171923A100807CB0 /* ArticleCoordinator.h */,
+				AE98B0C9171923A100807CB0 /* ArticleCoordinator.m */,
 				AEE6568D1703DEEC000D3C57 /* Supporting Files */,
 			);
 			path = Footnotr;
@@ -991,6 +996,7 @@
 				AEE656971703DEEC000D3C57 /* AppDelegate.m in Sources */,
 				AEE656A61703DEEC000D3C57 /* MasterViewController.m in Sources */,
 				AEE656A91703DEEC000D3C57 /* DetailViewController.m in Sources */,
+				AE98B0CA171923A100807CB0 /* ArticleCoordinator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

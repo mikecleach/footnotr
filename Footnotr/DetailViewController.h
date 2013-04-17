@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "AjiPDFLib.h"
 
-@interface DetailViewController : UIViewController <UISplitViewControllerDelegate, APAnnotatingPDFViewDelegate, APPDFProcessorDelegate>
+@interface DetailViewController : UIViewController <UISplitViewControllerDelegate, APAnnotatingPDFViewDelegate, APPDFProcessorDelegate, NSURLConnectionDelegate, NSURLConnectionDataDelegate>
 {
     IBOutlet UIView *hostView;
 
