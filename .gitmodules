@@ -1,0 +1,3 @@
+[submodule "FPPopover"]
+	path = FPPopover
+	url = https://github.com/50pixels/FPPopover.git
