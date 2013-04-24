@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Footnotr/DetailViewController.m"
-         timestampString = "387874046.923313"
+         timestampString = "388015280.386667"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "40"
-         endingLineNumber = "40"
+         startingLineNumber = "48"
+         endingLineNumber = "48"
          landmarkName = "-configureView"
          landmarkType = "5">
       </FileBreakpoint>
@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Footnotr/DetailViewController.m"
-         timestampString = "387874046.923313"
+         timestampString = "388015280.386667"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "25"
-         endingLineNumber = "25"
+         startingLineNumber = "33"
+         endingLineNumber = "33"
          landmarkName = "-setDetailItem:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -34,11 +34,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Footnotr/DetailViewController.m"
-         timestampString = "387874046.923313"
+         timestampString = "388015280.386667"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "44"
-         endingLineNumber = "44"
+         startingLineNumber = "52"
+         endingLineNumber = "52"
          landmarkName = "-configureView"
          landmarkType = "5">
       </FileBreakpoint>
@@ -47,11 +47,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Footnotr/DetailViewController.m"
-         timestampString = "387874288.51646"
+         timestampString = "388015280.386667"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "188"
-         endingLineNumber = "188"
+         startingLineNumber = "196"
+         endingLineNumber = "196"
          landmarkName = "-connection:didReceiveData:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -60,13 +60,44 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Footnotr/DetailViewController.m"
-         timestampString = "387874046.923313"
+         timestampString = "388015280.386667"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "105"
-         endingLineNumber = "105"
+         startingLineNumber = "113"
+         endingLineNumber = "113"
          landmarkName = "-configureView"
          landmarkType = "5">
       </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "Yes"
+         filePath = "Footnotr/DetailViewController.m"
+         timestampString = "388018801.704124"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "208"
+         endingLineNumber = "208"
+         landmarkName = "-connection:"
+         landmarkType = "5">
+         <Actions>
+            <BreakpointActionProxy
+               ActionType = "Xcode.BreakpointAction.Log">
+               <ActionContent
+                  message = "tapped"
+                  conveyanceType = "0">
+               </ActionContent>
+            </BreakpointActionProxy>
+         </Actions>
+      </FileBreakpoint>
    </FileBreakpoints>
+   <ExceptionBreakpoints>
+      <ExceptionBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         scope = "0"
+         stopOnStyle = "0">
+      </ExceptionBreakpoint>
+   </ExceptionBreakpoints>
 </Bucket>

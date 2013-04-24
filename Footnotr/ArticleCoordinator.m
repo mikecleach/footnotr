@@ -67,6 +67,11 @@
 
 }
 
+-(NSArray *)getCommentsForAnnot:(APAnnotation *)annot
+{
+    
+}
+
 
 
 @end

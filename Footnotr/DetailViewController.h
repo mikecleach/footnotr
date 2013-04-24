@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "AjiPDFLib.h"
+#import "CommentsView.h"
 
 @interface DetailViewController : UIViewController <UISplitViewControllerDelegate, APAnnotatingPDFViewDelegate, APPDFProcessorDelegate, NSURLConnectionDelegate, NSURLConnectionDataDelegate>
 {
@@ -16,9 +17,11 @@
     APPDFDocument *pdfDocument;
     APAnnotatingPDFViewController *pdfView;
 }
+
 @property (strong, nonatomic) id detailItem;
 @property (strong, nonatomic) NSString *documentDir;
 
+@property (weak, nonatomic) IBOutlet CommentsView *commentsView;
 @property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
 
 @end

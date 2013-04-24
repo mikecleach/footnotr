@@ -17,7 +17,7 @@
 
 @property (strong, nonatomic) NSMutableDictionary *annotations;
 @property (strong, nonatomic) NSMutableDictionary *articleInfo;
-
+@property (strong, nonatomic) NSMutableDictionary *comments;
 
 -(id) initWithArticle:(NSMutableDictionary *)articleInfo;
 
@@ -27,5 +27,6 @@
 
 -(NSString *)getXmlStringForAnnot:(APAnnotation *)annot withInfo:(APPDFInformation *)info;
 
+-(NSArray *)getCommentsForAnnot:(APAnnotation *)annot;
 
 @end
