@@ -8,8 +8,16 @@
 
 #import "DetailViewController.h"
 #import "ArticleCoordinator.h"
+#import "FPPopoverController.h"
+
 
 @interface DetailViewController ()
+{
+    IBOutlet UIView *hostView;
+    
+    APPDFDocument *pdfDocument;
+    APAnnotatingPDFViewController *pdfView;
+}
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 @property (strong, nonatomic) NSMutableData *serverResponse;
 @property (strong, nonatomic) APPDFInformation *info;
@@ -23,7 +31,8 @@
 {
     if (self = [super initWithNibName:@"PDFAnnotationSampleViewController" bundle:nil]) {
         NSAssert(nil != document, @"cannot initialize with nil document");
-        pdfDocument = document;    }
+        pdfDocument = document;
+    }
     return self;
 }
 
@@ -135,38 +144,54 @@
 //        pdfView.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
 //        [hostView addSubview:pdfView.view];
 //        
-        [pdfView fitToWidth];
+        //[pdfView fitToWidth];
+    }
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
+    if(error) {
+        [[[UIAlertView alloc] initWithTitle:@"Error" message:@"No Annots Found! Web server on?" delegate:self cancelButtonTitle:@"" otherButtonTitles:nil] show];
     }
 }
 
 
--(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    
-    //NSData *json = [[NSData alloc] initWithData:[jsonStr dataUsingEncoding:NSUTF8StringEncoding]];
-    
+-(NSInputStream *) packageAnnotationsIntoXml:(NSDictionary *)annotsData
+{
+    //PDF information library-required header and footer
     NSString *xmlHeader = @"<annotations>\n";
     NSString *xmlFooter = @"</annotations>";
-
-    //Article data comes packed as dictionaries within a dictionary: articleInfo, annots, comments are the keys
-    NSError *error;
-    NSDictionary *articleData = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     
+
     //packaging annots into xml string for importing to PDFInfo object
     NSMutableData *packagedXml = [[NSMutableData alloc] initWithData:[xmlHeader dataUsingEncoding:NSUTF8StringEncoding]];
     
-    NSDictionary *annots = [articleData objectForKey:@"annots"];
     
-    for (NSString *key in annots) {
-        NSDictionary *xmlObj = [annots objectForKey:key];
+    for (NSString *key in annotsData) {
+        NSDictionary *xmlObj = [annotsData objectForKey:key];
         [packagedXml appendData:[[xmlObj objectForKey:@"xmlStr"] dataUsingEncoding:NSUTF8StringEncoding]];
     }
     
     [packagedXml appendData:[xmlFooter dataUsingEncoding:NSUTF8StringEncoding]];
     
-    NSInputStream *is = [[NSInputStream alloc] initWithData:packagedXml];
+    return [[NSInputStream alloc] initWithData:packagedXml];
+}
+
+-(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    
+    //NSData *json = [[NSData alloc] initWithData:[jsonStr dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    //Article data comes packed as dictionaries within a dictionary: articleInfo, annots, comments are the keys
+    NSError *error;
+    NSDictionary *articleData = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    
+    
+    NSDictionary *annotsData = [articleData objectForKey:@"annots"];
+    
+    NSInputStream *is = [self packageAnnotationsIntoXml:annotsData];
     
     [self.info importAnnotationXMLFromStream:is];
-    //end xml packaging
+
     
     self.ac = [[ArticleCoordinator alloc] initWithArticle:[articleData objectForKey:@"articleInfo"]];
     
@@ -214,11 +239,31 @@
 -(void)pdfController:(APPDFViewController *)controller didTapOnAnnotation:(APAnnotation *)annotation inRect:(CGRect)rect
 {
     CGRect annotViewRect = [pdfView viewRectForPageSpaceRect:annotation.rect onPage:annotation.page];
-    NSString *comments = []
+    //NSString *comments = []
     UITextView *commentsView = [[UITextView alloc] initWithFrame:CGRectMake(0, annotViewRect.origin.y, 60, 60)];
     [commentsView setText:@"Test comment 1"];
     [commentsView setEditable:NO];
-    [pdfView.view addSubview:commentsView];
+    //[pdfView.view addSubview:commentsView];
+    
+    //self.commentsVC
+    //CommentsViewController *commVC = [[CommentsViewController alloc] init];
+    
+    
+    // do any setup you need for myNewVC
+    
+    self.commentsVC = [self.storyboard instantiateViewControllerWithIdentifier:@"commentsViewController"];
+    
+    
+    
+    FPPopoverController *pc = [[FPPopoverController alloc] initWithViewController:self.commentsVC];
+    
+    [pc presentPopoverFromPoint:annotViewRect.origin];
+    
+}
+
+-(BOOL)pdfController:(APPDFViewController *)controller shouldShowRibbonForAnnotation:(APAnnotation *)annotation
+{
+    return NO;
 }
 
 - (void)viewDidLoad
@@ -230,6 +275,8 @@
         
         _documentDir = [docPaths objectAtIndex:0];
     }
+    
+    _detailItem = @"test.pdf";
     
     [self configureView];
 }

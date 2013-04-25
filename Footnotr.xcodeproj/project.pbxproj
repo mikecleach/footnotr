@@ -7,6 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AE46D4FD1728CA5200500B33 /* FPPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46D4F81728CA5200500B33 /* FPPopoverController.m */; };
+		AE46D4FE1728CA5200500B33 /* FPPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46D4FA1728CA5200500B33 /* FPPopoverView.m */; };
+		AE46D4FF1728CA5200500B33 /* FPTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46D4FC1728CA5200500B33 /* FPTouchView.m */; };
+		AE46D5261728CC4500500B33 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE46D5251728CC4500500B33 /* QuartzCore.framework */; };
+		AE46D5281728CC5200500B33 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE46D5271728CC5200500B33 /* CoreText.framework */; };
+		AE46D52B1728CFC900500B33 /* CommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46D52A1728CFC900500B33 /* CommentsViewController.m */; };
+		AE46D5501728FAB600500B33 /* NSAttributedString+MGTrim.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46D52F1728FAB600500B33 /* NSAttributedString+MGTrim.m */; };
+		AE46D5511728FAB600500B33 /* NSObject+MGEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46D5311728FAB600500B33 /* NSObject+MGEvents.m */; };
+		AE46D5521728FAB600500B33 /* UIColor+MGExpanded.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46D5331728FAB600500B33 /* UIColor+MGExpanded.m */; };
+		AE46D5531728FAB600500B33 /* UIControl+MGEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46D5351728FAB600500B33 /* UIControl+MGEvents.m */; };
+		AE46D5541728FAB600500B33 /* UIResponder+FirstResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46D5371728FAB600500B33 /* UIResponder+FirstResponder.m */; };
+		AE46D5551728FAB600500B33 /* UIView+MGEasyFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46D5391728FAB600500B33 /* UIView+MGEasyFrame.m */; };
+		AE46D5561728FAB600500B33 /* MGBlockWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46D53C1728FAB600500B33 /* MGBlockWrapper.m */; };
+		AE46D5571728FAB600500B33 /* MGBox.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46D53E1728FAB600500B33 /* MGBox.m */; };
+		AE46D5581728FAB600500B33 /* MGButton.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46D5401728FAB600500B33 /* MGButton.m */; };
+		AE46D5591728FAB600500B33 /* MGLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46D5431728FAB600500B33 /* MGLayoutManager.m */; };
+		AE46D55A1728FAB600500B33 /* MGLine.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46D5451728FAB600500B33 /* MGLine.m */; };
+		AE46D55B1728FAB600500B33 /* MGLineStyled.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46D5471728FAB600500B33 /* MGLineStyled.m */; };
+		AE46D55C1728FAB600500B33 /* MGMushParser.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46D5491728FAB600500B33 /* MGMushParser.m */; };
+		AE46D55D1728FAB600500B33 /* MGScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46D54B1728FAB600500B33 /* MGScrollView.m */; };
+		AE46D55E1728FAB600500B33 /* MGTableBox.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46D54D1728FAB600500B33 /* MGTableBox.m */; };
+		AE46D55F1728FAB600500B33 /* MGTableBoxStyled.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46D54F1728FAB600500B33 /* MGTableBoxStyled.m */; };
 		AE74BDC5170E207D0040F14A /* FontCMaps in Resources */ = {isa = PBXBuildFile; fileRef = AE74BD12170E207C0040F14A /* FontCMaps */; };
 		AE74BDC6170E207D0040F14A /* AjiPDFLib.strings in Resources */ = {isa = PBXBuildFile; fileRef = AE74BD13170E207C0040F14A /* AjiPDFLib.strings */; };
 		AE74BDC7170E207D0040F14A /* AP_action_popupEditor.png in Resources */ = {isa = PBXBuildFile; fileRef = AE74BD14170E207C0040F14A /* AP_action_popupEditor.png */; };
@@ -194,7 +216,6 @@
 		AE74BE95170E23A70040F14A /* license.xml in Resources */ = {isa = PBXBuildFile; fileRef = AE74BE94170E23A70040F14A /* license.xml */; };
 		AE74BE99170E2AAC0040F14A /* test.pdf in Resources */ = {isa = PBXBuildFile; fileRef = AE74BE98170E2AAC0040F14A /* test.pdf */; };
 		AE98B0CA171923A100807CB0 /* ArticleCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = AE98B0C9171923A100807CB0 /* ArticleCoordinator.m */; };
-		AEA05B3917272C250003A0C4 /* CommentsView.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA05B3817272C250003A0C4 /* CommentsView.m */; };
 		AEE656871703DEEB000D3C57 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEE656861703DEEB000D3C57 /* UIKit.framework */; };
 		AEE656891703DEEB000D3C57 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEE656881703DEEB000D3C57 /* Foundation.framework */; };
 		AEE6568B1703DEEC000D3C57 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEE6568A1703DEEB000D3C57 /* CoreGraphics.framework */; };
@@ -211,6 +232,51 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AE46D4F71728CA5200500B33 /* FPPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FPPopoverController.h; path = FPPopover/FPPopoverController.h; sourceTree = "<group>"; };
+		AE46D4F81728CA5200500B33 /* FPPopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FPPopoverController.m; path = FPPopover/FPPopoverController.m; sourceTree = "<group>"; };
+		AE46D4F91728CA5200500B33 /* FPPopoverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FPPopoverView.h; path = FPPopover/FPPopoverView.h; sourceTree = "<group>"; };
+		AE46D4FA1728CA5200500B33 /* FPPopoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FPPopoverView.m; path = FPPopover/FPPopoverView.m; sourceTree = "<group>"; };
+		AE46D4FB1728CA5200500B33 /* FPTouchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FPTouchView.h; path = FPPopover/FPTouchView.h; sourceTree = "<group>"; };
+		AE46D4FC1728CA5200500B33 /* FPTouchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FPTouchView.m; path = FPPopover/FPTouchView.m; sourceTree = "<group>"; };
+		AE46D5241728CB6B00500B33 /* ARCMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ARCMacros.h; path = FPPopover/ARCMacros.h; sourceTree = "<group>"; };
+		AE46D5251728CC4500500B33 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		AE46D5271728CC5200500B33 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		AE46D5291728CFC900500B33 /* CommentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsViewController.h; sourceTree = "<group>"; };
+		AE46D52A1728CFC900500B33 /* CommentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsViewController.m; sourceTree = "<group>"; };
+		AE46D52E1728FAB600500B33 /* NSAttributedString+MGTrim.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+MGTrim.h"; sourceTree = "<group>"; };
+		AE46D52F1728FAB600500B33 /* NSAttributedString+MGTrim.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+MGTrim.m"; sourceTree = "<group>"; };
+		AE46D5301728FAB600500B33 /* NSObject+MGEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MGEvents.h"; sourceTree = "<group>"; };
+		AE46D5311728FAB600500B33 /* NSObject+MGEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MGEvents.m"; sourceTree = "<group>"; };
+		AE46D5321728FAB600500B33 /* UIColor+MGExpanded.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+MGExpanded.h"; sourceTree = "<group>"; };
+		AE46D5331728FAB600500B33 /* UIColor+MGExpanded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+MGExpanded.m"; sourceTree = "<group>"; };
+		AE46D5341728FAB600500B33 /* UIControl+MGEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIControl+MGEvents.h"; sourceTree = "<group>"; };
+		AE46D5351728FAB600500B33 /* UIControl+MGEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIControl+MGEvents.m"; sourceTree = "<group>"; };
+		AE46D5361728FAB600500B33 /* UIResponder+FirstResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIResponder+FirstResponder.h"; sourceTree = "<group>"; };
+		AE46D5371728FAB600500B33 /* UIResponder+FirstResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIResponder+FirstResponder.m"; sourceTree = "<group>"; };
+		AE46D5381728FAB600500B33 /* UIView+MGEasyFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MGEasyFrame.h"; sourceTree = "<group>"; };
+		AE46D5391728FAB600500B33 /* UIView+MGEasyFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MGEasyFrame.m"; sourceTree = "<group>"; };
+		AE46D53A1728FAB600500B33 /* MGBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGBase.h; sourceTree = "<group>"; };
+		AE46D53B1728FAB600500B33 /* MGBlockWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGBlockWrapper.h; sourceTree = "<group>"; };
+		AE46D53C1728FAB600500B33 /* MGBlockWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGBlockWrapper.m; sourceTree = "<group>"; };
+		AE46D53D1728FAB600500B33 /* MGBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGBox.h; sourceTree = "<group>"; };
+		AE46D53E1728FAB600500B33 /* MGBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGBox.m; sourceTree = "<group>"; };
+		AE46D53F1728FAB600500B33 /* MGButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGButton.h; sourceTree = "<group>"; };
+		AE46D5401728FAB600500B33 /* MGButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGButton.m; sourceTree = "<group>"; };
+		AE46D5411728FAB600500B33 /* MGLayoutBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGLayoutBox.h; sourceTree = "<group>"; };
+		AE46D5421728FAB600500B33 /* MGLayoutManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGLayoutManager.h; sourceTree = "<group>"; };
+		AE46D5431728FAB600500B33 /* MGLayoutManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGLayoutManager.m; sourceTree = "<group>"; };
+		AE46D5441728FAB600500B33 /* MGLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGLine.h; sourceTree = "<group>"; };
+		AE46D5451728FAB600500B33 /* MGLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGLine.m; sourceTree = "<group>"; };
+		AE46D5461728FAB600500B33 /* MGLineStyled.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGLineStyled.h; sourceTree = "<group>"; };
+		AE46D5471728FAB600500B33 /* MGLineStyled.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGLineStyled.m; sourceTree = "<group>"; };
+		AE46D5481728FAB600500B33 /* MGMushParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMushParser.h; sourceTree = "<group>"; };
+		AE46D5491728FAB600500B33 /* MGMushParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMushParser.m; sourceTree = "<group>"; };
+		AE46D54A1728FAB600500B33 /* MGScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGScrollView.h; sourceTree = "<group>"; };
+		AE46D54B1728FAB600500B33 /* MGScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGScrollView.m; sourceTree = "<group>"; };
+		AE46D54C1728FAB600500B33 /* MGTableBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGTableBox.h; sourceTree = "<group>"; };
+		AE46D54D1728FAB600500B33 /* MGTableBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGTableBox.m; sourceTree = "<group>"; };
+		AE46D54E1728FAB600500B33 /* MGTableBoxStyled.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGTableBoxStyled.h; sourceTree = "<group>"; };
+		AE46D54F1728FAB600500B33 /* MGTableBoxStyled.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGTableBoxStyled.m; sourceTree = "<group>"; };
 		AE74BD12170E207C0040F14A /* FontCMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; name = FontCMaps; path = Footnotr/FontCMaps; sourceTree = "<group>"; };
 		AE74BD13170E207C0040F14A /* AjiPDFLib.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = AjiPDFLib.strings; path = Footnotr/AjiPDFLib.strings; sourceTree = "<group>"; };
 		AE74BD14170E207C0040F14A /* AP_action_popupEditor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AP_action_popupEditor.png; path = Footnotr/AP_action_popupEditor.png; sourceTree = "<group>"; };
@@ -413,8 +479,6 @@
 		AE74BE98170E2AAC0040F14A /* test.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = test.pdf; sourceTree = "<group>"; };
 		AE98B0C8171923A100807CB0 /* ArticleCoordinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArticleCoordinator.h; sourceTree = "<group>"; };
 		AE98B0C9171923A100807CB0 /* ArticleCoordinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArticleCoordinator.m; sourceTree = "<group>"; };
-		AEA05B3717272C250003A0C4 /* CommentsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsView.h; sourceTree = "<group>"; };
-		AEA05B3817272C250003A0C4 /* CommentsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsView.m; sourceTree = "<group>"; };
 		AEE656831703DEEB000D3C57 /* Footnotr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Footnotr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEE656861703DEEB000D3C57 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AEE656881703DEEB000D3C57 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -441,6 +505,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE46D5281728CC5200500B33 /* CoreText.framework in Frameworks */,
+				AE46D5261728CC4500500B33 /* QuartzCore.framework in Frameworks */,
 				AE74BE93170E23200040F14A /* Security.framework in Frameworks */,
 				AE74BE91170E23160040F14A /* AVFoundation.framework in Frameworks */,
 				AE74BE8F170E230C0040F14A /* MessageUI.framework in Frameworks */,
@@ -455,6 +521,70 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AE46D5001728CA5C00500B33 /* FPPopover */ = {
+			isa = PBXGroup;
+			children = (
+				AE46D5241728CB6B00500B33 /* ARCMacros.h */,
+				AE46D4F71728CA5200500B33 /* FPPopoverController.h */,
+				AE46D4F81728CA5200500B33 /* FPPopoverController.m */,
+				AE46D4F91728CA5200500B33 /* FPPopoverView.h */,
+				AE46D4FA1728CA5200500B33 /* FPPopoverView.m */,
+				AE46D4FB1728CA5200500B33 /* FPTouchView.h */,
+				AE46D4FC1728CA5200500B33 /* FPTouchView.m */,
+			);
+			name = FPPopover;
+			sourceTree = "<group>";
+		};
+		AE46D52C1728FAB600500B33 /* MGBox */ = {
+			isa = PBXGroup;
+			children = (
+				AE46D52D1728FAB600500B33 /* Categories */,
+				AE46D53A1728FAB600500B33 /* MGBase.h */,
+				AE46D53B1728FAB600500B33 /* MGBlockWrapper.h */,
+				AE46D53C1728FAB600500B33 /* MGBlockWrapper.m */,
+				AE46D53D1728FAB600500B33 /* MGBox.h */,
+				AE46D53E1728FAB600500B33 /* MGBox.m */,
+				AE46D53F1728FAB600500B33 /* MGButton.h */,
+				AE46D5401728FAB600500B33 /* MGButton.m */,
+				AE46D5411728FAB600500B33 /* MGLayoutBox.h */,
+				AE46D5421728FAB600500B33 /* MGLayoutManager.h */,
+				AE46D5431728FAB600500B33 /* MGLayoutManager.m */,
+				AE46D5441728FAB600500B33 /* MGLine.h */,
+				AE46D5451728FAB600500B33 /* MGLine.m */,
+				AE46D5461728FAB600500B33 /* MGLineStyled.h */,
+				AE46D5471728FAB600500B33 /* MGLineStyled.m */,
+				AE46D5481728FAB600500B33 /* MGMushParser.h */,
+				AE46D5491728FAB600500B33 /* MGMushParser.m */,
+				AE46D54A1728FAB600500B33 /* MGScrollView.h */,
+				AE46D54B1728FAB600500B33 /* MGScrollView.m */,
+				AE46D54C1728FAB600500B33 /* MGTableBox.h */,
+				AE46D54D1728FAB600500B33 /* MGTableBox.m */,
+				AE46D54E1728FAB600500B33 /* MGTableBoxStyled.h */,
+				AE46D54F1728FAB600500B33 /* MGTableBoxStyled.m */,
+			);
+			name = MGBox;
+			path = MGBox2/MGBox;
+			sourceTree = "<group>";
+		};
+		AE46D52D1728FAB600500B33 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				AE46D52E1728FAB600500B33 /* NSAttributedString+MGTrim.h */,
+				AE46D52F1728FAB600500B33 /* NSAttributedString+MGTrim.m */,
+				AE46D5301728FAB600500B33 /* NSObject+MGEvents.h */,
+				AE46D5311728FAB600500B33 /* NSObject+MGEvents.m */,
+				AE46D5321728FAB600500B33 /* UIColor+MGExpanded.h */,
+				AE46D5331728FAB600500B33 /* UIColor+MGExpanded.m */,
+				AE46D5341728FAB600500B33 /* UIControl+MGEvents.h */,
+				AE46D5351728FAB600500B33 /* UIControl+MGEvents.m */,
+				AE46D5361728FAB600500B33 /* UIResponder+FirstResponder.h */,
+				AE46D5371728FAB600500B33 /* UIResponder+FirstResponder.m */,
+				AE46D5381728FAB600500B33 /* UIView+MGEasyFrame.h */,
+				AE46D5391728FAB600500B33 /* UIView+MGEasyFrame.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
 		AE74BE78170E21340040F14A /* include */ = {
 			isa = PBXGroup;
 			children = (
@@ -681,17 +811,11 @@
 			name = resources;
 			sourceTree = "<group>";
 		};
-		AEA05B3A1727A7A80003A0C4 /* FPPopover */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = FPPopover;
-			sourceTree = "<group>";
-		};
 		AEE6567A1703DEEB000D3C57 = {
 			isa = PBXGroup;
 			children = (
-				AEA05B3A1727A7A80003A0C4 /* FPPopover */,
+				AE46D52C1728FAB600500B33 /* MGBox */,
+				AE46D5001728CA5C00500B33 /* FPPopover */,
 				AE74BE89170E22090040F14A /* AjiPDF */,
 				AEE6568C1703DEEC000D3C57 /* Footnotr */,
 				AEE656851703DEEB000D3C57 /* Frameworks */,
@@ -710,6 +834,8 @@
 		AEE656851703DEEB000D3C57 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AE46D5271728CC5200500B33 /* CoreText.framework */,
+				AE46D5251728CC4500500B33 /* QuartzCore.framework */,
 				AE74BE92170E23200040F14A /* Security.framework */,
 				AE74BE90170E23160040F14A /* AVFoundation.framework */,
 				AE74BE8E170E230C0040F14A /* MessageUI.framework */,
@@ -735,8 +861,8 @@
 				AEE656A81703DEEC000D3C57 /* DetailViewController.m */,
 				AE98B0C8171923A100807CB0 /* ArticleCoordinator.h */,
 				AE98B0C9171923A100807CB0 /* ArticleCoordinator.m */,
-				AEA05B3717272C250003A0C4 /* CommentsView.h */,
-				AEA05B3817272C250003A0C4 /* CommentsView.m */,
+				AE46D5291728CFC900500B33 /* CommentsViewController.h */,
+				AE46D52A1728CFC900500B33 /* CommentsViewController.m */,
 				AEE6568D1703DEEC000D3C57 /* Supporting Files */,
 			);
 			path = Footnotr;
@@ -1010,7 +1136,26 @@
 				AEE656A61703DEEC000D3C57 /* MasterViewController.m in Sources */,
 				AEE656A91703DEEC000D3C57 /* DetailViewController.m in Sources */,
 				AE98B0CA171923A100807CB0 /* ArticleCoordinator.m in Sources */,
-				AEA05B3917272C250003A0C4 /* CommentsView.m in Sources */,
+				AE46D4FD1728CA5200500B33 /* FPPopoverController.m in Sources */,
+				AE46D4FE1728CA5200500B33 /* FPPopoverView.m in Sources */,
+				AE46D4FF1728CA5200500B33 /* FPTouchView.m in Sources */,
+				AE46D52B1728CFC900500B33 /* CommentsViewController.m in Sources */,
+				AE46D5501728FAB600500B33 /* NSAttributedString+MGTrim.m in Sources */,
+				AE46D5511728FAB600500B33 /* NSObject+MGEvents.m in Sources */,
+				AE46D5521728FAB600500B33 /* UIColor+MGExpanded.m in Sources */,
+				AE46D5531728FAB600500B33 /* UIControl+MGEvents.m in Sources */,
+				AE46D5541728FAB600500B33 /* UIResponder+FirstResponder.m in Sources */,
+				AE46D5551728FAB600500B33 /* UIView+MGEasyFrame.m in Sources */,
+				AE46D5561728FAB600500B33 /* MGBlockWrapper.m in Sources */,
+				AE46D5571728FAB600500B33 /* MGBox.m in Sources */,
+				AE46D5581728FAB600500B33 /* MGButton.m in Sources */,
+				AE46D5591728FAB600500B33 /* MGLayoutManager.m in Sources */,
+				AE46D55A1728FAB600500B33 /* MGLine.m in Sources */,
+				AE46D55B1728FAB600500B33 /* MGLineStyled.m in Sources */,
+				AE46D55C1728FAB600500B33 /* MGMushParser.m in Sources */,
+				AE46D55D1728FAB600500B33 /* MGScrollView.m in Sources */,
+				AE46D55E1728FAB600500B33 /* MGTableBox.m in Sources */,
+				AE46D55F1728FAB600500B33 /* MGTableBoxStyled.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1120,6 +1265,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "/Users/shomer/Sources/Footnotr/FPPopover/ /Users/shomer/Sources/Footnotr/MGBox2/";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1142,6 +1288,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "/Users/shomer/Sources/Footnotr/FPPopover/ /Users/shomer/Sources/Footnotr/MGBox2/";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
