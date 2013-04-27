@@ -67,8 +67,18 @@
 
 }
 
--(NSArray *)getCommentsForAnnot:(APAnnotation *)annot
+//Expects a permanent timestamp ID string
+-(NSArray *)getCommentsForAnnot:(NSString *)annotTsID
 {
+    NSMutableArray *annotsArray = [[NSMutableArray alloc] init];
+    
+    NSDictionary *commentsDict = [self.comments objectForKey:annotTsID];
+    
+    for (NSString* key in commentsDict) {
+        [annotsArray addObject:[commentsDict objectForKey:key]];
+    }
+    
+    return [annotsArray copy];
     
 }
 

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "AjiPDFLib.h"
 #import "CommentsViewController.h"
+#import "AnnotationModel.h"
 
 @interface DetailViewController : UIViewController <UISplitViewControllerDelegate, APAnnotatingPDFViewDelegate, APPDFProcessorDelegate, NSURLConnectionDelegate, NSURLConnectionDataDelegate>
 

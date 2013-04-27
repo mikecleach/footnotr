@@ -166,8 +166,10 @@
     //packaging annots into xml string for importing to PDFInfo object
     NSMutableData *packagedXml = [[NSMutableData alloc] initWithData:[xmlHeader dataUsingEncoding:NSUTF8StringEncoding]];
     
+    NSArray *sortedKeys = [[annotsData allKeys] sortedArrayUsingSelector:@selector(compare:)];
     
-    for (NSString *key in annotsData) {
+    
+    for (NSString *key in sortedKeys) {
         NSDictionary *xmlObj = [annotsData objectForKey:key];
         [packagedXml appendData:[[xmlObj objectForKey:@"xmlStr"] dataUsingEncoding:NSUTF8StringEncoding]];
     }
@@ -176,6 +178,33 @@
     
     return [[NSInputStream alloc] initWithData:packagedXml];
 }
+
+//-(NSInputStream *) packageAnnotationIntoXml:(NSDictionary *)annotData
+//{
+//    //PDF information library-required header and footer
+//    NSString *xmlHeader = @"<annotations>\n";
+//    NSString *xmlFooter = @"</annotations>";
+//    
+//    
+//    //packaging annots into xml string for importing to PDFInfo object
+//    NSMutableData *packagedXml = [[NSMutableData alloc] initWithData:[xmlHeader dataUsingEncoding:NSUTF8StringEncoding]];
+//    
+//    
+//    
+//    
+//    NSArray *sortedKeys = [[annotsData allKeys] sortedArrayUsingSelector:@selector(compare:)];
+//    
+//    
+//    for (NSString *key in sortedKeys) {
+//        NSDictionary *xmlObj = [annotsData objectForKey:key];
+//        [packagedXml appendData:[[xmlObj objectForKey:@"xmlStr"] dataUsingEncoding:NSUTF8StringEncoding]];
+//    }
+//    
+//    [packagedXml appendData:[xmlFooter dataUsingEncoding:NSUTF8StringEncoding]];
+//    
+//    return [[NSInputStream alloc] initWithData:packagedXml];
+//}
+
 
 -(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     
@@ -191,9 +220,28 @@
     NSInputStream *is = [self packageAnnotationsIntoXml:annotsData];
     
     [self.info importAnnotationXMLFromStream:is];
-
+    
+    NSArray *allAnnots = [self.info allUserAnnotations];
+    
+    NSMutableDictionary *tsToAnnModelMap = [NSMutableDictionary dictionary];
+    for (APTextMarkup *an in allAnnots) {
+        AnnotationModel *newAM = [[AnnotationModel alloc] init];
+        newAM.annot = an;
+        
+        NSString *tsAsStr = [NSString stringWithFormat:@"%d", an.creationStamp];
+        newAM.xml = [[annotsData objectForKey:tsAsStr ]objectForKey:@"xmlStr"];
+        newAM.currPdfId = [self.info identifierForAnnotation:an];
+        
+        [tsToAnnModelMap setObject:newAM forKey:tsAsStr];
+        
+    }
+    
+    
     
     self.ac = [[ArticleCoordinator alloc] initWithArticle:[articleData objectForKey:@"articleInfo"]];
+    
+    NSLog([tsToAnnModelMap description]);
+    self.ac.tsIdToAnnotMap = tsToAnnModelMap;
     
     self.ac.comments = [articleData objectForKey:@"comments"];
     
@@ -235,6 +283,10 @@
     // to get your server sending an answer
 }
 
+-(void)pdfController:(APAnnotatingPDFViewController *)controller didCreateAnnotation:(APAnnotation *)annotation
+{
+    //get the annotations creation time and current identifier and store to mapping dictionary
+}
 
 -(void)pdfController:(APPDFViewController *)controller didTapOnAnnotation:(APAnnotation *)annotation inRect:(CGRect)rect
 {
@@ -253,6 +305,10 @@
     
     self.commentsVC = [self.storyboard instantiateViewControllerWithIdentifier:@"commentsViewController"];
     
+    NSString *annTsID = [NSString stringWithFormat:@"%d", [(APTextMarkup *)annotation creationStamp]];
+    
+    
+    self.commentsVC.comments = [self.ac getCommentsForAnnot:annTsID];
     
     
     FPPopoverController *pc = [[FPPopoverController alloc] initWithViewController:self.commentsVC];

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AE3239DA172A56B000830BFC /* AnnotationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3239D9172A56B000830BFC /* AnnotationModel.m */; };
 		AE46D4FD1728CA5200500B33 /* FPPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46D4F81728CA5200500B33 /* FPPopoverController.m */; };
 		AE46D4FE1728CA5200500B33 /* FPPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46D4FA1728CA5200500B33 /* FPPopoverView.m */; };
 		AE46D4FF1728CA5200500B33 /* FPTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46D4FC1728CA5200500B33 /* FPTouchView.m */; };
@@ -232,6 +233,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AE3239D8172A56B000830BFC /* AnnotationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnnotationModel.h; sourceTree = "<group>"; };
+		AE3239D9172A56B000830BFC /* AnnotationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnnotationModel.m; sourceTree = "<group>"; };
 		AE46D4F71728CA5200500B33 /* FPPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FPPopoverController.h; path = FPPopover/FPPopoverController.h; sourceTree = "<group>"; };
 		AE46D4F81728CA5200500B33 /* FPPopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FPPopoverController.m; path = FPPopover/FPPopoverController.m; sourceTree = "<group>"; };
 		AE46D4F91728CA5200500B33 /* FPPopoverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FPPopoverView.h; path = FPPopover/FPPopoverView.h; sourceTree = "<group>"; };
@@ -864,6 +867,8 @@
 				AE46D5291728CFC900500B33 /* CommentsViewController.h */,
 				AE46D52A1728CFC900500B33 /* CommentsViewController.m */,
 				AEE6568D1703DEEC000D3C57 /* Supporting Files */,
+				AE3239D8172A56B000830BFC /* AnnotationModel.h */,
+				AE3239D9172A56B000830BFC /* AnnotationModel.m */,
 			);
 			path = Footnotr;
 			sourceTree = "<group>";
@@ -1156,6 +1161,7 @@
 				AE46D55D1728FAB600500B33 /* MGScrollView.m in Sources */,
 				AE46D55E1728FAB600500B33 /* MGTableBox.m in Sources */,
 				AE46D55F1728FAB600500B33 /* MGTableBoxStyled.m in Sources */,
+				AE3239DA172A56B000830BFC /* AnnotationModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

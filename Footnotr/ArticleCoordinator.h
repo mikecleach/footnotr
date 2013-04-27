@@ -15,6 +15,7 @@
     
 }
 
+@property (strong, nonatomic) NSMutableDictionary *tsIdToAnnotMap;
 @property (strong, nonatomic) NSMutableDictionary *annotations;
 @property (strong, nonatomic) NSMutableDictionary *articleInfo;
 @property (strong, nonatomic) NSMutableDictionary *comments;
@@ -27,6 +28,6 @@
 
 -(NSString *)getXmlStringForAnnot:(APAnnotation *)annot withInfo:(APPDFInformation *)info;
 
--(NSArray *)getCommentsForAnnot:(APAnnotation *)annot;
+-(NSArray *)getCommentsForAnnot:(NSString *)annot;
 
 @end

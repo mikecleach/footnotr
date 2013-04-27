@@ -11,7 +11,7 @@
 
 @interface CommentsViewController : UIViewController
 
-@property (nonatomic, weak) IBOutlet MGScrollView *scroller;
-
+@property (strong, nonatomic) IBOutlet MGScrollView *scroller;
+@property (nonatomic, strong) NSArray *comments;
 
 @end

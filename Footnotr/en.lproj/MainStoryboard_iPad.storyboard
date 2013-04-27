@@ -43,23 +43,13 @@
         <scene sceneID="QEh-QG-taG">
             <objects>
                 <viewController storyboardIdentifier="commentsViewController" id="WdW-CO-1OU" userLabel="Comments View Controller" customClass="CommentsViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="AXl-UC-VQL">
+                    <scrollView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="oyt-k0-cIz" customClass="MGScrollView">
                         <rect key="frame" x="0.0" y="20" width="768" height="1004"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="top" translatesAutoresizingMaskIntoConstraints="NO" id="Jnt-KI-Mh6">
-                                <items>
-                                    <barButtonItem title="Item" id="gH3-uC-0Td"/>
-                                </items>
-                            </toolbar>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="Jnt-KI-Mh6" firstAttribute="top" secondItem="AXl-UC-VQL" secondAttribute="top" constant="72" id="91W-zW-PbL"/>
-                            <constraint firstItem="Jnt-KI-Mh6" firstAttribute="leading" secondItem="AXl-UC-VQL" secondAttribute="leading" type="default" id="JBz-2g-JbI"/>
-                            <constraint firstItem="Jnt-KI-Mh6" firstAttribute="trailing" secondItem="AXl-UC-VQL" secondAttribute="trailing" type="default" id="nbo-Ke-mlU"/>
-                        </constraints>
-                    </view>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </scrollView>
+                    <connections>
+                        <outlet property="scroller" destination="oyt-k0-cIz" id="7Lv-qL-7Xo"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LP0-X6-dEo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
