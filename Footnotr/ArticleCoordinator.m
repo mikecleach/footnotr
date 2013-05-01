@@ -54,9 +54,16 @@
 -(NSString *)getXmlStringForAnnot:(APAnnotation *)annot withInfo:(APPDFInformation *)info
 {
     NSOutputStream *os = [[NSOutputStream alloc] initToMemory];
-    [os setDelegate:os];
+    //uncomment this if problems ever appear round here.
+    //[os setDelegate:os];
     [os open];
+    //TODO: error checking on exported should throw error or alert
     BOOL exported = [info exportSingleAnnotationXML:annot toStream:os];
+    
+    if(!exported) {
+        //signal the export didnt work
+    }
+        
     
     NSData *annotXml = [os propertyForKey:NSStreamDataWrittenToMemoryStreamKey];
     

@@ -11,7 +11,7 @@
 #import "CommentsViewController.h"
 #import "AnnotationModel.h"
 
-@interface DetailViewController : UIViewController <UISplitViewControllerDelegate, APAnnotatingPDFViewDelegate, APPDFProcessorDelegate, NSURLConnectionDelegate, NSURLConnectionDataDelegate>
+@interface DetailViewController : UIViewController <UISplitViewControllerDelegate, APAnnotatingPDFViewDelegate, APPDFProcessorDelegate>
 
 
 @property (strong, nonatomic) id detailItem;

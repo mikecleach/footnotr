@@ -7,3 +7,6 @@
 [submodule "JSONModel"]
 	path = JSONModel
 	url = https://github.com/icanzilb/JSONModel.git
+[submodule "AFNetworking"]
+	path = AFNetworking
+	url = https://github.com/AFNetworking/AFNetworking.git

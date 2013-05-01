@@ -9,6 +9,7 @@
 #import "CommentsViewController.h"
 #import "MGTableBoxStyled.h"
 #import "MGLineStyled.h"
+#import "CommentModel.h"
 
 #define ROW_SIZE (CGSize) {180, 30}
 
@@ -59,12 +60,12 @@
     [section.topLines addObject:head];
     
     
-    for (NSDictionary *commDict in self.comments) {
-        MGLineStyled *infoBar = [MGLineStyled lineWithLeft:[commDict objectForKey:@"user"] right:nil size:ROW_SIZE];
+    for (CommentModel *comment in self.comments) {
+        MGLineStyled *infoBar = [MGLineStyled lineWithLeft:comment.user right:nil size:ROW_SIZE];
         [section.topLines addObject:infoBar];
         
-        MGLineStyled *comment = [MGLineStyled lineWithMultilineLeft:[commDict objectForKey:@"comment_text"] right:nil width:160 minHeight:40];
-        [section.topLines addObject:comment];
+        MGLineStyled *commentLine = [MGLineStyled lineWithMultilineLeft:comment.comment right:nil width:160 minHeight:40];
+        [section.topLines addObject:commentLine];
     }
     
 }

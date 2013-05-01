@@ -8,7 +8,10 @@
 
 #import "DetailViewController.h"
 #import "ArticleCoordinator.h"
+#import "ArticleModel.h"
 #import "FPPopoverController.h"
+#import "APIHttpClient.h" 
+#import <Foundation/Foundation.h>
 
 
 @interface DetailViewController ()
@@ -18,10 +21,12 @@
     APPDFDocument *pdfDocument;
     APAnnotatingPDFViewController *pdfView;
 }
+
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 @property (strong, nonatomic) NSMutableData *serverResponse;
 @property (strong, nonatomic) APPDFInformation *info;
-@property (strong, nonatomic) ArticleCoordinator *ac;
+@property (strong, nonatomic) ArticleModel *article;
+
 - (void)configureView;
 @end
 
@@ -52,274 +57,75 @@
     }
 }
 
+
 - (void)configureView
 {
     // Update the user interface for the detail item.
     if (self.detailItem) {
         self.detailDescriptionLabel.text = [self.detailItem description];
-    
-    
-        NSString *pdfPath = [self.documentDir stringByAppendingPathComponent:self.detailItem];
-        
-        NSArray *libPaths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
-        NSString *infoFileName = [self.detailItem stringByAppendingString:@".info"];
-        NSString *infoPath = [[libPaths objectAtIndex:0] stringByAppendingPathComponent:infoFileName];
-        
-        /* create the PDF information object; this will load the cached
-         * file if it exists, or prepare it if it does not yet exist. */
-        self.info = [[APPDFInformation alloc] initAsMemoryDatabase];
-        
-        /* now the APPDFDocument object */
-        //APPDFDocument *pdfFile = [[APPDFDocument alloc] initWithPath:pdfPath information:self.info];
-        
-        
         
         //   THIS CODE IS FOR LOADING ARTICLE INFORMATION FROM A WEBSITE
         
-        NSURL * url = [NSURL URLWithString:@"http://127.0.0.1:8000/article/1/"];
-        
-        NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:url];
-        
-        [request setHTTPMethod:@"GET"];
-        
-        //when request returns, it is proceesed in connection:didRecieveData
-        [[NSURLConnection alloc] initWithRequest:request delegate:self];
+        //FIXME: article api call is hardcoded
+        [[APIHttpClient sharedClient] getPath:@"articles/1/" parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
+
+            NSError *error;
+            self.article = [[ArticleModel alloc] initWithDictionary:JSON error:&error];
+            
+            //Now that annotations and associated xml is available, import the annotations to the pdf lib.
+            NSArray *annotsModelArray = [self.article annots];
+            
+            BOOL importSuccessful = [self importAnnotsToPdfLib:annotsModelArray];
+            
+            if(!importSuccessful) {
+                [self displayErrorAsAlert:@"Importing annotations to PDF library failed."];
+            }
+            
+            //Since the imported annotations don't use the xml unique id they store, we have to reassociate the
+            //imported annotations with their proper AnnotationModel instance. This is done by using the unix epoch
+            //creationStamp time as a unique identifier that AnnotationModels store.
+            NSArray *allLibAnnots = (NSArray *)[self.info allUserAnnotations];
+            
+            for (AnnotationModel *am in annotsModelArray) {
+           
+                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"creationStamp == %d", am.pdfLibID];
+                
+                NSArray *matchingAnnot = [allLibAnnots filteredArrayUsingPredicate:predicate];
+
+                am.annot = [matchingAnnot objectAtIndex:0];
+                
+            }
+            
+            //Since the annotations are imported and associated with our data model, we can initialize the pdf document
+            NSString *pdfPath = [self.documentDir stringByAppendingPathComponent:self.detailItem];
+            APPDFDocument *pdfFile = [[APPDFDocument alloc] initWithPath:pdfPath information:self.info];
+            pdfDocument = pdfFile;
+            
+            /* create the view controller -- interactive on the iPad, read-only on the iPhone/iPod Touch... */
+            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+                pdfView = [[APAnnotatingPDFViewController alloc] initWithPDF:pdfDocument];
+            else
+                pdfView = (id)[[APPDFViewController alloc] initWithPDF:pdfDocument];
+            
+            //FIXME: make this support annotating protocol so next line is used.
+            pdfView.delegate = self;
+            
+            /* ...and load it into the view hierarchy */
+            //pdfView.view.frame = self.view.bounds;
+            pdfView.view.frame = hostView.bounds;
+            pdfView.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+            [hostView addSubview:pdfView.view];
+            
+            [pdfView fitToWidth];
+            
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [self displayErrorAsAlert:error];
+        }];
         
         //   END REMOTE LOADING OF ARTICLE INFORMATION
-        
-        
-        
-        //   THIS CODE IS FOR BUILDING ARTICLE INFO FROM A LOADED INFORMATION FILE //
-//        NSArray *annots = [pdfFile.information allUserAnnotations];
-//        NSMutableDictionary *indexedAnnots = [[NSMutableDictionary alloc] init];
-//        //building a dictionary of Annotation objects with unique numeric id key
-//        for(id annot in annots) {
-//            [indexedAnnots setObject:annot forKey:[NSString stringWithFormat:@"%i",[pdfFile.information identifierForAnnotation:annot]]];
-//        }
-//        
-//        
-//        NSDictionary *articleInfo = @{
-//                                @"title": @"test.pdf",
-//                                @"articleId": @"1"
-//                                };
-//        
-//        //first we initialize ac with just article info because the annotation data must be gotten via helper method
-//        ArticleCoordinator *ac = [[ArticleCoordinator alloc] initWithArticle:articleInfo];
-//        
-//        //building a serializable version of annotations keyed via unique, hopefully the same as before, key
-//        NSMutableDictionary *annotXml = [[NSMutableDictionary alloc] init];
-//        for (NSString *key in indexedAnnots) {
-//            NSDictionary* xmlDict = @{
-//                                @"xmlStr" : [ac getXmlStringForAnnot:[indexedAnnots objectForKey:key] withInfo:info]
-//                                };
-//            [annotXml setObject:xmlDict forKey:key];
-//        }
-//        
-//
-//        //article object is fully formed after this, so we can ask for json representation
-//        ac.annotations = annotXml;
-//        
-//        
-//        NSString *jsonOut = [ac articleAsJson];
-        //    END BUILDING OF ARTICLE INFO
-
-        
-
-        //pdfDocument = pdfFile;
-        /* create and launch the view controller */
-        //    PDFAnnotationSampleViewController * pdfView = [[PDFAnnotationSampleViewController alloc] initWithPDFDocument:pdfFile];
-        
-        
-        /* create the view controller -- interactive on the iPad, read-only on the iPhone/iPod Touch... */
-//        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-//            pdfView = [[APAnnotatingPDFViewController alloc] initWithPDF:pdfDocument];
-//        else
-//            pdfView = (id)[[APPDFViewController alloc] initWithPDF:pdfDocument];
-//        //fixme: make this support annotating protocol so next line is used.
-//        pdfView.delegate = self;
-//        
-//        /* ...and load it into the view heirarchy */
-//        //pdfView.view.frame = self.view.bounds;
-//        pdfView.view.frame = hostView.bounds;
-//        pdfView.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-//        [hostView addSubview:pdfView.view];
-//        
-        //[pdfView fitToWidth];
+    
     }
-}
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-    if(error) {
-        [[[UIAlertView alloc] initWithTitle:@"Error" message:@"No Annots Found! Web server on?" delegate:self cancelButtonTitle:@"" otherButtonTitles:nil] show];
-    }
-}
-
-
--(NSInputStream *) packageAnnotationsIntoXml:(NSDictionary *)annotsData
-{
-    //PDF information library-required header and footer
-    NSString *xmlHeader = @"<annotations>\n";
-    NSString *xmlFooter = @"</annotations>";
-    
-
-    //packaging annots into xml string for importing to PDFInfo object
-    NSMutableData *packagedXml = [[NSMutableData alloc] initWithData:[xmlHeader dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    NSArray *sortedKeys = [[annotsData allKeys] sortedArrayUsingSelector:@selector(compare:)];
-    
-    
-    for (NSString *key in sortedKeys) {
-        NSDictionary *xmlObj = [annotsData objectForKey:key];
-        [packagedXml appendData:[[xmlObj objectForKey:@"xmlStr"] dataUsingEncoding:NSUTF8StringEncoding]];
-    }
-    
-    [packagedXml appendData:[xmlFooter dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    return [[NSInputStream alloc] initWithData:packagedXml];
-}
-
-//-(NSInputStream *) packageAnnotationIntoXml:(NSDictionary *)annotData
-//{
-//    //PDF information library-required header and footer
-//    NSString *xmlHeader = @"<annotations>\n";
-//    NSString *xmlFooter = @"</annotations>";
-//    
-//    
-//    //packaging annots into xml string for importing to PDFInfo object
-//    NSMutableData *packagedXml = [[NSMutableData alloc] initWithData:[xmlHeader dataUsingEncoding:NSUTF8StringEncoding]];
-//    
-//    
-//    
-//    
-//    NSArray *sortedKeys = [[annotsData allKeys] sortedArrayUsingSelector:@selector(compare:)];
-//    
-//    
-//    for (NSString *key in sortedKeys) {
-//        NSDictionary *xmlObj = [annotsData objectForKey:key];
-//        [packagedXml appendData:[[xmlObj objectForKey:@"xmlStr"] dataUsingEncoding:NSUTF8StringEncoding]];
-//    }
-//    
-//    [packagedXml appendData:[xmlFooter dataUsingEncoding:NSUTF8StringEncoding]];
-//    
-//    return [[NSInputStream alloc] initWithData:packagedXml];
-//}
-
-
--(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    
-    //NSData *json = [[NSData alloc] initWithData:[jsonStr dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    //Article data comes packed as dictionaries within a dictionary: articleInfo, annots, comments are the keys
-    NSError *error;
-    NSDictionary *articleData = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    
-    
-    NSDictionary *annotsData = [articleData objectForKey:@"annots"];
-    
-    NSInputStream *is = [self packageAnnotationsIntoXml:annotsData];
-    
-    [self.info importAnnotationXMLFromStream:is];
-    
-    NSArray *allAnnots = [self.info allUserAnnotations];
-    
-    NSMutableDictionary *tsToAnnModelMap = [NSMutableDictionary dictionary];
-    for (APTextMarkup *an in allAnnots) {
-        AnnotationModel *newAM = [[AnnotationModel alloc] init];
-        newAM.annot = an;
-        
-        NSString *tsAsStr = [NSString stringWithFormat:@"%d", an.creationStamp];
-        newAM.xml = [[annotsData objectForKey:tsAsStr ]objectForKey:@"xmlStr"];
-        newAM.currPdfId = [self.info identifierForAnnotation:an];
-        
-        [tsToAnnModelMap setObject:newAM forKey:tsAsStr];
-        
-    }
-    
-    
-    
-    self.ac = [[ArticleCoordinator alloc] initWithArticle:[articleData objectForKey:@"articleInfo"]];
-    
-    NSLog([tsToAnnModelMap description]);
-    self.ac.tsIdToAnnotMap = tsToAnnModelMap;
-    
-    self.ac.comments = [articleData objectForKey:@"comments"];
-    
-    
-    
-    //NSDictionary *fields = [theobj objectForKey:@"fields"];
-    
-    //NSLog(@"theobj: %@", fields);
-    NSString *pdfPath = [self.documentDir stringByAppendingPathComponent:self.detailItem];
-    APPDFDocument *pdfFile = [[APPDFDocument alloc] initWithPath:pdfPath information:self.info];
-    pdfDocument = pdfFile;
-    /* create and launch the view controller */
-    //    PDFAnnotationSampleViewController * pdfView = [[PDFAnnotationSampleViewController alloc] initWithPDFDocument:pdfFile];
-    
-    
-    /* create the view controller -- interactive on the iPad, read-only on the iPhone/iPod Touch... */
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-        pdfView = [[APAnnotatingPDFViewController alloc] initWithPDF:pdfDocument];
-    else
-        pdfView = (id)[[APPDFViewController alloc] initWithPDF:pdfDocument];
-    //fixme: make this support annotating protocol so next line is used.
-    pdfView.delegate = self;
-    
-    /* ...and load it into the view heirarchy */
-    //pdfView.view.frame = self.view.bounds;
-    pdfView.view.frame = hostView.bounds;
-    pdfView.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-    [hostView addSubview:pdfView.view];
-    
-    [pdfView fitToWidth];
-    
-    
-    [self.serverResponse appendData:data];
-}
-
--(void)connection:(NSURLConnection *)connection {
-    // do what you want with myClassPointerData the data that your server did send you back here
-    // for info on your server php script you just need to do: echo json_encode(array('var1'=> $var1, 'var2'=>$var2...));
-    // to get your server sending an answer
-}
-
--(void)pdfController:(APAnnotatingPDFViewController *)controller didCreateAnnotation:(APAnnotation *)annotation
-{
-    //get the annotations creation time and current identifier and store to mapping dictionary
-}
-
--(void)pdfController:(APPDFViewController *)controller didTapOnAnnotation:(APAnnotation *)annotation inRect:(CGRect)rect
-{
-    CGRect annotViewRect = [pdfView viewRectForPageSpaceRect:annotation.rect onPage:annotation.page];
-    //NSString *comments = []
-    UITextView *commentsView = [[UITextView alloc] initWithFrame:CGRectMake(0, annotViewRect.origin.y, 60, 60)];
-    [commentsView setText:@"Test comment 1"];
-    [commentsView setEditable:NO];
-    //[pdfView.view addSubview:commentsView];
-    
-    //self.commentsVC
-    //CommentsViewController *commVC = [[CommentsViewController alloc] init];
-    
-    
-    // do any setup you need for myNewVC
-    
-    self.commentsVC = [self.storyboard instantiateViewControllerWithIdentifier:@"commentsViewController"];
-    
-    NSString *annTsID = [NSString stringWithFormat:@"%d", [(APTextMarkup *)annotation creationStamp]];
-    
-    
-    self.commentsVC.comments = [self.ac getCommentsForAnnot:annTsID];
-    
-    
-    FPPopoverController *pc = [[FPPopoverController alloc] initWithViewController:self.commentsVC];
-    
-    [pc presentPopoverFromPoint:annotViewRect.origin];
-    
-}
-
--(BOOL)pdfController:(APPDFViewController *)controller shouldShowRibbonForAnnotation:(APAnnotation *)annotation
-{
-    return NO;
 }
 
 - (void)viewDidLoad
@@ -335,6 +141,89 @@
     _detailItem = @"test.pdf";
     
     [self configureView];
+}
+
+
+-(void)pdfController:(APAnnotatingPDFViewController *)controller didCreateAnnotation:(APAnnotation *)annotation
+{
+    //get the annotations creation time and current identifier and store to mapping dictionary
+}
+
+-(void)pdfController:(APPDFViewController *)controller didTapOnAnnotation:(APAnnotation *)annotation inRect:(CGRect)rect
+{
+    //FIXME:popover has an offset, probably due to the Detail Text bar at top of split view
+    CGRect annotViewRect = [pdfView viewRectForPageSpaceRect:annotation.rect onPage:annotation.page];
+    
+    self.commentsVC = [self.storyboard instantiateViewControllerWithIdentifier:@"commentsViewController"];
+
+    //get the annotation model associated with the tapped annotation, and set it's comments to the view controller.
+    AnnotationModel *tappedAnnotModel = [self getAnnotModelForTimestampId:(int)[(APTextMarkup *)annotation creationStamp]];
+    
+    self.commentsVC.comments = tappedAnnotModel.comments;
+    
+    //initialize and present the popover
+    FPPopoverController *pc = [[FPPopoverController alloc] initWithViewController:self.commentsVC];
+    [pc presentPopoverFromPoint:annotViewRect.origin];
+    
+}
+
+
+-(AnnotationModel *)getAnnotModelForTimestampId:(int)tsId
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pdfLibID == %d", tsId];    
+    
+    NSArray *matchingAnnot = [self.article.annots filteredArrayUsingPredicate:predicate];
+    
+    return [matchingAnnot objectAtIndex:0];
+}
+
+-(NSInputStream *)packageAnnotationsIntoXml:(NSArray *)annotsModelArray
+{
+    //PDF information library-required header and footer
+    NSString *xmlHeader = @"<annotations>\n";
+    NSString *xmlFooter = @"</annotations>";
+    
+    //packaging annots into xml string for importing to PDFInfo object
+    NSMutableData *packagedXml = [[NSMutableData alloc] initWithData:[xmlHeader dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    
+    for (AnnotationModel *am in annotsModelArray) {
+        [packagedXml appendData:[am.xml dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    
+    [packagedXml appendData:[xmlFooter dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    return [[NSInputStream alloc] initWithData:packagedXml];
+}
+
+//initialize the pdfInformation object as a memory database, package the annots into xml form, and import them
+- (BOOL)importAnnotsToPdfLib:(NSArray *)annotsModelArray
+{
+    
+    self.info = [[APPDFInformation alloc] initAsMemoryDatabase];
+    
+    NSInputStream *is = [self packageAnnotationsIntoXml:annotsModelArray];
+    
+    BOOL importSuccess = [self.info importAnnotationXMLFromStream:is];
+    
+    return importSuccess;
+}
+
+- (void)displayErrorAsAlert:(id)error
+{
+    if([error isKindOfClass:[NSError class]]) {
+        [[[UIAlertView alloc] initWithTitle:@"Error" message:[error localizedDescription] delegate:self cancelButtonTitle:@"" otherButtonTitles:nil] show];
+    }
+    else if ([error isKindOfClass:[NSString class]]) {
+        [[[UIAlertView alloc] initWithTitle:@"Error" message:error delegate:self cancelButtonTitle:@"" otherButtonTitles:nil] show];
+    }
+}
+
+
+
+-(BOOL)pdfController:(APPDFViewController *)controller shouldShowRibbonForAnnotation:(APAnnotation *)annotation
+{
+    return NO;
 }
 
 -(void)viewWillAppear:(BOOL)animated

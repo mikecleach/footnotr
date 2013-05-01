@@ -8,12 +8,19 @@
 
 #import <Foundation/Foundation.h>
 #import "APAnnotations.h"
+#import "CommentModel.h"
 
-@interface AnnotationModel : NSObject
+@protocol AnnotationModel
 
-@property(strong, nonatomic) APAnnotation *annot;
+@end
+
+@interface AnnotationModel : JSONModel
+
+@property(strong, nonatomic) APAnnotation<Optional> *annot;
 @property(strong, nonatomic) NSString *xml;
-@property(assign, nonatomic) NSUInteger currPdfId;
+@property int pdfLibID;
+@property(strong, nonatomic) NSArray<CommentModel> *comments;
+@property(strong, nonatomic) NSString *url;
 
 -(NSString *)debugDescription;
 

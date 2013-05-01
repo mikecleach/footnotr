@@ -26,9 +26,9 @@
     
     [desc appendString: [self.xml substringToIndex:60]];
     
-    [desc appendString:@"  currPdfID:"];
+    [desc appendString:@"  pdfLibID:"];
     
-    [desc appendString:[NSString stringWithFormat:@"%d", self.currPdfId]];
+    [desc appendString:[NSString stringWithFormat:@"%d", self.pdfLibID]];
     
     
     return [desc copy];
