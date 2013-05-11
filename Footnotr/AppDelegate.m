@@ -7,6 +7,9 @@
 //
 
 #import "AppDelegate.h"
+#import "iOSHierarchyViewer.h"
+#import "UserManager.h"
+#import "UserModel.h"
 
 @implementation AppDelegate
 
@@ -16,6 +19,15 @@
 
     library = [[APLibrary alloc] initWithLicenseKey:@"FORSS-QSRWK-OIQEJ-KLQVL-GJKGT-HGVOU-OEROT-RPQTO" dataFolder:nil];
     NSAssert(nil != library, @"AjiPDFLib failed to initialize.");
+    
+    //FIXME:Add proper login screen, and set user based on that
+    UserManager *uManager = [UserManager sharedManager];
+    
+    NSError *error;
+    UserModel *uModel = [[UserModel alloc] initWithString:@"{\"pk\": 2, \"username\": \"mleach\"}" error:&error];
+    
+    uManager.loggedInUser = uModel;
+    
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
@@ -45,6 +57,7 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+     [iOSHierarchyViewer start];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

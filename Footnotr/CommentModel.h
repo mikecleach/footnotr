@@ -7,6 +7,7 @@
 //
 
 #import "JSONModel.h"
+#import "VoteModel.h"
 
 @protocol CommentModel
 
@@ -14,9 +15,14 @@
 
 @interface CommentModel : JSONModel
 
-@property (strong,nonatomic) NSString *user;
+@property (strong,nonatomic) NSString *username;
 @property (strong,nonatomic) NSString *comment;
-@property int votes;
-@property (strong, nonatomic) NSString *url;
+@property (strong, nonatomic) NSMutableArray<VoteModel> *votes;
+@property int pk;
+
+
+-(BOOL) userDidVote:(UserModel *)user;
+
+-(VoteModel *) getVoteForUser:(UserModel *)user;
 
 @end

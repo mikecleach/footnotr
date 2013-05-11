@@ -163,7 +163,12 @@
     
     //initialize and present the popover
     FPPopoverController *pc = [[FPPopoverController alloc] initWithViewController:self.commentsVC];
-    [pc presentPopoverFromPoint:annotViewRect.origin];
+    
+    pc.contentSize = CGSizeMake(400, 500);
+    
+    //coordinates do not account for the 'Detail" Navigation Bar at top. Manually adjust for it here.
+    CGPoint adjustedOffset = CGPointMake(annotViewRect.origin.x,  annotViewRect.origin.y + 48);
+    [pc presentPopoverFromPoint:adjustedOffset];
     
 }
 

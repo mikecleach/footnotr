@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>iOS Hierarchy Viewer</title>
+    <link href="style.css" rel="stylesheet" type="text/css">
+      <script type="text/javascript" src="jquery.js"></script>
+      <script type="text/javascript" src="navbar.js"></script>
+  </head>
+<body>
+</body>
+  <script>
+    function QueryInput(options) {
+
+      var o = options;
+
+      var dom = $('<input class="context_query" placeholder=""></input>');
+
+      var entityScheme, contextName;
+
+      dom.keypress(function(e) {
+        if ( e.which == 13 ) {
+          var query = dom.val();
+          if ( o && o.onQueryEntered ) o.onQueryEntered(query, entityScheme, contextName);
+          dom.val('');
+          e.preventDefault();
+        }
+      });
+
+      var showFunc = function() {
+        dom.show();
+      }
+
+      var hideFunc = function() {
+        dom.hide();
+      }
+
+      var entitySchemeFunc = function(ctxName, entScheme) {
+        contextName = ctxName;
+        entityScheme = entScheme;
+        dom.attr('placeholder', 'enter predicate for "' + entityScheme.name + '" entity');
+      }
+
+      dom.hide();
+
+      o.parentDom.append(dom);
+
+      return {
+        show: showFunc,
+        hide: hideFunc,
+        entityScheme: entitySchemeFunc
+      }
+    }
+
+  	function ContextsList(options) {
+  		var o = options;
+
+  		var dom = $('<div class="context_list"></div>');
+
+  		var showFunc = function() {
+  			dom.show();
+  		}
+
+  		var hideFunc = function() {
+  			dom.hide();
+  		}
+
+  		o.parentDom.append(dom);
+
+      var contextSchemes;
+
+      var handleClickFunc = function(event) {
+        $('.context_list_item').attr('data-selected', '0');
+        $(this).attr('data-selected', '1');
+        var index = parseInt($(this).attr('data-index'));
+        if ( o.onContextSelected ) o.onContextSelected(contextSchemes[index]);
+      }
+
+  		var presentSchemeFunc = function(schemes, selectFirst) {
+  			dom.empty();
+        contextSchemes = schemes;
+  			$.each(schemes, function(index, scheme) {
+  				var itemDom = $('<div class="context_list_item"></div>');
+          itemDom.attr('data-index', index);
+  				itemDom.text(scheme.name);
+          itemDom.click(handleClickFunc);
+  				dom.append(itemDom);
+          if ( index == 0 && selectFirst ) {
+            itemDom.click();
+          }
+  			});
+  		}
+
+  		return {
+  			show: showFunc,
+  			hide: hideFunc,
+  			presentScheme: presentSchemeFunc
+  		}
+  	};
+  	function EntitiesList(options) {
+  		var o = options;
+
+  		var dom = $('<div class="entities_list"></div>');
+
+  		var showFunc = function() {
+  			dom.show();
+  		}
+
+  		var hideFunc = function() {
+  			dom.hide();
+  		}
+
+  		o.parentDom.append(dom);
+
+  		var contextSechme;
+
+  		var handleClickFunc = function(ev) {
+  			var index = parseInt($(this).attr('data-index'));
+        $('.entities_list_item').attr('data-selected', '0');
+        $(this).attr('data-selected', '1');
+  			if ( o.onEntitSelected ) {
+  				o.onEntitSelected(contextSechme.name, contextSechme.entities[index]);
+  			}
+  		}
+
+  		var presentEntitiesFunc = function(context, selectFirst) {
+  			dom.empty();
+  			contextSechme = context;
+  			$.each(context.entities, function(index, entity) {
+  				var itemDom = $('<div class="entities_list_item"></div>');
+  				itemDom.attr('data-index', index);
+  				itemDom.text(entity.name);
+  				itemDom.click(handleClickFunc);
+  				dom.append(itemDom);
+          if ( index == 0 && selectFirst ){
+            itemDom.click();
+          }
+  			});
+  		}
+
+  		return {
+  			show: showFunc,
+  			hide: hideFunc,
+  			presentEntities: presentEntitiesFunc
+  		}
+  	}
+  	function DataTable(options) {
+  		var o = options;
+
+  		var dom = $('<div class="datatable_wrap"></div>');
+      var empty = $('<div class="datatable_empty">...no data...</div>');
+  		var table = $('<table width="100%" class="datatable"></table>');
+  		dom.append(table);
+      dom.append(empty);
+
+      empty.hide();
+
+  		var showFunc = function() {
+  			dom.show();
+  		}
+
+  		var hideFunc = function() {
+  			dom.hide();
+  		}
+
+      var clearDataFunc = function() {
+        table.empty();
+      }
+
+  		o.parentDom.append(dom);
+
+  		var presentDataFunc = function(contextName, entityScheme, predicate) {
+  			table.empty();
+  			var trHeader = $('<tr></tr>');
+  			$.each(entityScheme.properties, function(index, attribute) {
+  				var td = $('<th></th>');
+  				td.attr('width', (100/entityScheme.properties.length) + '%');
+  				td.text(attribute.name);
+  				trHeader.append(td);
+  			});
+  			table.append(trHeader);
+        var url = '/core?entity=' + encodeURIComponent(entityScheme.name) + '&context=' + encodeURIComponent(contextName);
+        if ( predicate ) {
+          url += '&predicate=' + encodeURIComponent(predicate);
+        }
+  			$.getJSON(url, function(data) {
+          if  ( data.error ) {
+            empty.text(data.error);
+            empty.show();
+            return;
+          }
+          if ( data.length <= 0 ) {
+            empty.text('...no data...');
+            empty.show();
+          } else {
+            empty.hide();
+          }
+  				$.each(data, function(index, row) {
+	  				var tr = $('<tr></tr>');	
+	  				$.each(entityScheme.properties, function(index, attribute) {
+		  				var td = $('<td></td>');
+		  				td.attr('width', (100/entityScheme.properties.length) + '%');
+		  				td.text(row[attribute.name]);
+		  				tr.append(td);
+		  			});
+  					table.append(tr);
+  				});
+  			});
+  		}
+
+  		return {
+  			show: showFunc,
+  			hide: hideFunc,
+        clearData: clearDataFunc,
+  			presentData: presentDataFunc
+  		}
+  	}
+   </script>
+  <script>
+
+  	var navbar = new Navbar({ parentDom: $('body') });
+    navbar.showLoading();
+
+    var dataTable = new DataTable({ parentDom: $('body') });
+    dataTable.show();
+    
+    var contextList = new ContextsList({ 
+      parentDom: $('body'),
+      onContextSelected: function(contextScheme) {
+        dataTable.clearData();
+        entitiesList.presentEntities(contextScheme, true);
+      }
+    });
+    contextList.show();
+
+    var queryInput = QueryInput({ 
+      parentDom: $('body'),
+      onQueryEntered: function(query, entityScheme, contextName) {
+        dataTable.presentData(contextName, entityScheme, query);
+      }
+    });
+
+    var entitiesList = new EntitiesList({ 
+    	parentDom: $('body'),
+    	onEntitSelected: function(contextName, entityScheme) {
+        queryInput.entityScheme(contextName, entityScheme);
+    		dataTable.presentData(contextName, entityScheme);
+        queryInput.show();
+    	}
+    });
+    entitiesList.show();
+    
+    $.getJSON('/core', function(scheme) {      
+       navbar.hideLoading();     
+       contextList.presentScheme(scheme, true); 
+    });
+  </script>
+</html>

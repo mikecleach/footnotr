@@ -43,12 +43,12 @@
         <scene sceneID="QEh-QG-taG">
             <objects>
                 <viewController storyboardIdentifier="commentsViewController" id="WdW-CO-1OU" userLabel="Comments View Controller" customClass="CommentsViewController" sceneMemberID="viewController">
-                    <scrollView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="oyt-k0-cIz" customClass="MGScrollView">
+                    <scrollView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="ReS-Nc-bz7" customClass="MGScrollView">
                         <rect key="frame" x="0.0" y="20" width="768" height="1004"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </scrollView>
                     <connections>
-                        <outlet property="scroller" destination="oyt-k0-cIz" id="7Lv-qL-7Xo"/>
+                        <outlet property="commentsScroller" destination="ReS-Nc-bz7" id="wve-Ka-3Fa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LP0-X6-dEo" userLabel="First Responder" sceneMemberID="firstResponder"/>

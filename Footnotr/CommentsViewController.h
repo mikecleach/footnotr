@@ -8,11 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "MGScrollView.h"
-
+#import "MGBox.h"
+#import "MGTableBox.h"
 
 @interface CommentsViewController : UIViewController
 
-@property (strong, nonatomic) IBOutlet MGScrollView *scroller;
+@property (strong, nonatomic) IBOutlet MGScrollView *commentsScroller;
 @property (nonatomic, strong) NSArray *comments;
+
+
 
 @end
