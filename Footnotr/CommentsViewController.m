@@ -12,6 +12,7 @@
 #import "CommentModel.h"
 #import "CommentHeaderView.h"
 #import "CommentView.h"
+#import "UserManager.h"
 
 #define ROW_SIZE (CGSize) {300, 30}
 
@@ -21,7 +22,7 @@
 
 @implementation CommentsViewController {
 
-    MGBox *commentsHeader;
+    CommentHeaderView *commentsHeader;
     
 }
 
@@ -41,6 +42,11 @@
 
     
     commentsHeader = [[CommentHeaderView alloc] initWithFrame:CGRectMake(0, 0, 360, 96)];//CGRectMake(0, 0, 280, 380)];//[CommentHeaderView commentHeaderViewForSize:ROW_SIZE];
+    
+    
+    //TODO:use uicotnrol+mgevents here instead, 
+    [commentsHeader.addCommentButton addTarget:self action:@selector(addCommentTapped:) forControlEvents:UIControlEventTouchDown];
+    
     
     self.commentsScroller.contentLayoutMode = MGLayoutTableStyle;
 
@@ -92,6 +98,44 @@
 //    }
 //    
 //}
+
+- (void) addCommentTapped: (id)sender
+{
+    NSLog(@"add button tapped");
+    
+    UserManager *um = [UserManager sharedManager];
+    UserModel *currUser = um.loggedInUser;
+    
+    CommentModel *newComment = [[CommentModel alloc] init];
+    newComment.username = currUser.username;
+    newComment.comment = @"\n";
+    
+    CommentView *newCommView = [[CommentView alloc] initWithComment:newComment andFrame:CGRectMake(0, 0, 360, 100)];
+    
+    //TODO:this is really busted encapsulation. Shouldnt have to know so much about the commentview's implementation
+    //set the comment textview'a delegate to the view controller
+    [((UITextView *)[newCommView.commentContent.leftItems objectAtIndex:0]) setDelegate:self];
+    
+    [self.commentsScroller.boxes addObject:newCommView];
+    
+    //need to call layout or new comment won't be added to scrollview
+    [self.commentsScroller layout];
+    
+    [self.commentsScroller scrollToView:newCommView withMargin:0];
+    
+    
+    
+    
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    NSLog(@"text view did end editing");
+    //TODO:save the new comment
+    CommentView *newComment = [self.commentsScroller.boxes lastObject];
+    
+    
+}
 
 
 - (void)didReceiveMemoryWarning

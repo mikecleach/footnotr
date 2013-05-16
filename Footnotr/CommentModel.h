@@ -21,8 +21,10 @@
 @property int pk;
 
 
--(BOOL) userDidVote:(UserModel *)user;
+- (BOOL) userDidVote:(UserModel *)user;
 
--(VoteModel *) getVoteForUser:(UserModel *)user;
+- (VoteModel *) getVoteForUser:(UserModel *)user;
+
+- (BOOL)userDidCreate:(NSString *)username;
 
 @end

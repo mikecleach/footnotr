@@ -34,4 +34,9 @@
     
 }
 
+- (BOOL)userDidCreate:(NSString *)username
+{
+    return [self.username isEqualToString:username];
+}
+
 @end

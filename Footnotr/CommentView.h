@@ -16,15 +16,16 @@
 @interface CommentView : MGBox
 
 @property (strong, nonatomic) CommentModel *comment;
+@property (strong, nonatomic) NSString *username;
 
 @property (strong, nonatomic) MGLine *commentDetails;
 @property (strong, nonatomic) MGLine *commentContent;
 @property (strong, nonatomic) MGButton *voteBtn;
-@property (strong, nonatomic) MGButton *editBtn;
 @property (strong, nonatomic) MGButton *deleteBtn;
 @property (strong, nonatomic) UILabel *votesLabel;
 
 
 - (id) initWithComment:(CommentModel *)comment andFrame:(CGRect)frame;
+
 
 @end

@@ -11,11 +11,11 @@
 #import "MGBox.h"
 #import "MGTableBox.h"
 
-@interface CommentsViewController : UIViewController
+@interface CommentsViewController : UIViewController<UITextViewDelegate>
 
 @property (strong, nonatomic) IBOutlet MGScrollView *commentsScroller;
 @property (nonatomic, strong) NSArray *comments;
 
-
+- (void) addCommentTapped: (id) sender;
 
 @end
