@@ -70,9 +70,17 @@
             
             [newCommentView.voteBtn setEnabled:NO];
             [newCommentView.deleteBtn setHidden:NO];
+            
+            //TODO:presumably we add the delegate here to deal with edited comments.
         }
+        //create standard comment view, set highlighted state
         else {
             newCommentView = [[CommentView alloc] initWithComment:commentModel.comment andUsername:commentModel.username andVoteCount:commentModel.votes.count andFrame:CGRectMake(0, 0, 360, 100)];
+            
+            //if user already voted, highlight the vote button
+            if ([commentModel userDidVote:loggedInUser]) {
+                [newCommentView.voteBtn setHighlighted:YES];
+            }
         }
         
         
@@ -89,7 +97,7 @@
                 //vote was successful, so we add to model, which should notify VC, which should update view button
                 [commentModel addVote:createdVote];
                 
-                //FIXME:figure out whether to highlight vote button if already voted
+                [newCommentView.voteBtn setHighlighted:YES];
                 //self.voteBtn.highlighted = [self.comment userDidVote:loggedInUser];
                 
                 //this should update the votes label
@@ -108,8 +116,8 @@
                 [commentModel removeVote:deletedVote];
                 
                     
-                //FIXME:figure out highlighting here
-                //self.voteBtn.highlighted = [self.comment userDidVote:loggedInUser];
+
+                [newCommentView.voteBtn setHighlighted:NO];
 
                 [newCommentView setVoteCount:commentModel.votes.count];
             };
