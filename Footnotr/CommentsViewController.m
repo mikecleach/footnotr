@@ -13,6 +13,8 @@
 #import "CommentHeaderView.h"
 #import "CommentView.h"
 #import "UserManager.h"
+#import "NSObject+MGEvents.h"
+#import "APIHttpClient.h"
 
 #define ROW_SIZE (CGSize) {300, 30}
 
@@ -31,20 +33,18 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view
     
-//    UITextView *commentsView = [[UITextView alloc] initWithFrame:CGRectMake(4, 4, 100, 100)];
-//    [commentsView setText:@"Test comment 1"];
-//    [commentsView setEditable:NO];
-//    //[self.view addSubview:commentsView];
-//    
-    //self.commentsScroller = [MGScrollView scrollerWithSize:CGSizeMake(300, 400)];
-    
     NSLog(@"in viewDidLoad");
+    
+    //get the current user and set bool if this comment was made by logged-in user
+    UserManager *uManager = [UserManager sharedManager];
+    UserModel *loggedInUser = uManager.loggedInUser;
+    
 
     
     commentsHeader = [[CommentHeaderView alloc] initWithFrame:CGRectMake(0, 0, 360, 96)];//CGRectMake(0, 0, 280, 380)];//[CommentHeaderView commentHeaderViewForSize:ROW_SIZE];
     
     
-    //TODO:use uicotnrol+mgevents here instead, 
+    //TODO:use uicontrol+mgevents here instead, 
     [commentsHeader.addCommentButton addTarget:self action:@selector(addCommentTapped:) forControlEvents:UIControlEventTouchDown];
     
     
@@ -58,9 +58,100 @@
     
     
     for (CommentModel *commentModel in self.comments) {
-        CommentView *newCommentView = [[CommentView alloc] initWithComment:commentModel andFrame:CGRectMake(0, 0, 360, 100)];
+        //CommentView *newCommentView = [[CommentView alloc] initWithComment:commentModel andFrame:CGRectMake(0, 0, 360, 100)];
         
-        newCommentView.comment = commentModel;
+        CommentView *newCommentView = [[CommentView alloc] initWithComment:commentModel.comment andUsername:commentModel.username andVoteCount:commentModel.votes.count andFrame:CGRectMake(0, 0, 360, 100)];
+        
+        //If user created comment, disable voting and show 
+        if ([newCommentView.username isEqualToString:loggedInUser.username]) {
+            [newCommentView.voteBtn setEnabled:NO];
+            [newCommentView.deleteBtn setHidden:YES];
+        }
+        
+        
+        [newCommentView.voteBtn onControlEvent:UIControlEventTouchUpInside do:^{
+            
+            void (^addingVoteBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
+                
+                VoteModel *createdVote = [[VoteModel alloc] init];
+                createdVote.user = loggedInUser;
+                createdVote.pk = [[JSON objectForKey:@"pk"] intValue];
+                createdVote.username = [JSON objectForKey:@"username"];
+                
+                //TODO:What if vote failed? This assumes it doesnt
+                //vote was successful, so we add to model, which should notify VC, which should update view button
+                [commentModel addVote:createdVote];
+                
+                //FIXME:figure out whether to highlight vote button if already voted
+                //self.voteBtn.highlighted = [self.comment userDidVote:loggedInUser];
+                
+                //this should update the votes label
+                [newCommentView setVoteCount:commentModel.votes.count];
+                
+                
+            };
+            
+            void (^deleteVoteBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
+                
+                //TODO:what if delete fails? need to handle it
+                
+                
+                VoteModel *deletedVote = [commentModel getVoteForUser:loggedInUser];
+                
+                [commentModel removeVote:deletedVote];
+                
+                    
+                //FIXME:figure out highlighting here
+                //self.voteBtn.highlighted = [self.comment userDidVote:loggedInUser];
+
+                [newCommentView setVoteCount:commentModel.votes.count];
+            };
+            
+            
+            APIHttpClient *sharedClient = [APIHttpClient sharedClient];
+            //TODO:hardcoding all up in here
+            //if already voted, delete that vote. Otherwise add vote
+            if([commentModel userDidVote:loggedInUser]) {
+                
+                
+                
+                NSString *path = [NSString stringWithFormat:@"votes/%d/", [commentModel getVoteForUser:loggedInUser].pk];
+                
+                [sharedClient deletePath:path parameters:nil success:deleteVoteBlock failure:nil];
+            }
+            else {
+                
+                NSMutableDictionary *newVote = [[NSMutableDictionary alloc] init];
+                [newVote setObject:[NSString stringWithFormat:@"%d", commentModel.pk] forKey:@"comment"];
+                [newVote setObject:[NSString stringWithFormat:@"%d", loggedInUser.pk] forKey:@"user"];
+                
+                
+                NSString *path = @"votes/new";
+                [sharedClient postPath:path parameters:newVote success:addingVoteBlock failure:nil];
+            }
+            
+            NSLog(@"tapped");
+        }];
+        
+        
+        [newCommentView.deleteBtn onControlEvent:UIControlEventTouchUpInside do:^{
+            
+            void (^deleteVoteBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
+                
+                //FIXME:remove comment from view if delete succeeded
+                
+                
+                
+            };
+            
+            
+            APIHttpClient *sharedClient = [APIHttpClient sharedClient];
+            
+            NSString *path = [NSString stringWithFormat:@"comments/%d/", commentModel.pk];
+            
+            [sharedClient deletePath:path parameters:nil success:deleteVoteBlock failure:nil];
+            
+        }];
         
         
         [self.commentsScroller.boxes addObject:newCommentView];
@@ -110,7 +201,7 @@
     newComment.username = currUser.username;
     newComment.comment = @"\n";
     
-    CommentView *newCommView = [[CommentView alloc] initWithComment:newComment andFrame:CGRectMake(0, 0, 360, 100)];
+    CommentView *newCommView = [[CommentView alloc] initWithFrame:CGRectMake(0, 0, 360, 100)];
     
     //TODO:this is really busted encapsulation. Shouldnt have to know so much about the commentview's implementation
     //set the comment textview'a delegate to the view controller

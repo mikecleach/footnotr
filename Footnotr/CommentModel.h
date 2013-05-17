@@ -20,6 +20,9 @@
 @property (strong, nonatomic) NSMutableArray<VoteModel> *votes;
 @property int pk;
 
+- (void) addVote:(VoteModel *)voteToAdd;
+
+- (void) removeVote:(VoteModel *)voteToRemove;
 
 - (BOOL) userDidVote:(UserModel *)user;
 

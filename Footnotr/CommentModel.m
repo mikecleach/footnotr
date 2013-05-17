@@ -10,6 +10,24 @@
 
 @implementation CommentModel
 
+- (void) addVote:(VoteModel *)voteToAdd
+{
+    NSError *error=nil;
+    
+    //if the vote model validates, add it to the array, else log error
+    if([voteToAdd validate:&error]) {
+        [self.votes addObject:voteToAdd];
+    }
+    else {
+        NSLog([error description]);
+    }
+}
+
+- (void) removeVote:(VoteModel *)voteToRemove
+{
+    [self.votes removeObjectIdenticalTo:voteToRemove];
+}
+
 
 -(BOOL) userDidVote:(UserModel *)user
 {

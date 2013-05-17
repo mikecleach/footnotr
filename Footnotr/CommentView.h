@@ -15,8 +15,9 @@
 
 @interface CommentView : MGBox
 
-@property (strong, nonatomic) CommentModel *comment;
+@property (strong, nonatomic) NSString *commentText;
 @property (strong, nonatomic) NSString *username;
+@property int votes;
 
 @property (strong, nonatomic) MGLine *commentDetails;
 @property (strong, nonatomic) MGLine *commentContent;
@@ -24,8 +25,10 @@
 @property (strong, nonatomic) MGButton *deleteBtn;
 @property (strong, nonatomic) UILabel *votesLabel;
 
+- (id)initWithComment:(NSString *)commentText andUsername:(NSString *)username andVoteCount:(int)voteCount andFrame:(CGRect)frame;
 
-- (id) initWithComment:(CommentModel *)comment andFrame:(CGRect)frame;
+- (id) initWithFrame:(CGRect)frame;
 
+- (void)setVoteCount:(int)voteCount;
 
 @end
