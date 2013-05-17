@@ -12,6 +12,7 @@
 #import "CommentModel.h"
 #import "CommentHeaderView.h"
 #import "CommentView.h"
+#import "EditableCommentView.h"
 #import "UserManager.h"
 #import "NSObject+MGEvents.h"
 #import "APIHttpClient.h"
@@ -60,12 +61,18 @@
     for (CommentModel *commentModel in self.comments) {
         //CommentView *newCommentView = [[CommentView alloc] initWithComment:commentModel andFrame:CGRectMake(0, 0, 360, 100)];
         
-        CommentView *newCommentView = [[CommentView alloc] initWithComment:commentModel.comment andUsername:commentModel.username andVoteCount:commentModel.votes.count andFrame:CGRectMake(0, 0, 360, 100)];
+        CommentView *newCommentView;
         
-        //If user created comment, disable voting and show 
-        if ([newCommentView.username isEqualToString:loggedInUser.username]) {
+        //If user created comment, create an editable view, disable voting and show delete button
+        if ([commentModel.username isEqualToString:loggedInUser.username]) {
+            
+            newCommentView = [[EditableCommentView alloc] initWithComment:commentModel.comment andUsername:commentModel.username andVoteCount:commentModel.votes.count andFrame:CGRectMake(0, 0, 360, 100)];
+            
             [newCommentView.voteBtn setEnabled:NO];
-            [newCommentView.deleteBtn setHidden:YES];
+            [newCommentView.deleteBtn setHidden:NO];
+        }
+        else {
+            newCommentView = [[CommentView alloc] initWithComment:commentModel.comment andUsername:commentModel.username andVoteCount:commentModel.votes.count andFrame:CGRectMake(0, 0, 360, 100)];
         }
         
         

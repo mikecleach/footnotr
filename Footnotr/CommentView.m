@@ -104,7 +104,7 @@
     [self createDeleteButton:buttonImage buttonImageHighlight:buttonImageHighlight];
     
     self.deleteBtn.margin = standardMarginOrPadding;
-    [self.deleteBtn setHidden:NO];
+    [self.deleteBtn setHidden:YES];
     
 
     
