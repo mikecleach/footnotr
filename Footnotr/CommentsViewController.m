@@ -155,10 +155,15 @@
         
         [newCommentView.deleteBtn onControlEvent:UIControlEventTouchUpInside do:^{
             
-            void (^deleteVoteBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
+            void (^deleteCommentBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
                 
-                //FIXME:remove comment from view if delete succeeded
                 
+                [self.annot.comments removeObject:commentModel];
+
+                
+                [self.commentsScroller.boxes removeObject:newCommentView];
+                
+                [self.commentsScroller layoutWithSpeed:0.5 completion:nil];
                 
                 
             };
@@ -168,7 +173,7 @@
             
             NSString *path = [NSString stringWithFormat:@"comments/%d/", commentModel.pk];
             
-            [sharedClient deletePath:path parameters:nil success:deleteVoteBlock failure:nil];
+            [sharedClient deletePath:path parameters:nil success:deleteCommentBlock failure:nil];
             
         }];
         
@@ -213,7 +218,6 @@
 {
     NSLog(@"add button tapped");
     
-    UserManager *um = [UserManager sharedManager];
     [self setModalPresentationStyle:UIModalPresentationFormSheet];
     [self setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
     
@@ -248,7 +252,18 @@
         [self.annot addComment:newlyCreatedComment];
         
         
+        UserManager *uManager = [UserManager sharedManager];
+        UserModel *loggedInUser = uManager.loggedInUser;
+        
         //TODO:Add new view to comments scroller and scroll it into view
+        EditableCommentView *newCommentView = [[EditableCommentView alloc] initWithComment:newlyCreatedComment.comment andUsername:loggedInUser.username andVoteCount:0 andFrame:CGRectMake(0, 0, 360, 100)];
+        
+        [newCommentView.deleteBtn setHidden:NO];
+        [newCommentView.voteBtn setEnabled:NO];
+        
+        [self.commentsScroller.boxes addObject:newCommentView];
+        [self.commentsScroller layoutWithSpeed:0.4 completion:nil];
+        [self.commentsScroller scrollToView:newCommentView withMargin:10];
         
         
     };
@@ -256,16 +271,19 @@
     UserManager *uManager = [UserManager sharedManager];
     UserModel *loggedInUser = uManager.loggedInUser;
     
+    //Build the comment data dictionary
     NSMutableDictionary *newCommentDict = [[NSMutableDictionary alloc] init];
     [newCommentDict setObject:[NSString stringWithFormat:@"%d",self.annot.pk] forKey:@"annotation"];
     [newCommentDict setObject:[NSString stringWithFormat:@"%d",loggedInUser.pk] forKey:@"user"];
     [newCommentDict setObject:comment forKey:@"comment"];
+    
     
     APIHttpClient *sharedClient = [APIHttpClient sharedClient];
     
     NSString *path = @"comments/new";
     
     [sharedClient postPath:path parameters:newCommentDict success:createCommentBlock failure:nil];
+    
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
