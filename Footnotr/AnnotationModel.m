@@ -11,6 +11,13 @@
 
 @implementation AnnotationModel
 
+- (void)addComment:(CommentModel *)commentToAdd
+{
+    [self.comments addObject:commentToAdd];
+    
+    //TODO:trigger add object event here, so ui knows to update??
+}
+
 -(NSString *) description
 {
     return [self debugDescription];

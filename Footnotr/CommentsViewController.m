@@ -62,7 +62,7 @@
     [self.commentsScroller.boxes addObject:commentsHeader];
     
     
-    for (CommentModel *commentModel in self.comments) {
+    for (CommentModel *commentModel in self.annot.comments) {
         //CommentView *newCommentView = [[CommentView alloc] initWithComment:commentModel andFrame:CGRectMake(0, 0, 360, 100)];
         
         CommentView *newCommentView;
@@ -235,24 +235,37 @@
 
 - (void) newCommentViewController:(NewCommentViewController *)newCommVC didProvideComment:(NSString *)comment
 {
-//Not working
-//    //TODO:veto dismissing the view controller if save to server fails
-//    void (^createCommentBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
-//        
-//        //FIXME:remove comment from view if delete succeeded
-//        
-//        
-//        
-//    };
-//    
-//    
-//    
-//    
-//    APIHttpClient *sharedClient = [APIHttpClient sharedClient];
-//    
-//    NSString *path = [NSString stringWithFormat:@"comments/new", commentModel.pk];
-//    
-//    [sharedClient postPath:path parameters:nil success:createCommentBlock failure:nil];
+
+    //TODO:veto dismissing the view controller if save to server fails
+    void (^createCommentBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
+        
+        NSLog(@"create comment on server call succeeded");
+        
+        NSError *error;
+        CommentModel *newlyCreatedComment = [[CommentModel alloc] initWithDictionary:JSON error:&error];
+        
+        //TODO:Update model with newly created comment
+        [self.annot addComment:newlyCreatedComment];
+        
+        
+        //TODO:Add new view to comments scroller and scroll it into view
+        
+        
+    };
+    
+    UserManager *uManager = [UserManager sharedManager];
+    UserModel *loggedInUser = uManager.loggedInUser;
+    
+    NSMutableDictionary *newCommentDict = [[NSMutableDictionary alloc] init];
+    [newCommentDict setObject:[NSString stringWithFormat:@"%d",self.annot.pk] forKey:@"annotation"];
+    [newCommentDict setObject:[NSString stringWithFormat:@"%d",loggedInUser.pk] forKey:@"user"];
+    [newCommentDict setObject:comment forKey:@"comment"];
+    
+    APIHttpClient *sharedClient = [APIHttpClient sharedClient];
+    
+    NSString *path = @"comments/new";
+    
+    [sharedClient postPath:path parameters:newCommentDict success:createCommentBlock failure:nil];
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }

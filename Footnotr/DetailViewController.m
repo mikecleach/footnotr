@@ -159,7 +159,7 @@
     //get the annotation model associated with the tapped annotation, and set it's comments to the view controller.
     AnnotationModel *tappedAnnotModel = [self getAnnotModelForTimestampId:(int)[(APTextMarkup *)annotation creationStamp]];
     
-    self.commentsVC.comments = tappedAnnotModel.comments;
+    self.commentsVC.annot = tappedAnnotModel;
     
     //initialize and present the popover
     FPPopoverController *pc = [[FPPopoverController alloc] initWithViewController:self.commentsVC];

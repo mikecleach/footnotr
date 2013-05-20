@@ -19,8 +19,11 @@
 @property(strong, nonatomic) APAnnotation<Optional> *annot;
 @property(strong, nonatomic) NSString *xml;
 @property int pdfLibID;
-@property(strong, nonatomic) NSArray<CommentModel> *comments;
+@property(strong, nonatomic) NSMutableArray<CommentModel> *comments;
 @property(strong, nonatomic) NSString *url;
+@property int pk;
+
+- (void) addComment:(CommentModel *)commentToAdd;
 
 -(NSString *)debugDescription;
 

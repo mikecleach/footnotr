@@ -10,13 +10,16 @@
 #import "MGScrollView.h"
 #import "MGBox.h"
 #import "MGTableBox.h"
+
+#import "AnnotationModel.h"
+
 #import "NewCommentViewController.h"
 
 @interface CommentsViewController : UIViewController<NewCommentViewDelegate>
 
 @property (strong, nonatomic) IBOutlet MGScrollView *commentsScroller;
-@property (strong, nonatomic) NSArray *comments;
-@property int parentAnnotationPk;
+@property (strong, nonatomic) AnnotationModel *annot;
+
 
 - (void) addCommentTapped: (id) sender;
 
