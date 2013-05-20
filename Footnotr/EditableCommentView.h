@@ -10,4 +10,6 @@
 
 @interface EditableCommentView : CommentView
 
+@property (strong, nonatomic) UITextView *commentTV;
+
 @end

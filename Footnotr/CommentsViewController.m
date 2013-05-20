@@ -13,9 +13,13 @@
 #import "CommentHeaderView.h"
 #import "CommentView.h"
 #import "EditableCommentView.h"
+
 #import "UserManager.h"
-#import "NSObject+MGEvents.h"
+#import "UIControl+MGEvents.h"
+
 #import "APIHttpClient.h"
+
+#import "FPPopoverController.h"
 
 #define ROW_SIZE (CGSize) {300, 30}
 
@@ -210,39 +214,48 @@
     NSLog(@"add button tapped");
     
     UserManager *um = [UserManager sharedManager];
-    UserModel *currUser = um.loggedInUser;
+    [self setModalPresentationStyle:UIModalPresentationFormSheet];
+    [self setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
     
-    CommentModel *newComment = [[CommentModel alloc] init];
-    newComment.username = currUser.username;
-    newComment.comment = @"\n";
+    NewCommentViewController *newCommVC = [self.storyboard instantiateViewControllerWithIdentifier:@"newCommentViewController"];
+    [newCommVC setDelegate:self];
+    [newCommVC setTitle:@"Add A Comment"];
     
-    CommentView *newCommView = [[CommentView alloc] initWithFrame:CGRectMake(0, 0, 360, 100)];
-    
-    //TODO:this is really busted encapsulation. Shouldnt have to know so much about the commentview's implementation
-    //set the comment textview'a delegate to the view controller
-    [((UITextView *)[newCommView.commentContent.leftItems objectAtIndex:0]) setDelegate:self];
-    
-    [self.commentsScroller.boxes addObject:newCommView];
-    
-    //need to call layout or new comment won't be added to scrollview
-    [self.commentsScroller layout];
-    
-    [self.commentsScroller scrollToView:newCommView withMargin:0];
-    
-    
-    
+    [self presentViewController:newCommVC animated:YES completion:nil];
+
     
 }
 
-- (void)textViewDidEndEditing:(UITextView *)textView
+- (void) newCommentViewControllerDidCancel:(NewCommentViewController *)newCommVC
 {
-    NSLog(@"text view did end editing");
-    //TODO:save the new comment
-    CommentView *newComment = [self.commentsScroller.boxes lastObject];
-    
+    NSLog(@"canceled new comment");
+    [self dismissViewControllerAnimated:YES completion:nil];
     
 }
 
+- (void) newCommentViewController:(NewCommentViewController *)newCommVC didProvideComment:(NSString *)comment
+{
+//Not working
+//    //TODO:veto dismissing the view controller if save to server fails
+//    void (^createCommentBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
+//        
+//        //FIXME:remove comment from view if delete succeeded
+//        
+//        
+//        
+//    };
+//    
+//    
+//    
+//    
+//    APIHttpClient *sharedClient = [APIHttpClient sharedClient];
+//    
+//    NSString *path = [NSString stringWithFormat:@"comments/new", commentModel.pk];
+//    
+//    [sharedClient postPath:path parameters:nil success:createCommentBlock failure:nil];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 - (void)didReceiveMemoryWarning
 {

@@ -22,7 +22,7 @@
 
 - (void)setup
 {
-    //LEt's assume for now that super setup called the right createComment. Use this setup to do any delegate setting up type stuff?
+    //Let's assume for now that super setup called the right createComment. Use this setup to do any delegate setting up type stuff?
     [super setup];
     
     
@@ -39,12 +39,12 @@
     
     CGFloat multilineCommentHeight = size.height;
     
-    UITextView *myTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, self.size.width, multilineCommentHeight)];
-    myTextView.font = font;
-    myTextView.text = self.commentText;
-    myTextView.autocorrectionType = UITextAutocorrectionTypeNo;
-    myTextView.keyboardType = UIKeyboardTypeDefault;
-    myTextView.returnKeyType = UIReturnKeyNext;
+    self.commentTV = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, self.size.width, multilineCommentHeight)];
+    self.commentTV.font = font;
+    self.commentTV.text = self.commentText;
+    self.commentTV.autocorrectionType = UITextAutocorrectionTypeNo;
+    self.commentTV.keyboardType = UIKeyboardTypeDefault;
+    self.commentTV.returnKeyType = UIReturnKeyNext;
     
     
     //TODO: this may not be neccesary
@@ -67,7 +67,7 @@
     //        [myTextView setInputAccessoryView:inputAccView];
     //
     
-    self.commentContent = [MGLine lineWithLeft:myTextView right:nil size:CGSizeMake(self.size.width, multilineCommentHeight)];
+    self.commentContent = [MGLine lineWithLeft:self.commentTV right:nil size:CGSizeMake(self.size.width, multilineCommentHeight)];
     
 }
 
