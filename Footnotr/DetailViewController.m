@@ -8,7 +8,6 @@
 
 #import "DetailViewController.h"
 #import "ArticleCoordinator.h"
-#import "ArticleModel.h"
 #import "FPPopoverController.h"
 #import "APIHttpClient.h" 
 #import <Foundation/Foundation.h>
@@ -22,10 +21,6 @@
     APAnnotatingPDFViewController *pdfView;
 }
 
-@property (strong, nonatomic) UIPopoverController *masterPopoverController;
-@property (strong, nonatomic) NSMutableData *serverResponse;
-@property (strong, nonatomic) APPDFInformation *info;
-@property (strong, nonatomic) ArticleModel *article;
 
 - (void)configureView;
 @end
@@ -138,16 +133,60 @@
         _documentDir = [docPaths objectAtIndex:0];
     }
     
+    //FIXME:Stop autoloading test pdf
     _detailItem = @"test.pdf";
     
+    
+    UILongPressGestureRecognizer *longTapRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longTap:)];
+    
+    [hostView addGestureRecognizer:longTapRecognizer];
+    
     [self configureView];
+}
+
+- (void)longTap:(UIGestureRecognizer *)gr
+{
+    NSLog(@"Long tap detected on pdf's hostview");
+    [pdfView addAnnotationOfType:kAPAnnotationTypeHighlight];
 }
 
 
 -(void)pdfController:(APAnnotatingPDFViewController *)controller didCreateAnnotation:(APAnnotation *)annotation
 {
     //get the annotations creation time and current identifier and store to mapping dictionary
+    NSLog(@"pdf lib did create annotation");
+    
+    
+    void (^createAnnotationBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
+        
+        
+        NSError *error;
+        AnnotationModel *newAnnotModel = [[AnnotationModel alloc] initWithDictionary:JSON error:&error];
+        
+        
+        [self.article addAnnotation:newAnnotModel];
+        
+    };
+    
+    
+    NSMutableDictionary *newAnnotDict = [[NSMutableDictionary alloc] init];
+
+    NSString *annotAsXml = [self getXmlStringForAnnotation:annotation];
+    [newAnnotDict setObject:annotAsXml forKey:@"xml"];
+    
+    int pdfLibID = (int)[(APTextMarkup *)annotation creationStamp];
+    [newAnnotDict setObject:[NSString stringWithFormat:@"%d",pdfLibID] forKey:@"pdfLibID"];
+    
+    [newAnnotDict setObject:[NSString stringWithFormat:@"%d",self.article.pk] forKey:@"article"];
+    
+    APIHttpClient *sharedClient = [APIHttpClient sharedClient];
+    
+    NSString *path = @"annotations/new";
+    
+    [sharedClient postPath:path parameters:newAnnotDict success:createAnnotationBlock failure:nil];
+    
 }
+
 
 -(void)pdfController:(APPDFViewController *)controller didTapOnAnnotation:(APAnnotation *)annotation inRect:(CGRect)rect
 {
@@ -214,6 +253,22 @@
     return importSuccess;
 }
 
+
+- (NSString *)getXmlStringForAnnotation:(APAnnotation *)annot
+{
+    
+    NSOutputStream *os = [[NSOutputStream alloc] initToMemory];
+    
+    [self.info exportSingleAnnotationXML:annot toStream:os];
+    
+    NSData *annotationAsData =  [os propertyForKey:NSStreamDataWrittenToMemoryStreamKey];
+    
+    NSString *outputString = [[NSString alloc] initWithData:annotationAsData encoding:NSUTF8StringEncoding];
+    
+    return outputString;
+}
+
+
 - (void)displayErrorAsAlert:(id)error
 {
     if([error isKindOfClass:[NSError class]]) {
@@ -228,7 +283,7 @@
 
 -(BOOL)pdfController:(APPDFViewController *)controller shouldShowRibbonForAnnotation:(APAnnotation *)annotation
 {
-    return NO;
+    return YES;
 }
 
 -(void)viewWillAppear:(BOOL)animated

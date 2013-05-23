@@ -10,4 +10,10 @@
 
 @implementation ArticleModel
 
+- (void)addAnnotation:(AnnotationModel *)annotToAdd
+{
+    [self.annots addObject:annotToAdd];
+}
+
+
 @end

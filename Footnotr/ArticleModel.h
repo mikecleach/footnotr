@@ -13,6 +13,9 @@
 
 @property(strong,nonatomic) NSString *title;
 @property(strong,nonatomic) NSString *creator;
-@property(strong,nonatomic) NSArray<AnnotationModel>* annots;
+@property(strong,nonatomic) NSMutableArray<AnnotationModel>* annots;
+@property int pk;
+
+- (void) addAnnotation:(AnnotationModel *)annotToAdd;
 
 @end

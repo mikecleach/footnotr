@@ -94,7 +94,6 @@
     
     [self createVoteLabel];
     
-    //TODO:disable vote button if user's comment
     [self createVoteButton:buttonImage buttonImageHighlight:buttonImageHighlight];
     
     self.voteBtn.margin = standardMarginOrPadding;
