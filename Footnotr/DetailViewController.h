@@ -21,6 +21,7 @@
 
 @property (weak, nonatomic) IBOutlet CommentsViewController *commentsVC;
 @property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
+@property (strong, nonatomic) MGBox *annotCreationMenu;
 
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 @property (strong, nonatomic) NSMutableData *serverResponse;

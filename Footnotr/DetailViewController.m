@@ -10,6 +10,7 @@
 #import "ArticleCoordinator.h"
 #import "FPPopoverController.h"
 #import "APIHttpClient.h" 
+#import "UIControl+MGEvents.h"
 #import <Foundation/Foundation.h>
 
 
@@ -102,7 +103,7 @@
             else
                 pdfView = (id)[[APPDFViewController alloc] initWithPDF:pdfDocument];
             
-            //FIXME: make this support annotating protocol so next line is used.
+            
             pdfView.delegate = self;
             
             /* ...and load it into the view hierarchy */
@@ -112,6 +113,56 @@
             [hostView addSubview:pdfView.view];
             
             [pdfView fitToWidth];
+            
+            //Add new annotation menu
+            self.annotCreationMenu = [MGBox boxWithSize:CGSizeMake(200, 0)];
+            
+            //self.annotCreationMenu.frame = CGRectMake(0, -40, 200, 40);
+            
+            self.annotCreationMenu.center = CGPointMake(hostView.width/2, -40);
+            self.annotCreationMenu.backgroundColor = [UIColor colorWithRed:0.94 green:0.94 blue:0.95 alpha:1];
+            
+            
+            UIImage *buttonImage = [[UIImage imageNamed:@"blueButton.png"]
+                                    resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
+            
+            MGButton *doneBtn = [[MGButton alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
+
+            [doneBtn setBackgroundImage:buttonImage forState:UIControlStateNormal];
+            [doneBtn setTitle:@"Done" forState:UIControlStateNormal];
+            doneBtn.margin = UIEdgeInsetsMake(4, 20, 4, 20);
+
+            [doneBtn onControlEvent:UIControlEventTouchUpInside do:^{
+                
+                [pdfView finishCurrentAnnotation];
+            }];
+            
+            
+            
+            MGButton *cancelBtn = [[MGButton alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
+            
+            
+            [cancelBtn setBackgroundImage:buttonImage forState:UIControlStateNormal];
+            [cancelBtn setTitle:@"Cancel" forState:UIControlStateNormal];
+            cancelBtn.margin = UIEdgeInsetsMake(4, 20, 4, 20);
+            
+            [cancelBtn onControlEvent:UIControlEventTouchUpInside do:^{
+            
+                [pdfView cancelAddAnnotation];
+            }];
+            [self.annotCreationMenu.boxes addObject:cancelBtn];
+            [self.annotCreationMenu.boxes addObject:doneBtn];
+            
+            [self.annotCreationMenu setContentLayoutMode:MGLayoutGridStyle];
+            
+            self.annotCreationMenu.margin = UIEdgeInsetsMake(4, 20, 4, 20);
+            
+            //self.annotCreationMenu.sizingMode = MGResizingExpandWidthToFill;
+            
+            [self.annotCreationMenu layout];
+            
+            [hostView addSubview:self.annotCreationMenu];
+            
             
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -150,8 +201,7 @@
     [pdfView addAnnotationOfType:kAPAnnotationTypeHighlight];
 }
 
-
--(void)pdfController:(APAnnotatingPDFViewController *)controller didCreateAnnotation:(APAnnotation *)annotation
+-(void)pdfController:(APAnnotatingPDFViewController *)controller didPlaceAnnotation:(APAnnotation *)annotation
 {
     //get the annotations creation time and current identifier and store to mapping dictionary
     NSLog(@"pdf lib did create annotation");
@@ -170,7 +220,7 @@
     
     
     NSMutableDictionary *newAnnotDict = [[NSMutableDictionary alloc] init];
-
+    
     NSString *annotAsXml = [self getXmlStringForAnnotation:annotation];
     [newAnnotDict setObject:annotAsXml forKey:@"xml"];
     
@@ -184,13 +234,12 @@
     NSString *path = @"annotations/new";
     
     [sharedClient postPath:path parameters:newAnnotDict success:createAnnotationBlock failure:nil];
-    
 }
 
 
 -(void)pdfController:(APPDFViewController *)controller didTapOnAnnotation:(APAnnotation *)annotation inRect:(CGRect)rect
 {
-    //FIXME:popover has an offset, probably due to the Detail Text bar at top of split view
+
     CGRect annotViewRect = [pdfView viewRectForPageSpaceRect:annotation.rect onPage:annotation.page];
     
     self.commentsVC = [self.storyboard instantiateViewControllerWithIdentifier:@"commentsViewController"];
@@ -209,6 +258,27 @@
     CGPoint adjustedOffset = CGPointMake(annotViewRect.origin.x,  annotViewRect.origin.y + 48);
     [pc presentPopoverFromPoint:adjustedOffset];
     
+}
+
+- (BOOL)pdfController:(APAnnotatingPDFViewController *)controller shouldShowPopupForAnnotation:(APAnnotation *)annotation
+{
+    return NO;
+}
+
+- (void)pdfController:(APAnnotatingPDFViewController *)controller didEnterAnnotationMode:(APAnnotationType)type
+{
+    [UIView animateWithDuration:0.7 animations:^{
+    
+        self.annotCreationMenu.center = CGPointMake(hostView.width/2, 20);
+    }];
+}
+
+- (void)pdfController:(APAnnotatingPDFViewController *)controller didEndAnnotationMode:(APAnnotationType)type
+{
+    [UIView animateWithDuration:0.7 animations:^{
+        
+        self.annotCreationMenu.center = CGPointMake(hostView.width/2, -20);
+    }];
 }
 
 
@@ -280,10 +350,9 @@
 }
 
 
-
 -(BOOL)pdfController:(APPDFViewController *)controller shouldShowRibbonForAnnotation:(APAnnotation *)annotation
 {
-    return YES;
+    return NO;
 }
 
 -(void)viewWillAppear:(BOOL)animated
