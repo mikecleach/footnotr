@@ -69,6 +69,7 @@
     
     self.commentContent = [MGLine lineWithLeft:self.commentTV right:nil size:CGSizeMake(self.size.width, multilineCommentHeight)];
     
+    self.commentContent.margin = UIEdgeInsetsMake(16, 16, 16, 16);
 }
 
 /*

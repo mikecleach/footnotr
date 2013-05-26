@@ -18,4 +18,6 @@
 
 - (void) addAnnotation:(AnnotationModel *)annotToAdd;
 
+- (void) removeAnnotation:(AnnotationModel *)annotToRemove;
+
 @end

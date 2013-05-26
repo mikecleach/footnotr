@@ -18,6 +18,7 @@
 @property (strong,nonatomic) NSString *username;
 @property (strong,nonatomic) NSString *comment;
 @property (strong, nonatomic) NSMutableArray<VoteModel> *votes;
+@property (strong, nonatomic) NSDate *created;
 @property int pk;
 
 - (void) addVote:(VoteModel *)voteToAdd;

@@ -17,6 +17,7 @@
 @property (strong, nonatomic) MGButton *sortVotesButton;
 @property (strong, nonatomic) MGButton *sortDateButton;
 @property (strong, nonatomic) MGButton *addCommentButton;
+@property (strong, nonatomic) MGButton *deleteAnnotButton;
 
 @property (strong, nonatomic) MGLine *sortLine;
 

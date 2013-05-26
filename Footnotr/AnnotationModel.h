@@ -20,9 +20,12 @@
 @property(strong, nonatomic) NSString *xml;
 @property int pdfLibID;
 @property(strong, nonatomic) NSMutableArray<CommentModel> *comments;
+@property(strong, nonatomic) NSString *username;
 @property int pk;
 
-- (void) addComment:(CommentModel *)commentToAdd;
+- (void)addComment:(CommentModel *)commentToAdd;
+
+- (void)removeComment:(CommentModel *)commentToRemove;
 
 -(NSString *)debugDescription;
 

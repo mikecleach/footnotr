@@ -38,6 +38,7 @@
 {
     self.votes = voteCount;
     [self.votesLabel setText:[NSString stringWithFormat:@"Votes: %d", voteCount]];
+    [self.votesLabel setBackgroundColor:[UIColor colorWithRed:0.94 green:0.94 blue:0.95 alpha:1]];
 }
 
 - (void)createVoteLabel
@@ -52,7 +53,7 @@
 - (void)createVoteButton:(UIImage *)buttonImage buttonImageHighlight:(UIImage *)buttonImageHighlight
 {
     //vote for this comment button creation
-    self.voteBtn = [[MGButton alloc] initWithFrame:CGRectMake(0, 0, 60, ROW_HEIGHT)];
+    self.voteBtn = [[MGButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
     
     // Set the background for any states you plan to use
     [self.voteBtn setBackgroundImage:buttonImage forState:UIControlStateNormal];
@@ -64,12 +65,14 @@
 
 - (void)createDeleteButton:(UIImage *)buttonImage buttonImageHighlight:(UIImage *)buttonImageHighlight
 {
-    self.deleteBtn = [[MGButton alloc] initWithFrame:CGRectMake(0, 0, 60, ROW_HEIGHT)];
+    self.deleteBtn = [[MGButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+    
+    UIImage *orangeButtonImage = [[UIImage imageNamed:@"orangeButton.png"]
+                            resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
     
     // Set the background for any states you plan to use
-    [self.deleteBtn setBackgroundImage:buttonImage forState:UIControlStateNormal];
-    [self.deleteBtn setBackgroundImage:buttonImageHighlight forState:UIControlStateHighlighted];
-    [self.deleteBtn setTitle:@"Del" forState:UIControlStateNormal];
+    [self.deleteBtn setBackgroundImage:orangeButtonImage forState:UIControlStateNormal];
+    [self.deleteBtn setTitle:@"X" forState:UIControlStateNormal];
 }
 
 
@@ -117,7 +120,9 @@
     
 
     
-    self.commentDetails = [MGLine lineWithLeft:self.username right:commentModItems size:CGSizeMake(360, 36)];
+    self.commentDetails = [MGLine lineWithLeft:self.username right:commentModItems size:CGSizeMake(320, 36)];
+    
+    self.commentDetails.margin = UIEdgeInsetsMake(4, 12, 4, 12);
     
     self.commentDetails.middleItems = voteItems;
 
@@ -126,7 +131,7 @@
     
     //setup comment container box
     self.layer.cornerRadius = 4;
-    self.borderStyle = MGBorderEtchedAll;
+    self.borderStyle = MGBorderEtchedTop | MGBorderEtchedBottom;
     
     //add lines to box
     [self.boxes addObject:self.commentDetails];

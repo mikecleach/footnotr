@@ -1,4 +1,4 @@
-//
+
 //  DetailViewController.m
 //  Footnotr
 //
@@ -11,6 +11,7 @@
 #import "FPPopoverController.h"
 #import "APIHttpClient.h" 
 #import "UIControl+MGEvents.h"
+#import "UserManager.h"
 #import <Foundation/Foundation.h>
 
 
@@ -19,7 +20,7 @@
     IBOutlet UIView *hostView;
     
     APPDFDocument *pdfDocument;
-    APAnnotatingPDFViewController *pdfView;
+    APAnnotatingPDFViewController *pdfViewContr;
 }
 
 
@@ -99,20 +100,23 @@
             
             /* create the view controller -- interactive on the iPad, read-only on the iPhone/iPod Touch... */
             if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-                pdfView = [[APAnnotatingPDFViewController alloc] initWithPDF:pdfDocument];
+                pdfViewContr = [[APAnnotatingPDFViewController alloc] initWithPDF:pdfDocument];
             else
-                pdfView = (id)[[APPDFViewController alloc] initWithPDF:pdfDocument];
+                pdfViewContr = (id)[[APPDFViewController alloc] initWithPDF:pdfDocument];
             
             
-            pdfView.delegate = self;
+            pdfViewContr.delegate = self;
             
             /* ...and load it into the view hierarchy */
             //pdfView.view.frame = self.view.bounds;
-            pdfView.view.frame = hostView.bounds;
-            pdfView.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-            [hostView addSubview:pdfView.view];
+            pdfViewContr.view.frame = hostView.bounds;
+            pdfViewContr.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+            [hostView addSubview:pdfViewContr.view];
             
-            [pdfView fitToWidth];
+            [pdfViewContr fitToWidth];
+            
+            
+            
             
             //Add new annotation menu
             self.annotCreationMenu = [MGBox boxWithSize:CGSizeMake(200, 0)];
@@ -134,7 +138,7 @@
 
             [doneBtn onControlEvent:UIControlEventTouchUpInside do:^{
                 
-                [pdfView finishCurrentAnnotation];
+                [pdfViewContr finishCurrentAnnotation];
             }];
             
             
@@ -148,7 +152,7 @@
             
             [cancelBtn onControlEvent:UIControlEventTouchUpInside do:^{
             
-                [pdfView cancelAddAnnotation];
+                [pdfViewContr cancelAddAnnotation];
             }];
             [self.annotCreationMenu.boxes addObject:cancelBtn];
             [self.annotCreationMenu.boxes addObject:doneBtn];
@@ -198,7 +202,7 @@
 - (void)longTap:(UIGestureRecognizer *)gr
 {
     NSLog(@"Long tap detected on pdf's hostview");
-    [pdfView addAnnotationOfType:kAPAnnotationTypeHighlight];
+    [pdfViewContr addAnnotationOfType:kAPAnnotationTypeHighlight];
 }
 
 -(void)pdfController:(APAnnotatingPDFViewController *)controller didPlaceAnnotation:(APAnnotation *)annotation
@@ -213,6 +217,8 @@
         NSError *error;
         AnnotationModel *newAnnotModel = [[AnnotationModel alloc] initWithDictionary:JSON error:&error];
         
+        //associate new annotation with annot model
+        newAnnotModel.annot = annotation;
         
         [self.article addAnnotation:newAnnotModel];
         
@@ -229,6 +235,11 @@
     
     [newAnnotDict setObject:[NSString stringWithFormat:@"%d",self.article.pk] forKey:@"article"];
     
+    UserManager *uManager = [UserManager sharedManager];
+    UserModel *loggedInUser = uManager.loggedInUser;
+    
+    [newAnnotDict setObject:[NSString stringWithFormat:@"%d",loggedInUser.pk] forKey:@"user"];
+    
     APIHttpClient *sharedClient = [APIHttpClient sharedClient];
     
     NSString *path = @"annotations/new";
@@ -240,7 +251,7 @@
 -(void)pdfController:(APPDFViewController *)controller didTapOnAnnotation:(APAnnotation *)annotation inRect:(CGRect)rect
 {
 
-    CGRect annotViewRect = [pdfView viewRectForPageSpaceRect:annotation.rect onPage:annotation.page];
+    CGRect annotViewRect = [pdfViewContr viewRectForPageSpaceRect:annotation.rect onPage:annotation.page];
     
     self.commentsVC = [self.storyboard instantiateViewControllerWithIdentifier:@"commentsViewController"];
 
@@ -251,6 +262,14 @@
     
     //initialize and present the popover
     FPPopoverController *pc = [[FPPopoverController alloc] initWithViewController:self.commentsVC];
+    
+    
+    self.commentsVC.parentPopoverController = pc;
+    
+    //TODO:This feels hacky. Comments VC has to know way too much to achieve delete annotation functionality
+    self.commentsVC.parentArticle = self.article;
+    self.commentsVC.parentPdfInfo = self.info;
+    self.commentsVC.parentPdfView = pdfViewContr;
     
     pc.contentSize = CGSizeMake(400, 500);
     
@@ -357,37 +376,37 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    [pdfView viewWillAppear:animated];
+    [pdfViewContr viewWillAppear:animated];
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
-    [pdfView viewDidAppear:animated];
+    [pdfViewContr viewDidAppear:animated];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
-    [pdfView viewWillDisappear:animated];
+    [pdfViewContr viewWillDisappear:animated];
 }
 
 -(void)viewDidDisappear:(BOOL)animated
 {
-    [pdfView viewWillDisappear:animated];
+    [pdfViewContr viewWillDisappear:animated];
 }
 
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return (nil == pdfView ? YES : [pdfView shouldAutorotateToInterfaceOrientation:interfaceOrientation]);
+    return (nil == pdfViewContr ? YES : [pdfViewContr shouldAutorotateToInterfaceOrientation:interfaceOrientation]);
 }
 
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    [pdfView willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    [pdfViewContr willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
 -(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    [pdfView didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    [pdfViewContr didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
 - (void)didReceiveMemoryWarning

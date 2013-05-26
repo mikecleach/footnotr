@@ -16,4 +16,10 @@
 }
 
 
+- (void) removeAnnotation:(AnnotationModel *)annotToRemove
+{
+    [self.annots removeObject:annotToRemove];
+    
+}
+
 @end

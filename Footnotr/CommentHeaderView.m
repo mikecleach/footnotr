@@ -33,9 +33,19 @@
     
     [super setup];
     
-    CGSize hostSize = self.size;
     
-    self.commentHeaderBar = [MGLineStyled lineWithLeft:@"Comments" right:nil size:CGSizeMake(self.size.width,48)];
+    self.deleteAnnotButton = [[MGButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+
+    UIImage *redButtonImage = [[UIImage imageNamed:@"orangeButton.png"]
+                               resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
+    
+    [self.deleteAnnotButton setBackgroundImage:redButtonImage forState:UIControlStateNormal];
+    [self.deleteAnnotButton setTitle:@"X" forState:UIControlStateNormal];
+    
+    [self.deleteAnnotButton setHidden:YES];
+
+    
+    self.commentHeaderBar = [MGLineStyled lineWithLeft:@"Comments" right:self.deleteAnnotButton size:CGSizeMake(self.size.width,48)];
     
     [self.commentHeaderBar setFont:HEADER_FONT];
     
@@ -103,7 +113,7 @@
     
     self.commentSubheaderBar.borderStyle = MGBorderEtchedBottom;
     
-    self.commentSubheaderBar.padding = UIEdgeInsetsMake(6, 0, 6, 0);
+    self.commentSubheaderBar.margin = UIEdgeInsetsMake(6, 6, 6, 6);
     
     
     

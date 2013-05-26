@@ -20,6 +20,8 @@
 #import "APIHttpClient.h"
 
 #import "FPPopoverController.h"
+#import "APPDFInformation.h"
+
 
 #define ROW_SIZE (CGSize) {300, 30}
 
@@ -46,7 +48,40 @@
     
 
     
-    commentsHeader = [[CommentHeaderView alloc] initWithFrame:CGRectMake(0, 0, 360, 96)];//CGRectMake(0, 0, 280, 380)];//[CommentHeaderView commentHeaderViewForSize:ROW_SIZE];
+    commentsHeader = [[CommentHeaderView alloc] initWithFrame:CGRectMake(0, 0, 320, 96)];//CGRectMake(0, 0, 280, 380)];//[CommentHeaderView commentHeaderViewForSize:ROW_SIZE];
+    
+    if ([loggedInUser.username isEqualToString:self.annot.username]) {
+        [commentsHeader.deleteAnnotButton setHidden:NO];
+        
+        [commentsHeader.deleteAnnotButton onControlEvent:UIControlEventTouchUpInside do:^{
+            
+            void (^deleteAnnotationBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
+                
+                NSLog(@"After delete annotation web request");
+
+                [self.parentArticle removeAnnotation:self.annot];
+                
+                BOOL annotRemoved = [self.parentPdfInfo removeAnnotation:self.annot.annot];
+                
+                
+                [self.parentPdfView reloadAnnotationViews];
+                
+                [self.parentPopoverController dismissPopoverAnimated:NO];
+                
+                
+            };
+            
+            
+            APIHttpClient *sharedClient = [APIHttpClient sharedClient];
+            
+            NSString *path = [NSString stringWithFormat:@"annotations/%d/", self.annot.pk];
+            
+            [sharedClient deletePath:path parameters:nil success:deleteAnnotationBlock failure:nil];
+            
+            
+        }];
+        
+    }
     
     
     //TODO:use uicontrol+mgevents here instead, 
@@ -70,7 +105,7 @@
         //If user created comment, create an editable view, disable voting and show delete button
         if ([commentModel.username isEqualToString:loggedInUser.username]) {
             
-            newCommentView = [[EditableCommentView alloc] initWithComment:commentModel.comment andUsername:commentModel.username andVoteCount:commentModel.votes.count andFrame:CGRectMake(0, 0, 360, 100)];
+            newCommentView = [[EditableCommentView alloc] initWithComment:commentModel.comment andUsername:commentModel.username andVoteCount:commentModel.votes.count andFrame:CGRectMake(0, 0, 320, 100)];
             
             [newCommentView.voteBtn setEnabled:NO];
             [newCommentView.deleteBtn setHidden:NO];
@@ -79,7 +114,7 @@
         }
         //create standard comment view, set highlighted state
         else {
-            newCommentView = [[CommentView alloc] initWithComment:commentModel.comment andUsername:commentModel.username andVoteCount:commentModel.votes.count andFrame:CGRectMake(0, 0, 360, 100)];
+            newCommentView = [[CommentView alloc] initWithComment:commentModel.comment andUsername:commentModel.username andVoteCount:commentModel.votes.count andFrame:CGRectMake(0, 0, 320, 100)];
             
             //if user already voted, highlight the vote button
             if ([commentModel userDidVote:loggedInUser]) {
@@ -158,7 +193,7 @@
             void (^deleteCommentBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
                 
                 
-                [self.annot.comments removeObject:commentModel];
+                [self.annot removeComment:commentModel];
 
                 
                 [self.commentsScroller.boxes removeObject:newCommentView];

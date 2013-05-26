@@ -18,6 +18,11 @@
     //TODO:trigger add object event here, so ui knows to update??
 }
 
+- (void)removeComment:(CommentModel *)commentToRemove
+{
+    [self.comments removeObject:commentToRemove];
+}
+
 -(NSString *) description
 {
     return [self debugDescription];
