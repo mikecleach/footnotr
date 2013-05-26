@@ -16,11 +16,16 @@
 
 #import "FPPopoverController.h"
 #import "APAnnotatingPDFViewController.h"
+#import "CommentHeaderView.h"
 #import "NewCommentViewController.h"
 
 @class APPDFInformation;
 
 @interface CommentsViewController : UIViewController<NewCommentViewDelegate>
+
+
+
+@property (strong, nonatomic) IBOutlet CommentHeaderView *commentsHeader;
 
 @property (strong, nonatomic) IBOutlet MGScrollView *commentsScroller;
 @property (strong, nonatomic) AnnotationModel *annot;

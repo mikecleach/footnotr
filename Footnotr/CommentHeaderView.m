@@ -13,26 +13,11 @@
 
 @implementation CommentHeaderView
 
-//+ (CommentHeaderView *)commentHeaderViewForSize:(CGSize)size
-//{
-//    
-//    CommentHeaderView *chv = [[CommentHeaderView alloc] initWithFrame:CGRectMake(0, 0, 200, 80)];
-//    //[CommentHeaderView boxWithSize:size];
-//    
-////    UILabel *lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
-////    lbl.text = @"label";
-////    [chv addSubview:lbl];
-//    
-//    return chv;
-//}
-
-
 - (void)setup
 {
     NSLog(@"called comment header view setup");
     
     [super setup];
-    
     
     self.deleteAnnotButton = [[MGButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
 
@@ -45,7 +30,7 @@
     [self.deleteAnnotButton setHidden:YES];
 
     
-    self.commentHeaderBar = [MGLineStyled lineWithLeft:@"Comments" right:self.deleteAnnotButton size:CGSizeMake(self.size.width,48)];
+    self.commentHeaderBar = [MGLineStyled lineWithLeft:@"Comments" right:self.deleteAnnotButton size:CGSizeMake(320,48)];
     
     [self.commentHeaderBar setFont:HEADER_FONT];
     
@@ -93,7 +78,7 @@
     
     
     //add new comment button creation
-    self.addCommentButton = [[MGButton alloc] initWithFrame:CGRectMake(0, 0, 140, ROW_HEIGHT_STD)];
+    self.addCommentButton = [[MGButton alloc] initWithFrame:CGRectMake(0, 0, 100, ROW_HEIGHT_STD)];
     
 
     // Set the background for any states you plan to use
@@ -105,7 +90,7 @@
     
     
     //create and setup subheader options line
-    self.commentSubheaderBar = [MGLine lineWithLeft:@"Sort By:"right:self.addCommentButton size:CGSizeMake(self.size.width, 48)];
+    self.commentSubheaderBar = [MGLine lineWithLeft:@"Sort By:"right:self.addCommentButton size:CGSizeMake(320, 48)];
     
     
     [self.commentSubheaderBar setMiddleItems:sortItems];
@@ -119,8 +104,6 @@
     
     [self.boxes addObject:self.commentSubheaderBar];
     
-    //pin the comments header to the top of scrollview
-    //self.fixedPosition = CGPointMake(0, 0);
 }
 
 - (void)layout

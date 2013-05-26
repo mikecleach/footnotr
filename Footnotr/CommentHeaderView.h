@@ -24,7 +24,6 @@
 @property (strong, nonatomic) MGLine *commentHeaderBar;
 @property (strong, nonatomic) MGLine *commentSubheaderBar;
 
-//+ (CommentHeaderView *)commentHeaderViewForSize:(CGSize)size;
 //TODO: Add expand comments grid button
 
 @end
