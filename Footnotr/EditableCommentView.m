@@ -34,17 +34,22 @@
 {
     UIFont *font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
     
+    //subtracting 16 from the self.size.width to account fo UItextview's left and right 8pt margins
     CGSize size = [self.commentText sizeWithFont:font
-                                   constrainedToSize:CGSizeMake(self.size.width, 100000)];
+                                   constrainedToSize:CGSizeMake(self.size.width-8-8, 100000)];
     
-    CGFloat multilineCommentHeight = size.height;
+    //UITextviews have 8 top and 8 bottom margins, so we account for them here.
+    CGFloat multilineCommentHeight = size.height + 16;
     
     self.commentTV = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, self.size.width, multilineCommentHeight)];
     self.commentTV.font = font;
     self.commentTV.text = self.commentText;
+    [self.commentTV setBackgroundColor:[UIColor colorWithRed:0.94 green:0.94 blue:0.95 alpha:1]];
+    
     self.commentTV.autocorrectionType = UITextAutocorrectionTypeNo;
     self.commentTV.keyboardType = UIKeyboardTypeDefault;
     self.commentTV.returnKeyType = UIReturnKeyNext;
+    [self.commentTV setScrollEnabled:NO];
     
     
     //TODO: this may not be neccesary
@@ -69,7 +74,7 @@
     
     self.commentContent = [MGLine lineWithLeft:self.commentTV right:nil size:CGSizeMake(self.size.width, multilineCommentHeight)];
     
-    self.commentContent.margin = UIEdgeInsetsMake(16, 16, 16, 16);
+    //self.commentContent.margin = UIEdgeInsetsMake(16, 16, 16, 16);
 }
 
 /*

@@ -111,10 +111,13 @@
             //pdfView.view.frame = self.view.bounds;
             pdfViewContr.view.frame = hostView.bounds;
             pdfViewContr.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+            
+            //If a pdf file is already in view, we need to remove the current views before adding the new view.
+            [hostView.subviews makeObjectsPerformSelector: @selector(removeFromSuperview)];
+            
             [hostView addSubview:pdfViewContr.view];
             
             [pdfViewContr fitToWidth];
-            
             
             
             
@@ -164,6 +167,7 @@
             //self.annotCreationMenu.sizingMode = MGResizingExpandWidthToFill;
             
             [self.annotCreationMenu layout];
+            
             
             [hostView addSubview:self.annotCreationMenu];
             
@@ -271,13 +275,24 @@
     self.commentsVC.parentPdfInfo = self.info;
     self.commentsVC.parentPdfView = pdfViewContr;
     
-    pc.contentSize = CGSizeMake(400, 500);
+    pc.contentSize = CGSizeMake(380, 500);
     
     //FIXME:coordinates do not account for the 'Detail" Navigation Bar at top. Manually adjust for it here.
-    CGPoint adjustedOffset = CGPointMake(annotViewRect.origin.x,  annotViewRect.origin.y + 48);
+    //annotViewRect's origin is apparently not integer based, which can lead to uitextview aliasing issues so we round to a nice int value
+    CGPoint adjustedOffset = CGPointMake(roundf(annotViewRect.origin.x),  roundf(annotViewRect.origin.y + 48));
     [pc presentPopoverFromPoint:adjustedOffset];
     
 }
+
+- (UIColor *)pdfController:(APAnnotatingPDFViewController *)controller colorForNewAnnotationOfType:(APAnnotationType)annotType
+{
+    if (annotType == kAPAnnotationTypeHighlight) {
+        return [UIColor colorWithRed:1 green:1 blue:0 alpha:1];
+    }
+    
+    return nil;
+}
+
 
 - (BOOL)pdfController:(APAnnotatingPDFViewController *)controller shouldShowPopupForAnnotation:(APAnnotation *)annotation
 {

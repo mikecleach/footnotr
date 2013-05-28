@@ -69,7 +69,9 @@
     [self.saveBtn setBackgroundImage:buttonImage forState:UIControlStateNormal];
     [self.saveBtn setTitle:@"Save" forState:UIControlStateNormal];
     
-    self.toolbarLine = [MGLine lineWithLeft:self.cancelBtn right:self.saveBtn size:CGSizeMake(360, 48)];
+    self.toolbarLine = [MGLine lineWithLeft:self.cancelBtn right:self.saveBtn size:CGSizeMake(480, 48)];
+    
+    self.toolbarLine.padding = UIEdgeInsetsMake(4, 160, 4, 160);
     
 //    [self.boxes addObject:self.cancelBtn];
 //    [self.boxes addObject:self.saveBtn];
