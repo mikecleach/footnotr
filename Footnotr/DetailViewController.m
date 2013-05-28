@@ -275,7 +275,7 @@
     self.commentsVC.parentPdfInfo = self.info;
     self.commentsVC.parentPdfView = pdfViewContr;
     
-    pc.contentSize = CGSizeMake(380, 500);
+    pc.contentSize = CGSizeMake(380, 520);
     
     //FIXME:coordinates do not account for the 'Detail" Navigation Bar at top. Manually adjust for it here.
     //annotViewRect's origin is apparently not integer based, which can lead to uitextview aliasing issues so we round to a nice int value
