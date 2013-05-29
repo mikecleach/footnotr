@@ -44,7 +44,7 @@
     UserModel *loggedInUser = uManager.loggedInUser;
     
     
-    [self.commentsHeader setFrame:CGRectMake(0, 0, 320, 100)];
+    [self.commentsHeader setFrame:CGRectMake(0, 0, 360, 100)];
     
     if ([loggedInUser.username isEqualToString:self.annot.username]) {
         [self.commentsHeader.deleteAnnotButton setHidden:NO];
@@ -91,7 +91,7 @@
 
     self.commentsScroller.backgroundColor = [UIColor colorWithRed:0.94 green:0.94 blue:0.95 alpha:1];
     
-    [self.commentsScroller setContentSize:CGSizeMake(340, 480)];
+    [self.commentsScroller setContentSize:CGSizeMake(360, 480)];
     
     //[self.commentsScroller.boxes addObject:commentsHeader];
     
@@ -214,7 +214,7 @@
         [self.commentsScroller.boxes addObject:newCommentView];
     }
     
-    [self.commentsHeader layoutWithSpeed:0.5 completion:nil];
+    [self.commentsHeader layout];//WithSpeed:0.5 completion:nil];
     [self.commentsScroller layoutWithSpeed:0.5 completion:nil];
 
 }

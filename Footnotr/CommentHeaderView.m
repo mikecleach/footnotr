@@ -30,9 +30,11 @@
     [self.deleteAnnotButton setHidden:YES];
 
     
-    self.commentHeaderBar = [MGLineStyled lineWithLeft:@"Comments" right:self.deleteAnnotButton size:CGSizeMake(320,48)];
+    self.commentHeaderBar = [MGLineStyled lineWithLeft:@"Comments" right:self.deleteAnnotButton size:CGSizeMake(360,48)];
     
+    self.commentHeaderBar.padding = UIEdgeInsetsMake(0, 16, 0, 4);
     [self.commentHeaderBar setFont:HEADER_FONT];
+    
     
     
     
@@ -90,7 +92,7 @@
     
     
     //create and setup subheader options line
-    self.commentSubheaderBar = [MGLine lineWithLeft:@"Sort By:"right:self.addCommentButton size:CGSizeMake(320, 48)];
+    self.commentSubheaderBar = [MGLine lineWithLeft:@"Sort By:"right:self.addCommentButton size:CGSizeMake(360, 48)];
     
     
     [self.commentSubheaderBar setMiddleItems:sortItems];
@@ -98,7 +100,7 @@
     
     self.commentSubheaderBar.borderStyle = MGBorderEtchedBottom;
     
-    self.commentSubheaderBar.margin = UIEdgeInsetsMake(6, 6, 6, 6);
+    self.commentSubheaderBar.padding = UIEdgeInsetsMake(6, 6, 6, 6);
     
     
     

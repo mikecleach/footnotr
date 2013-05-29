@@ -266,7 +266,8 @@
     
     //initialize and present the popover
     FPPopoverController *pc = [[FPPopoverController alloc] initWithViewController:self.commentsVC];
-    
+    [pc setArrowDirection:FPPopoverArrowDirectionVertical];
+
     
     self.commentsVC.parentPopoverController = pc;
     
