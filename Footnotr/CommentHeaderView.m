@@ -42,7 +42,7 @@
     
     
     //setting up standard style elements
-    UIEdgeInsets standardMarginOrPadding = UIEdgeInsetsMake(0, 8, 0, 8);
+    UIEdgeInsets standardMarginOrPadding = UIEdgeInsetsMake(0, 6, 0, 6);
     
     UIImage *buttonImage = [[UIImage imageNamed:@"blueButton.png"]
                             resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
@@ -58,7 +58,7 @@
     [self.sortVotesButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
     [self.sortVotesButton setBackgroundImage:buttonImageHighlight forState:UIControlStateHighlighted];
     [self.sortVotesButton setTitle:@"Votes" forState:UIControlStateNormal];
-    self.sortVotesButton.margin = standardMarginOrPadding;
+    self.sortVotesButton.margin = UIEdgeInsetsMake(0, -16, 0, 8);
     
     
     
@@ -80,14 +80,14 @@
     
     
     //add new comment button creation
-    self.addCommentButton = [[MGButton alloc] initWithFrame:CGRectMake(0, 0, 100, ROW_HEIGHT_STD)];
+    self.addCommentButton = [[MGButton alloc] initWithFrame:CGRectMake(0, 0, 120, ROW_HEIGHT_STD)];
     
 
     // Set the background for any states you plan to use
     [self.addCommentButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
     [self.addCommentButton setBackgroundImage:buttonImageHighlight forState:UIControlStateHighlighted];
     [self.addCommentButton setTitle:@"Add Comment" forState:UIControlStateNormal];
-    self.addCommentButton.padding = standardMarginOrPadding;
+    self.addCommentButton.padding = UIEdgeInsetsMake(0, 12, 0, 8);
 
     
     
@@ -100,7 +100,7 @@
     
     self.commentSubheaderBar.borderStyle = MGBorderEtchedBottom;
     
-    self.commentSubheaderBar.padding = UIEdgeInsetsMake(6, 6, 6, 6);
+    self.commentSubheaderBar.padding = UIEdgeInsetsMake(20, 6, 6, 20);
     
     
     

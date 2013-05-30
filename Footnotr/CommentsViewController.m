@@ -103,7 +103,7 @@
         //If user created comment, create an editable view, disable voting and show delete button
         if ([commentModel.username isEqualToString:loggedInUser.username]) {
             
-            newCommentView = [[EditableCommentView alloc] initWithComment:commentModel.comment andUsername:commentModel.username andVoteCount:commentModel.votes.count andFrame:CGRectMake(0, 0, 320, 100)];
+            newCommentView = [[EditableCommentView alloc] initWithComment:commentModel.comment andUsername:commentModel.username andVoteCount:commentModel.votes.count andFrame:CGRectMake(0, 0, 348, 100)];
             
             [newCommentView.voteBtn setEnabled:NO];
             [newCommentView.deleteBtn setHidden:NO];
@@ -112,7 +112,7 @@
         }
         //create standard comment view, set highlighted state
         else {
-            newCommentView = [[CommentView alloc] initWithComment:commentModel.comment andUsername:commentModel.username andVoteCount:commentModel.votes.count andFrame:CGRectMake(0, 0, 320, 100)];
+            newCommentView = [[CommentView alloc] initWithComment:commentModel.comment andUsername:commentModel.username andVoteCount:commentModel.votes.count andFrame:CGRectMake(0, 0, 348, 100)];
             
             //if user already voted, highlight the vote button
             if ([commentModel userDidVote:loggedInUser]) {
@@ -254,7 +254,7 @@
         NSError *error;
         CommentModel *newlyCreatedComment = [[CommentModel alloc] initWithDictionary:JSON error:&error];
         
-        //TODO:Update model with newly created comment
+        
         [self.annot addComment:newlyCreatedComment];
         
         
@@ -266,6 +266,34 @@
         
         [newCommentView.deleteBtn setHidden:NO];
         [newCommentView.voteBtn setEnabled:NO];
+        
+        
+        //TODO:This is duplicate code. Refactor associating blocks with buttons.
+        [newCommentView.deleteBtn onControlEvent:UIControlEventTouchUpInside do:^{
+            
+            void (^deleteCommentBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
+                
+                
+                [self.annot removeComment:newlyCreatedComment];
+                
+                
+                [self.commentsScroller.boxes removeObject:newCommentView];
+                
+                [self.commentsScroller layoutWithSpeed:0.5 completion:nil];
+                
+                
+            };
+            
+            
+            APIHttpClient *sharedClient = [APIHttpClient sharedClient];
+            
+            NSString *path = [NSString stringWithFormat:@"comments/%d/", newlyCreatedComment.pk];
+            
+            [sharedClient deletePath:path parameters:nil success:deleteCommentBlock failure:nil];
+            
+        }];
+        
+        
         
         [self.commentsScroller.boxes addObject:newCommentView];
         [self.commentsScroller layoutWithSpeed:0.4 completion:nil];

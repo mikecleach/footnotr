@@ -78,7 +78,7 @@
 
 - (void)createCommentContent
 {
-    self.commentContent = [MGLine multilineWithText:self.commentText font:nil width:self.size.width padding:UIEdgeInsetsMake(16, 16, 16, 16)];
+    self.commentContent = [MGLine multilineWithText:self.commentText font:[UIFont fontWithName:@"HelveticaNeue-Light" size:16] width:self.size.width padding:UIEdgeInsetsMake(16, 8, 16, 16)];
 }
 
 
@@ -105,7 +105,7 @@
     //create delete button, hide by default
     [self createDeleteButton:buttonImage buttonImageHighlight:buttonImageHighlight];
     
-    self.deleteBtn.margin = standardMarginOrPadding;
+    //self.deleteBtn.margin = standardMarginOrPadding;
     [self.deleteBtn setHidden:YES];
     
 
@@ -120,9 +120,9 @@
     
 
     
-    self.commentDetails = [MGLine lineWithLeft:self.username right:commentModItems size:CGSizeMake(320, 36)];
+    self.commentDetails = [MGLine lineWithLeft:self.username right:commentModItems size:CGSizeMake(348, 36)];
     
-    self.commentDetails.margin = UIEdgeInsetsMake(4, 12, 4, 12);
+    self.commentDetails.margin = UIEdgeInsetsMake(4, 6, 4, 6);
     
     self.commentDetails.middleItems = voteItems;
 
