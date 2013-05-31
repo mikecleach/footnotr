@@ -13,6 +13,7 @@
 #import "UIControl+MGEvents.h"
 #import "UserManager.h"
 #import <Foundation/Foundation.h>
+#import "FileMD5Hash.h"
 
 
 @interface DetailViewController ()
@@ -62,9 +63,17 @@
         self.detailDescriptionLabel.text = [self.detailItem description];
         
         //   THIS CODE IS FOR LOADING ARTICLE INFORMATION FROM A WEBSITE
+        NSString *pdfPath = [self.documentDir stringByAppendingPathComponent:self.detailItem];
         
-        //FIXME: article api call is hardcoded
-        [[APIHttpClient sharedClient] getPath:@"articles/1/" parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
+        //In case we have large files, we use a file hashing function that uses CF to prevent ballooning autorelease pools.
+        CFStringRef pdfFileMd5 = FileMD5HashCreateWithPath((__bridge CFStringRef)pdfPath, 8096);
+
+        NSString *articlePath = [NSString stringWithFormat: @"articles/%@/", (__bridge NSString *)pdfFileMd5];
+        
+        CFRelease(pdfFileMd5);
+        
+        
+        [[APIHttpClient sharedClient] getPath:articlePath parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
 
             NSError *error;
             self.article = [[ArticleModel alloc] initWithDictionary:JSON error:&error];
@@ -94,7 +103,6 @@
             }
             
             //Since the annotations are imported and associated with our data model, we can initialize the pdf document
-            NSString *pdfPath = [self.documentDir stringByAppendingPathComponent:self.detailItem];
             APPDFDocument *pdfFile = [[APPDFDocument alloc] initWithPath:pdfPath information:self.info];
             pdfDocument = pdfFile;
             

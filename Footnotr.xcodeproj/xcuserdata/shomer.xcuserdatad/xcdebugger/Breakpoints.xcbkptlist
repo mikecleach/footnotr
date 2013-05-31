@@ -47,11 +47,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Footnotr/DetailViewController.m"
-         timestampString = "389392052.965508"
+         timestampString = "391671208.942673"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "155"
-         endingLineNumber = "155"
+         startingLineNumber = "163"
+         endingLineNumber = "163"
          landmarkName = "-configureView"
          landmarkType = "5">
       </FileBreakpoint>
@@ -99,11 +99,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Footnotr/DetailViewController.m"
-         timestampString = "389400333.579244"
+         timestampString = "391671208.942673"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "162"
-         endingLineNumber = "162"
+         startingLineNumber = "170"
+         endingLineNumber = "170"
          landmarkName = "-configureView"
          landmarkType = "5">
       </FileBreakpoint>

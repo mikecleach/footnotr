@@ -77,6 +77,7 @@
 		AE46D55D1728FAB600500B33 /* MGScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46D54B1728FAB600500B33 /* MGScrollView.m */; };
 		AE46D55E1728FAB600500B33 /* MGTableBox.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46D54D1728FAB600500B33 /* MGTableBox.m */; };
 		AE46D55F1728FAB600500B33 /* MGTableBoxStyled.m in Sources */ = {isa = PBXBuildFile; fileRef = AE46D54F1728FAB600500B33 /* MGTableBoxStyled.m */; };
+		AE5B185017586851009865D6 /* FileMD5Hash.c in Sources */ = {isa = PBXBuildFile; fileRef = AE5B184E17586851009865D6 /* FileMD5Hash.c */; };
 		AE62656C17546EE3002A7FAF /* NewCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE62656717546EE3002A7FAF /* NewCommentViewController.m */; };
 		AE62656D17546EE3002A7FAF /* NewCommentView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE62656917546EE3002A7FAF /* NewCommentView.m */; };
 		AE62656E17546EE3002A7FAF /* EditableCommentView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE62656B17546EE3002A7FAF /* EditableCommentView.m */; };
@@ -259,7 +260,7 @@
 		AE6266D517546F48002A7FAF /* AP_unstick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE62662217546F48002A7FAF /* AP_unstick@2x.png */; };
 		AE6266D617546F48002A7FAF /* AP_verticalDragger.png in Resources */ = {isa = PBXBuildFile; fileRef = AE62662317546F48002A7FAF /* AP_verticalDragger.png */; };
 		AE6266D717546F48002A7FAF /* SimpleFontInfo.txt in Resources */ = {isa = PBXBuildFile; fileRef = AE62662417546F48002A7FAF /* SimpleFontInfo.txt */; };
-		AE6266E917546F89002A7FAF /* libAjiPDFLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE6266E817546F89002A7FAF /* libAjiPDFLib.a */; };
+		AE6266E917546F89002A7FAF /* libAjiPDFLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE6266E817546F89002A7FAF /* libAjiPDFLib.a */; settings = {ATTRIBUTES = (Required, ); }; };
 		AE70B6DF172BA6D700DDD4C2 /* JSONModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AE70B6C8172BA6D700DDD4C2 /* JSONModel.m */; };
 		AE70B6E0172BA6D700DDD4C2 /* JSONModelArray.m in Sources */ = {isa = PBXBuildFile; fileRef = AE70B6CA172BA6D700DDD4C2 /* JSONModelArray.m */; };
 		AE70B6E1172BA6D700DDD4C2 /* JSONModelClassProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = AE70B6CC172BA6D700DDD4C2 /* JSONModelClassProperty.m */; };
@@ -424,6 +425,9 @@
 		AE46D54D1728FAB600500B33 /* MGTableBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGTableBox.m; sourceTree = "<group>"; };
 		AE46D54E1728FAB600500B33 /* MGTableBoxStyled.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGTableBoxStyled.h; sourceTree = "<group>"; };
 		AE46D54F1728FAB600500B33 /* MGTableBoxStyled.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGTableBoxStyled.m; sourceTree = "<group>"; };
+		AE5B184E17586851009865D6 /* FileMD5Hash.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = FileMD5Hash.c; sourceTree = "<group>"; };
+		AE5B184F17586851009865D6 /* FileMD5Hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileMD5Hash.h; sourceTree = "<group>"; };
+		AE5B1851175868B6009865D6 /* FileMD5Hash_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileMD5Hash_Prefix.pch; sourceTree = "<group>"; };
 		AE62656617546EE3002A7FAF /* NewCommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewCommentViewController.h; sourceTree = "<group>"; };
 		AE62656717546EE3002A7FAF /* NewCommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewCommentViewController.m; sourceTree = "<group>"; };
 		AE62656817546EE3002A7FAF /* NewCommentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewCommentView.h; sourceTree = "<group>"; };
@@ -872,6 +876,16 @@
 			path = Categories;
 			sourceTree = "<group>";
 		};
+		AE5B184D17585F7E009865D6 /* FileMD5 */ = {
+			isa = PBXGroup;
+			children = (
+				AE5B1851175868B6009865D6 /* FileMD5Hash_Prefix.pch */,
+				AE5B184E17586851009865D6 /* FileMD5Hash.c */,
+				AE5B184F17586851009865D6 /* FileMD5Hash.h */,
+			);
+			name = FileMD5;
+			sourceTree = "<group>";
+		};
 		AE62656F17546EF1002A7FAF /* lib */ = {
 			isa = PBXGroup;
 			children = (
@@ -1192,6 +1206,7 @@
 		AEE6567A1703DEEB000D3C57 = {
 			isa = PBXGroup;
 			children = (
+				AE5B184D17585F7E009865D6 /* FileMD5 */,
 				AE1327B217330D9B00746654 /* CoreData.framework */,
 				AE13276D17330A4100746654 /* HierarchyViewer */,
 				AEAED006172F982200665961 /* AFNetworking */,
@@ -1688,6 +1703,7 @@
 				AE62656C17546EE3002A7FAF /* NewCommentViewController.m in Sources */,
 				AE62656D17546EE3002A7FAF /* NewCommentView.m in Sources */,
 				AE62656E17546EE3002A7FAF /* EditableCommentView.m in Sources */,
+				AE5B185017586851009865D6 /* FileMD5Hash.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
