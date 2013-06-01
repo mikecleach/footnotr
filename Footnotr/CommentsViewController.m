@@ -16,6 +16,7 @@
 
 #import "UserManager.h"
 #import "UIControl+MGEvents.h"
+#import "UIAlertView+Blocks.h"
 
 #import "APIHttpClient.h"
 
@@ -51,29 +52,41 @@
         
         [self.commentsHeader.deleteAnnotButton onControlEvent:UIControlEventTouchUpInside do:^{
             
-            void (^deleteAnnotationBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
+            //Using a block based UIAlertView category, avoids that messy delegate stuff
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Delete Annotation" message:@"Are you sure you want to delete this annotation?" delegate:nil cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+            
+            [alert showWithBlock:^(NSInteger buttonIndex) {
+                if (buttonIndex == 1) {
+                    
+                    void (^deleteAnnotationBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
+                        
+                        NSLog(@"After delete annotation web request");
+                        
+                        [self.parentArticle removeAnnotation:self.annot];
+                        
+                        BOOL annotRemoved = [self.parentPdfInfo removeAnnotation:self.annot.annot];
+                        
+                        
+                        [self.parentPdfView reloadAnnotationViews];
+                        
+                        [self.parentPopoverController dismissPopoverAnimated:NO];
+                        
+                        
+                    };
+                    
+                    
+                    APIHttpClient *sharedClient = [APIHttpClient sharedClient];
+                    
+                    NSString *path = [NSString stringWithFormat:@"annotations/%d/", self.annot.pk];
+                    
+                    [sharedClient deletePath:path parameters:nil success:deleteAnnotationBlock failure:nil];
+                    
+                }
+            } cancelBlock:^{
                 
-                NSLog(@"After delete annotation web request");
+            }];
+            
 
-                [self.parentArticle removeAnnotation:self.annot];
-                
-                BOOL annotRemoved = [self.parentPdfInfo removeAnnotation:self.annot.annot];
-                
-                
-                [self.parentPdfView reloadAnnotationViews];
-                
-                [self.parentPopoverController dismissPopoverAnimated:NO];
-                
-                
-            };
-            
-            
-            APIHttpClient *sharedClient = [APIHttpClient sharedClient];
-            
-            NSString *path = [NSString stringWithFormat:@"annotations/%d/", self.annot.pk];
-            
-            [sharedClient deletePath:path parameters:nil success:deleteAnnotationBlock failure:nil];
-            
             
         }];
         
@@ -210,25 +223,36 @@
 
         [newCommentView.deleteBtn onControlEvent:UIControlEventTouchUpInside do:^{
             
-            void (^deleteCommentBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Delete Comment" message:@"Are you sure you want to delete this comment?" delegate:nil cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+            
+            [alert showWithBlock:^(NSInteger buttonIndex) {
+                //If Yes was answered to "Delete this comment?"
+                if (buttonIndex == 1) {
+                    void (^deleteCommentBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
+                        
+                        
+                        [self.annot removeComment:commentModel];
+                        
+                        
+                        [self.commentsScroller.boxes removeObject:newCommentView];
+                        
+                        [self.commentsScroller layoutWithSpeed:0.5 completion:nil];
+                        
+                        
+                    };
+                    
+                    
+                    APIHttpClient *sharedClient = [APIHttpClient sharedClient];
+                    
+                    NSString *path = [NSString stringWithFormat:@"comments/%d/", commentModel.pk];
+                    
+                    [sharedClient deletePath:path parameters:nil success:deleteCommentBlock failure:nil];
+                    
+                }
+            } cancelBlock:^{
                 
-                
-                [self.annot removeComment:commentModel];
+            }];
 
-                
-                [self.commentsScroller.boxes removeObject:newCommentView];
-                
-                [self.commentsScroller layoutWithSpeed:0.5 completion:nil];
-                
-                
-            };
-            
-            
-            APIHttpClient *sharedClient = [APIHttpClient sharedClient];
-            
-            NSString *path = [NSString stringWithFormat:@"comments/%d/", commentModel.pk];
-            
-            [sharedClient deletePath:path parameters:nil success:deleteCommentBlock failure:nil];
             
         }];
         

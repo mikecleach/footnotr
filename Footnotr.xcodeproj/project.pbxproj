@@ -261,6 +261,7 @@
 		AE6266D617546F48002A7FAF /* AP_verticalDragger.png in Resources */ = {isa = PBXBuildFile; fileRef = AE62662317546F48002A7FAF /* AP_verticalDragger.png */; };
 		AE6266D717546F48002A7FAF /* SimpleFontInfo.txt in Resources */ = {isa = PBXBuildFile; fileRef = AE62662417546F48002A7FAF /* SimpleFontInfo.txt */; };
 		AE6266E917546F89002A7FAF /* libAjiPDFLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE6266E817546F89002A7FAF /* libAjiPDFLib.a */; settings = {ATTRIBUTES = (Required, ); }; };
+		AE651F43175A8BE7005B85BB /* UIAlertView+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = AE651F42175A8BE7005B85BB /* UIAlertView+Blocks.m */; };
 		AE70B6DF172BA6D700DDD4C2 /* JSONModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AE70B6C8172BA6D700DDD4C2 /* JSONModel.m */; };
 		AE70B6E0172BA6D700DDD4C2 /* JSONModelArray.m in Sources */ = {isa = PBXBuildFile; fileRef = AE70B6CA172BA6D700DDD4C2 /* JSONModelArray.m */; };
 		AE70B6E1172BA6D700DDD4C2 /* JSONModelClassProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = AE70B6CC172BA6D700DDD4C2 /* JSONModelClassProperty.m */; };
@@ -630,6 +631,8 @@
 		AE6266E617546F7F002A7FAF /* APPDFViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPDFViewDelegate.h; sourceTree = "<group>"; };
 		AE6266E717546F7F002A7FAF /* APPDFViewOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPDFViewOptions.h; sourceTree = "<group>"; };
 		AE6266E817546F89002A7FAF /* libAjiPDFLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libAjiPDFLib.a; sourceTree = "<group>"; };
+		AE651F41175A8BE7005B85BB /* UIAlertView+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+Blocks.h"; sourceTree = "<group>"; };
+		AE651F42175A8BE7005B85BB /* UIAlertView+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+Blocks.m"; sourceTree = "<group>"; };
 		AE70B6C7172BA6D700DDD4C2 /* JSONModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONModel.h; sourceTree = "<group>"; };
 		AE70B6C8172BA6D700DDD4C2 /* JSONModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONModel.m; sourceTree = "<group>"; };
 		AE70B6C9172BA6D700DDD4C2 /* JSONModelArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONModelArray.h; sourceTree = "<group>"; };
@@ -1103,6 +1106,15 @@
 			name = resources;
 			sourceTree = "<group>";
 		};
+		AE651F40175A8BD1005B85BB /* UIAlertViewBlocks */ = {
+			isa = PBXGroup;
+			children = (
+				AE651F41175A8BE7005B85BB /* UIAlertView+Blocks.h */,
+				AE651F42175A8BE7005B85BB /* UIAlertView+Blocks.m */,
+			);
+			name = UIAlertViewBlocks;
+			sourceTree = "<group>";
+		};
 		AE70B160172BA4EF00DDD4C2 /* JSONModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -1206,6 +1218,7 @@
 		AEE6567A1703DEEB000D3C57 = {
 			isa = PBXGroup;
 			children = (
+				AE651F40175A8BD1005B85BB /* UIAlertViewBlocks */,
 				AE5B184D17585F7E009865D6 /* FileMD5 */,
 				AE1327B217330D9B00746654 /* CoreData.framework */,
 				AE13276D17330A4100746654 /* HierarchyViewer */,
@@ -1704,6 +1717,7 @@
 				AE62656D17546EE3002A7FAF /* NewCommentView.m in Sources */,
 				AE62656E17546EE3002A7FAF /* EditableCommentView.m in Sources */,
 				AE5B185017586851009865D6 /* FileMD5Hash.c in Sources */,
+				AE651F43175A8BE7005B85BB /* UIAlertView+Blocks.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
