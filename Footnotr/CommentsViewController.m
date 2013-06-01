@@ -196,7 +196,7 @@
             
             
             APIHttpClient *sharedClient = [APIHttpClient sharedClient];
-            //TODO:hardcoding all up in here
+
             //if already voted, delete that vote. Otherwise add vote
             if([commentModel userDidVote:loggedInUser]) {
                 
@@ -308,18 +308,27 @@
         
         NSLog(@"create comment on server call succeeded");
         
-        NSError *error;
-        CommentModel *newlyCreatedComment = [[CommentModel alloc] initWithDictionary:JSON error:&error];
-        
-        
-        [self.annot addComment:newlyCreatedComment];
-        
-        
         UserManager *uManager = [UserManager sharedManager];
         UserModel *loggedInUser = uManager.loggedInUser;
         
-        //TODO:Add new view to comments scroller and scroll it into view
-        EditableCommentView *newCommentView = [[EditableCommentView alloc] initWithComment:newlyCreatedComment.comment andUsername:loggedInUser.username andVoteCount:0 andFrame:CGRectMake(0, 0, 360, 100)];
+        
+        NSError *error;
+        //Create and update model with new comment
+        CommentModel *newlyCreatedComment = [[CommentModel alloc] initWithDictionary:JSON error:&error];
+        
+        [self.annot addComment:newlyCreatedComment];
+        
+        NSMutableDictionary *newVote = [[NSMutableDictionary alloc] init];
+        [newVote setObject:[NSString stringWithFormat:@"%d", newlyCreatedComment.pk] forKey:@"comment"];
+        [newVote setObject:[NSString stringWithFormat:@"%d", loggedInUser.pk] forKey:@"user"];
+        
+        
+        NSString *path = @"votes/new";
+        [[APIHttpClient sharedClient] postPath:path parameters:newVote success:nil failure:nil];
+        
+        
+        //Set the vote count to 1 to match the vote we just sent to server
+        EditableCommentView *newCommentView = [[EditableCommentView alloc] initWithComment:newlyCreatedComment.comment andUsername:loggedInUser.username andVoteCount:1 andFrame:CGRectMake(0, 0, 360, 100)];
         
         [newCommentView.deleteBtn setHidden:NO];
         [newCommentView.voteBtn setEnabled:NO];

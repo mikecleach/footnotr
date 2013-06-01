@@ -55,6 +55,7 @@
     //vote for this comment button creation
     self.voteBtn = [[MGButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
     
+    
     // Set the background for any states you plan to use
     [self.voteBtn setBackgroundImage:buttonImage forState:UIControlStateNormal];
     [self.voteBtn setBackgroundImage:buttonImageHighlight forState:UIControlStateHighlighted];

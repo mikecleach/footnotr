@@ -73,11 +73,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Footnotr/CommentView.m"
-         timestampString = "389906647.365682"
+         timestampString = "391811590.480183"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "139"
-         endingLineNumber = "139"
+         startingLineNumber = "140"
+         endingLineNumber = "140"
          landmarkName = "-setup"
          landmarkType = "5">
       </FileBreakpoint>
@@ -99,11 +99,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Footnotr/CommentView.m"
-         timestampString = "389905475.859169"
+         timestampString = "391811590.480183"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "67"
-         endingLineNumber = "67"
+         startingLineNumber = "68"
+         endingLineNumber = "68"
          landmarkName = "-createDeleteButton:buttonImageHighlight:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -112,11 +112,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Footnotr/CommentView.m"
-         timestampString = "389906647.365682"
+         timestampString = "391811590.480183"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "104"
-         endingLineNumber = "104"
+         startingLineNumber = "105"
+         endingLineNumber = "105"
          landmarkName = "-setup"
          landmarkType = "5">
       </FileBreakpoint>
@@ -125,11 +125,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Footnotr/CommentView.m"
-         timestampString = "389906845.768912"
+         timestampString = "391811590.480183"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "79"
-         endingLineNumber = "79"
+         startingLineNumber = "80"
+         endingLineNumber = "80"
          landmarkName = "-createCommentContent"
          landmarkType = "5">
       </FileBreakpoint>
@@ -138,11 +138,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Footnotr/CommentView.m"
-         timestampString = "389906852.624681"
+         timestampString = "391811590.480183"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "98"
-         endingLineNumber = "98"
+         startingLineNumber = "99"
+         endingLineNumber = "99"
          landmarkName = "-setup"
          landmarkType = "5">
       </FileBreakpoint>
@@ -151,11 +151,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Footnotr/CommentView.m"
-         timestampString = "389906856.918849"
+         timestampString = "391811590.480183"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "109"
-         endingLineNumber = "109"
+         startingLineNumber = "110"
+         endingLineNumber = "110"
          landmarkName = "-setup"
          landmarkType = "5">
       </FileBreakpoint>
