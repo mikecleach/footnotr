@@ -21,7 +21,7 @@
 
 @class APPDFInformation;
 
-@interface CommentsViewController : UIViewController<NewCommentViewDelegate>
+@interface CommentsViewController : UIViewController<NewCommentViewDelegate, UITextViewDelegate>
 
 
 

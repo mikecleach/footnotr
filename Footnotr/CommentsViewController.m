@@ -92,9 +92,7 @@
     self.commentsScroller.backgroundColor = [UIColor colorWithRed:0.94 green:0.94 blue:0.95 alpha:1];
     
     [self.commentsScroller setContentSize:CGSizeMake(360, 480)];
-    
-    //[self.commentsScroller.boxes addObject:commentsHeader];
-    
+      
     
     for (CommentModel *commentModel in self.annot.comments) {
         
@@ -108,7 +106,31 @@
             [newCommentView.voteBtn setEnabled:NO];
             [newCommentView.deleteBtn setHidden:NO];
             
-            //TODO:presumably we add the delegate here to deal with edited comments.
+            //Act as each textview's delegate so we can, on end editing, trigger the self-assignment workaround that invokes the change KVO below.
+            ((EditableCommentView *)newCommentView).commentTV.delegate = self;
+            
+            [((EditableCommentView *)newCommentView).commentTV onChangeOf:@"text" do:^{
+            
+                void (^updateCommentBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
+                    
+                    //Update the model with the updated text
+                    commentModel.comment = ((EditableCommentView *)newCommentView).commentTV.text;
+                };
+                
+                
+                NSMutableDictionary *updateCommentDict = [[NSMutableDictionary alloc] init];
+                [updateCommentDict setObject:((EditableCommentView *)newCommentView).commentTV.text forKey:@"comment"];
+                
+                
+                APIHttpClient *sharedClient = [APIHttpClient sharedClient];
+                
+                NSString *path = [NSString stringWithFormat:@"comments/%d/", commentModel.pk];
+                
+                [sharedClient patchPath:path parameters:updateCommentDict success:updateCommentBlock failure:nil];
+                
+            }];
+            
+            
         }
         //create standard comment view, set highlighted state
         else {
@@ -220,6 +242,14 @@
 }
 
 
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    //FIXME:This is a workaround to trigger our KVO notification
+    //May not be reliable since UIKit stuff typically isnt KVO compliant
+    textView.text = textView.text;
+}
+
+
 - (void) addCommentTapped: (id)sender
 {
     NSLog(@"add button tapped");
@@ -235,6 +265,9 @@
 
     
 }
+
+
+
 
 - (void) newCommentViewControllerDidCancel:(NewCommentViewController *)newCommVC
 {
