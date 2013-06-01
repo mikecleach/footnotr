@@ -12,5 +12,6 @@
 
 @property int pk;
 @property (strong, nonatomic) NSString *username;
+@property (strong, nonatomic) NSString<Optional> *password;
 
 @end

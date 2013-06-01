@@ -25,6 +25,7 @@
     
     NSError *error;
     UserModel *uModel = [[UserModel alloc] initWithString:@"{\"pk\": 2, \"username\": \"mleach\"}" error:&error];
+    uModel.password = @"mleach";
     
     uManager.loggedInUser = uModel;
     

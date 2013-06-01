@@ -8,6 +8,7 @@
 
 #import "APIHttpClient.h"
 #import "AFJSONRequestOperation.h"
+#import "UserManager.h"
 
 static NSString * const kFootnotrAPIBaseURLString = @"http://127.0.0.1:8000/";
 
@@ -39,6 +40,11 @@ static NSString * const kFootnotrAPIBaseURLString = @"http://127.0.0.1:8000/";
 //    if ([[url scheme] isEqualToString:@"https"] && [[url host] isEqualToString:@"alpha-api.app.net"]) {
 //        [self setDefaultSSLPinningMode:AFSSLPinningModePublicKey];
 //    }
+    
+    UserManager *um = [UserManager sharedManager];
+    UserModel *loggedInUser = [um loggedInUser];
+    
+    [self setAuthorizationHeaderWithUsername:loggedInUser.username password:loggedInUser.password];
     
     return self;
 }
