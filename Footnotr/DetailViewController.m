@@ -62,6 +62,8 @@
     if (self.detailItem) {
         self.detailDescriptionLabel.text = [self.detailItem description];
         
+        self.navigationBar.title = [self.detailItem description];
+        
         //   THIS CODE IS FOR LOADING ARTICLE INFORMATION FROM A WEBSITE
         NSString *pdfPath = [self.documentDir stringByAppendingPathComponent:self.detailItem];
         
