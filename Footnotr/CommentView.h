@@ -19,6 +19,8 @@
 @property (strong, nonatomic) NSString *username;
 @property int votes;
 
+@property(strong, nonatomic) NSDate *created;
+
 @property (strong, nonatomic) MGLine *commentDetails;
 @property (strong, nonatomic) MGLine *commentContent;
 @property (strong, nonatomic) MGButton *voteBtn;

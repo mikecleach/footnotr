@@ -93,11 +93,54 @@
     }
     
     
+    [self.commentsHeader.sortVotesButton onControlEvent:UIControlEventTouchUpInside do:^{
+        
+        
+        [self.commentsScroller.boxes sortUsingComparator:^NSComparisonResult(id a, id b){
+            
+            int first = ((CommentView *)a).votes;
+            int second = ((CommentView *)b).votes;
+            
+            if (first < second) {
+                return NSOrderedDescending;
+            }
+            else if (first > second) {
+                return NSOrderedAscending;
+            }
+            else
+                return NSOrderedSame;
+            
+
+        }];
+        
+        
+        
+        [self.commentsScroller layout];
+    }];
+    
+    
+    [self.commentsHeader.sortDateButton onControlEvent:UIControlEventTouchUpInside do:^{
+    
+    
+        [self.commentsScroller.boxes sortUsingComparator:^NSComparisonResult(id a, id b){
+            
+            NSDate *first = ((CommentView *)a).created;
+            NSDate *second = ((CommentView *)b).created;
+            
+            
+            return [first compare:second];
+        }];
+        
+        [self.commentsScroller layout];
+    }];
+    
+    
+    
     //TODO:use uicontrol+mgevents here instead, 
     [self.commentsHeader.addCommentButton addTarget:self action:@selector(addCommentTapped:) forControlEvents:UIControlEventTouchDown];
     
     self.commentsHeader.backgroundColor = [UIColor colorWithRed:0.94 green:0.94 blue:0.95 alpha:1];
-    
+        
     
     
     self.commentsScroller.contentLayoutMode = MGLayoutTableStyle;
@@ -154,6 +197,9 @@
                 [newCommentView.voteBtn setHighlighted:YES];
             }
         }
+        
+        //Associate created date so we can sort easily. May be a hack.
+        newCommentView.created = commentModel.created;
         
         
         [newCommentView.voteBtn onControlEvent:UIControlEventTouchUpInside do:^{
