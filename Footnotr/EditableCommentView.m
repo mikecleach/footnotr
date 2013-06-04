@@ -49,7 +49,7 @@
     self.commentTV.autocorrectionType = UITextAutocorrectionTypeNo;
     self.commentTV.keyboardType = UIKeyboardTypeDefault;
     self.commentTV.returnKeyType = UIReturnKeyNext;
-    [self.commentTV setScrollEnabled:NO];
+    [self.commentTV setScrollEnabled:YES];
     
     
     //TODO: this may not be neccesary
