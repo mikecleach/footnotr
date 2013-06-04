@@ -331,7 +331,14 @@
     
     //FIXME:coordinates do not account for the 'Detail" Navigation Bar at top. Manually adjust for it here.
     //annotViewRect's origin is apparently not integer based, which can lead to uitextview aliasing issues so we round to a nice int value
-    CGPoint adjustedOffset = CGPointMake(roundf(annotViewRect.origin.x),  roundf(annotViewRect.origin.y + 48));
+    CGPoint adjustedOffset;
+    if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+        adjustedOffset = CGPointMake(roundf(annotViewRect.origin.x+320),  roundf(annotViewRect.origin.y + 48));
+    }
+    else {
+        adjustedOffset = CGPointMake(roundf(annotViewRect.origin.x),  roundf(annotViewRect.origin.y + 48));
+    }
+    
     [pc presentPopoverFromPoint:adjustedOffset];
     
 }
