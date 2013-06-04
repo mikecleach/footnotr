@@ -194,11 +194,12 @@
         
         [[APIHttpClient sharedClient] getPath:articlePath parameters:nil success:getArticleBlock  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             
-            NSLog(@"Initial article request failed. This may be because the pdf has never been seen before and returned Not Found");
+            NSLog(@"Initial article request failed. This may be because the pdf has never been seen before and returned 'Not found'");
             NSLog([error localizedDescription]);
+            NSLog([error localizedRecoverySuggestion]);
             
             //If not found was returned, it's a new article and we need to add it to the server
-            if ([[error localizedDescription] rangeOfString:@"Not found"].length > 0 ) {
+            if ([[error localizedRecoverySuggestion] rangeOfString:@"Not found"].length > 0 ) {
              
                 UserManager *um = [UserManager sharedManager];
                 UserModel *loggedInUser = [um loggedInUser];
