@@ -28,22 +28,24 @@
     
     UIFont *font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
     
+    //account for margins
+    int adjustedWidth = self.size.width-8-8;
     
-    NSString *initialEditorText = @"\n\n\n\n";
+    NSString *initialEditorText = @"\n\n\n\n\n\n\n";
     
     CGSize size = [initialEditorText sizeWithFont:font
-                               constrainedToSize:CGSizeMake(self.size.width, 100000)];
+                               constrainedToSize:CGSizeMake(adjustedWidth, 100000)];
     
     CGFloat multilineCommentHeight = size.height;
     
-    self.editor = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, self.size.width, multilineCommentHeight)];
+    self.editor = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, adjustedWidth, multilineCommentHeight)];
     self.editor.font = font;
     //self.editor.text = ;
     self.editor.autocorrectionType = UITextAutocorrectionTypeNo;
     self.editor.keyboardType = UIKeyboardTypeDefault;
     self.editor.returnKeyType = UIReturnKeyNext;
     
-    MGLine *commentLine = [MGLine lineWithLeft:self.editor right:nil size:CGSizeMake(self.size.width, size.height)];
+    MGLine *commentLine = [MGLine lineWithLeft:self.editor right:nil size:CGSizeMake(adjustedWidth, size.height)];
     
     
     [self.boxes addObject:commentLine];
@@ -71,7 +73,7 @@
     
     self.toolbarLine = [MGLine lineWithLeft:self.cancelBtn right:self.saveBtn size:CGSizeMake(480, 48)];
     
-    self.toolbarLine.padding = UIEdgeInsetsMake(4, 160, 4, 160);
+    self.toolbarLine.padding = UIEdgeInsetsMake(16, 60, 4, 160);
     
 //    [self.boxes addObject:self.cancelBtn];
 //    [self.boxes addObject:self.saveBtn];

@@ -80,7 +80,7 @@
         NSString *articlePath = [NSString stringWithFormat: @"articles/%@/",pdfFileMd5];
         
 
-        void (^getCommentBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
+        void (^getArticleBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
             
                 
                 NSError *error;
@@ -192,10 +192,13 @@
             };
         
         
-        [[APIHttpClient sharedClient] getPath:articlePath parameters:nil success:getCommentBlock  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [[APIHttpClient sharedClient] getPath:articlePath parameters:nil success:getArticleBlock  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+            NSLog(@"Initial article request failed. This may be because the pdf has never been seen before and returned Not Found");
+            NSLog([error localizedDescription]);
             
             //If not found was returned, it's a new article and we need to add it to the server
-            if ([[error localizedDescription] rangeOfString:@"Not found"].location == NSNotFound) {
+            if ([[error localizedDescription] rangeOfString:@"Not found"].length > 0 ) {
              
                 UserManager *um = [UserManager sharedManager];
                 UserModel *loggedInUser = [um loggedInUser];
@@ -207,9 +210,12 @@
                 [newArticle setObject:self.detailItem forKey:@"title"];
                 
                 NSString *path = @"articles/new";
-                [[APIHttpClient sharedClient] postPath:path parameters:newArticle success:getCommentBlock failure:nil];
+                [[APIHttpClient sharedClient] postPath:path parameters:newArticle success:getArticleBlock failure:nil];
                 
             }
+            //TODO: what if it failed because of an internet error? Need to deal with it
+            
+            
         }];
         
         //   END REMOTE LOADING OF ARTICLE INFORMATION
@@ -225,6 +231,8 @@
         NSArray *docPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         
         _documentDir = [docPaths objectAtIndex:0];
+        
+        
     }
     
     //FIXME:Stop autoloading test pdf
@@ -264,6 +272,13 @@
     };
     
     
+    void (^failedCreateAnnotationBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
+    
+        NSLog(@"***FAILED*** to create new annotation");
+        //TODO:undo highlight or else expext crashes
+    };
+    
+    
     NSMutableDictionary *newAnnotDict = [[NSMutableDictionary alloc] init];
     
     NSString *annotAsXml = [self getXmlStringForAnnotation:annotation];
@@ -283,7 +298,7 @@
     
     NSString *path = @"annotations/new";
     
-    [sharedClient postPath:path parameters:newAnnotDict success:createAnnotationBlock failure:nil];
+    [sharedClient postPath:path parameters:newAnnotDict success:createAnnotationBlock failure:failedCreateAnnotationBlock];
 }
 
 

@@ -10,7 +10,7 @@
 #import "AFJSONRequestOperation.h"
 #import "UserManager.h"
 
-static NSString * const kFootnotrAPIBaseURLString = @"http://127.0.0.1:8000/";
+static NSString * const kFootnotrAPIBaseURLString = @"http://footnotr.herokuapp.com/";//@"http://127.0.0.1:8000/";
 
 @implementation APIHttpClient
 

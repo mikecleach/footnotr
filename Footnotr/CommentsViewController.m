@@ -74,12 +74,17 @@
                         
                     };
                     
+                    void (^failedDeleteAnnotationBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
+                        
+                        NSLog(@"***FAILED*** to delete annotation");
+                                            };
+                    
                     
                     APIHttpClient *sharedClient = [APIHttpClient sharedClient];
                     
                     NSString *path = [NSString stringWithFormat:@"annotations/%d/", self.annot.pk];
                     
-                    [sharedClient deletePath:path parameters:nil success:deleteAnnotationBlock failure:nil];
+                    [sharedClient deletePath:path parameters:nil success:deleteAnnotationBlock failure:failedDeleteAnnotationBlock];
                     
                 }
             } cancelBlock:^{
@@ -174,6 +179,12 @@
                 };
                 
                 
+                void (^failedUpdateCommentBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
+                    
+                    NSLog(@"***FAILED*** to update comment");
+                    
+                };
+                
                 NSMutableDictionary *updateCommentDict = [[NSMutableDictionary alloc] init];
                 [updateCommentDict setObject:((EditableCommentView *)newCommentView).commentTV.text forKey:@"comment"];
                 
@@ -221,8 +232,14 @@
                 //this should update the votes label
                 [newCommentView setVoteCount:commentModel.votes.count];
                 
+            };
+            
+            void (^failedAddVoteBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
+                
+                NSLog(@"***FAILED*** to add vote");
                 
             };
+            
             
             void (^deleteVoteBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
                 
@@ -240,6 +257,12 @@
                 [newCommentView setVoteCount:commentModel.votes.count];
             };
             
+            void (^failedDeleteVoteBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
+                
+                NSLog(@"***FAILED*** to delete vote");
+                
+            };
+            
             
             APIHttpClient *sharedClient = [APIHttpClient sharedClient];
 
@@ -250,7 +273,7 @@
                 
                 NSString *path = [NSString stringWithFormat:@"votes/%d/", [commentModel getVoteForUser:loggedInUser].pk];
                 
-                [sharedClient deletePath:path parameters:nil success:deleteVoteBlock failure:nil];
+                [sharedClient deletePath:path parameters:nil success:deleteVoteBlock failure:failedDeleteVoteBlock];
             }
             else {
                 
@@ -260,7 +283,7 @@
                 
                 
                 NSString *path = @"votes/new";
-                [sharedClient postPath:path parameters:newVote success:addingVoteBlock failure:nil];
+                [sharedClient postPath:path parameters:newVote success:addingVoteBlock failure:failedAddVoteBlock];
             }
             
             NSLog(@"tapped");
@@ -287,12 +310,18 @@
                         
                     };
                     
+                    void (^failedDeleteCommentBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
+                        
+                        NSLog(@"***FAILED*** to delete comment");
+                        
+                    };
+                    
                     
                     APIHttpClient *sharedClient = [APIHttpClient sharedClient];
                     
                     NSString *path = [NSString stringWithFormat:@"comments/%d/", commentModel.pk];
                     
-                    [sharedClient deletePath:path parameters:nil success:deleteCommentBlock failure:nil];
+                    [sharedClient deletePath:path parameters:nil success:deleteCommentBlock failure:failedDeleteCommentBlock];
                     
                 }
             } cancelBlock:^{
@@ -331,7 +360,11 @@
     [newCommVC setDelegate:self];
     [newCommVC setTitle:@"Add A Comment"];
     
-    [self presentViewController:newCommVC animated:YES completion:nil];
+    [self presentViewController:newCommVC animated:YES completion:^{
+        CommentsViewController *cvc = self;
+    }];
+    newCommVC.view.superview.frame = CGRectMake(0, 0, 380, 200);//it's important to do this after presentModalViewController
+    newCommVC.view.superview.center = CGPointMake(roundf(self.view.superview.center.x), roundf(self.view.superview.center.y));
 
     
 }
@@ -369,8 +402,15 @@
         [newVote setObject:[NSString stringWithFormat:@"%d", loggedInUser.pk] forKey:@"user"];
         
         
+        void (^failedVoteForNewCommentBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
+            
+            NSLog(@"***FAILED*** to update comment");
+            
+        };
+        
         NSString *path = @"votes/new";
-        [[APIHttpClient sharedClient] postPath:path parameters:newVote success:nil failure:nil];
+        //TODO:Should have a proper success function here instead of assuming success
+        [[APIHttpClient sharedClient] postPath:path parameters:newVote success:nil failure:failedVoteForNewCommentBlock];
         
         
         //Set the vote count to 1 to match the vote we just sent to server
@@ -396,21 +436,32 @@
                 
             };
             
+            void (^failedDeleteCommentBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
+                
+                NSLog(@"***FAILED*** to delete comment");
+                
+            };
+            
             
             APIHttpClient *sharedClient = [APIHttpClient sharedClient];
             
             NSString *path = [NSString stringWithFormat:@"comments/%d/", newlyCreatedComment.pk];
             
-            [sharedClient deletePath:path parameters:nil success:deleteCommentBlock failure:nil];
+            [sharedClient deletePath:path parameters:nil success:deleteCommentBlock failure:failedDeleteCommentBlock];
             
         }];
-        
         
         
         [self.commentsScroller.boxes addObject:newCommentView];
         [self.commentsScroller layoutWithSpeed:0.4 completion:nil];
         [self.commentsScroller scrollToView:newCommentView withMargin:10];
         
+    };
+    
+    
+    void (^failedCreateCommentBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
+        
+        NSLog(@"***FAILED*** to update comment");
         
     };
     
@@ -424,11 +475,9 @@
     [newCommentDict setObject:comment forKey:@"comment"];
     
     
-    APIHttpClient *sharedClient = [APIHttpClient sharedClient];
-    
     NSString *path = @"comments/new";
     
-    [sharedClient postPath:path parameters:newCommentDict success:createCommentBlock failure:nil];
+    [[APIHttpClient sharedClient] postPath:path parameters:newCommentDict success:createCommentBlock failure:failedCreateCommentBlock];
     
     
     [self dismissViewControllerAnimated:YES completion:nil];

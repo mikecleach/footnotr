@@ -81,11 +81,12 @@
             <objects>
                 <viewController storyboardIdentifier="newCommentViewController" autoresizesArchivedViewToFullSize="NO" modalPresentationStyle="formSheet" id="jKQ-5D-zHQ" customClass="NewCommentViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" restorationIdentifier="" id="QO1-HD-cqG" customClass="NewCommentView">
-                        <rect key="frame" x="0.0" y="20" width="768" height="1004"/>
+                        <rect key="frame" x="0.0" y="20" width="540" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <value key="contentSizeForViewInPopover" type="size" width="360" height="480"/>
+                    <value key="contentSizeForViewInPopover" type="size" width="360" height="200"/>
+                    <modalFormSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="commView" destination="QO1-HD-cqG" id="O30-hR-QWe"/>
                     </connections>

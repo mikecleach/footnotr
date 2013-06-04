@@ -279,6 +279,8 @@
 		AE74BE93170E23200040F14A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE74BE92170E23200040F14A /* Security.framework */; };
 		AE74BE95170E23A70040F14A /* license.xml in Resources */ = {isa = PBXBuildFile; fileRef = AE74BE94170E23A70040F14A /* license.xml */; };
 		AE74BE99170E2AAC0040F14A /* test.pdf in Resources */ = {isa = PBXBuildFile; fileRef = AE74BE98170E2AAC0040F14A /* test.pdf */; };
+		AE884ACF175D5703009F17A8 /* Chicken_Thighs_with_Shallots_in_Red_Wine_Vinegar.pdf in Resources */ = {isa = PBXBuildFile; fileRef = AE884ACE175D5703009F17A8 /* Chicken_Thighs_with_Shallots_in_Red_Wine_Vinegar.pdf */; };
+		AE884AD1175D637C009F17A8 /* ECE361-Lecture1-DiscreteNatureOfInformation.pdf in Resources */ = {isa = PBXBuildFile; fileRef = AE884AD0175D637C009F17A8 /* ECE361-Lecture1-DiscreteNatureOfInformation.pdf */; };
 		AE908947173B6EBD00CCAB2F /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AE908946173B6EBD00CCAB2F /* UserModel.m */; };
 		AE90894A173B761900CCAB2F /* UserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AE908949173B761900CCAB2F /* UserManager.m */; };
 		AE97C6121730DF92007FC257 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE97C6111730DF92007FC257 /* MobileCoreServices.framework */; };
@@ -662,6 +664,8 @@
 		AE74BE92170E23200040F14A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		AE74BE94170E23A70040F14A /* license.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = license.xml; path = "../../../Downloads/iAnnotate_PDF_SDK-2.4-RC2-demo/samples/MultipleDocumentSample/license.xml"; sourceTree = "<group>"; };
 		AE74BE98170E2AAC0040F14A /* test.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = test.pdf; sourceTree = "<group>"; };
+		AE884ACE175D5703009F17A8 /* Chicken_Thighs_with_Shallots_in_Red_Wine_Vinegar.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Chicken_Thighs_with_Shallots_in_Red_Wine_Vinegar.pdf; sourceTree = "<group>"; };
+		AE884AD0175D637C009F17A8 /* ECE361-Lecture1-DiscreteNatureOfInformation.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "ECE361-Lecture1-DiscreteNatureOfInformation.pdf"; sourceTree = "<group>"; };
 		AE908945173B6EBD00CCAB2F /* UserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserModel.h; sourceTree = "<group>"; };
 		AE908946173B6EBD00CCAB2F /* UserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserModel.m; sourceTree = "<group>"; };
 		AE908948173B761900CCAB2F /* UserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserManager.h; sourceTree = "<group>"; };
@@ -1307,6 +1311,8 @@
 		AEE6568D1703DEEC000D3C57 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				AE884AD0175D637C009F17A8 /* ECE361-Lecture1-DiscreteNatureOfInformation.pdf */,
+				AE884ACE175D5703009F17A8 /* Chicken_Thighs_with_Shallots_in_Red_Wine_Vinegar.pdf */,
 				AE1327B41733353600746654 /* blackButton.png */,
 				AE1327B51733353600746654 /* blackButton@2x.png */,
 				AE1327B61733353600746654 /* blackButtonHighlight.png */,
@@ -1621,6 +1627,8 @@
 				AE6266D517546F48002A7FAF /* AP_unstick@2x.png in Resources */,
 				AE6266D617546F48002A7FAF /* AP_verticalDragger.png in Resources */,
 				AE6266D717546F48002A7FAF /* SimpleFontInfo.txt in Resources */,
+				AE884ACF175D5703009F17A8 /* Chicken_Thighs_with_Shallots_in_Red_Wine_Vinegar.pdf in Resources */,
+				AE884AD1175D637C009F17A8 /* ECE361-Lecture1-DiscreteNatureOfInformation.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
