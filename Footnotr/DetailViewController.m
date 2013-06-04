@@ -85,113 +85,64 @@
         void (^getArticleBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
             
                 
-                NSError *error;
-                self.article = [[ArticleModel alloc] initWithDictionary:JSON error:&error];
+            NSError *error;
+            self.article = [[ArticleModel alloc] initWithDictionary:JSON error:&error];
+            
+            //Now that annotations and associated xml is available, import the annotations to the pdf lib.
+            NSArray *annotsModelArray = [self.article annots];
+            
+            BOOL importSuccessful = [self importAnnotsToPdfLib:annotsModelArray];
+            
+            if(!importSuccessful) {
+                [self displayErrorAsAlert:@"Importing annotations to PDF library failed."];
+            }
+            
+            //Since the imported annotations don't use the xml unique id they store, we have to reassociate the
+            //imported annotations with their proper AnnotationModel instance. This is done by using the unix epoch
+            //creationStamp time as a unique identifier that AnnotationModels store.
+            NSArray *allLibAnnots = (NSArray *)[self.info allUserAnnotations];
+            
+            for (AnnotationModel *am in annotsModelArray) {
                 
-                //Now that annotations and associated xml is available, import the annotations to the pdf lib.
-                NSArray *annotsModelArray = [self.article annots];
+                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"creationStamp == %d", am.pdfLibID];
                 
-                BOOL importSuccessful = [self importAnnotsToPdfLib:annotsModelArray];
+                NSArray *matchingAnnot = [allLibAnnots filteredArrayUsingPredicate:predicate];
                 
-                if(!importSuccessful) {
-                    [self displayErrorAsAlert:@"Importing annotations to PDF library failed."];
-                }
+                am.annot = [matchingAnnot objectAtIndex:0];
                 
-                //Since the imported annotations don't use the xml unique id they store, we have to reassociate the
-                //imported annotations with their proper AnnotationModel instance. This is done by using the unix epoch
-                //creationStamp time as a unique identifier that AnnotationModels store.
-                NSArray *allLibAnnots = (NSArray *)[self.info allUserAnnotations];
+            }
+            
+            //Since the annotations are imported and associated with our data model, we can initialize the pdf document
+            APPDFDocument *pdfFile = [[APPDFDocument alloc] initWithPath:pdfPath information:self.info];
+            pdfDocument = pdfFile;
+            
+            /* create the view controller -- interactive on the iPad, read-only on the iPhone/iPod Touch... */
+            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+                pdfViewContr = [[APAnnotatingPDFViewController alloc] initWithPDF:pdfDocument];
+            else
+                pdfViewContr = (id)[[APPDFViewController alloc] initWithPDF:pdfDocument];
+            
+            
+            pdfViewContr.delegate = self;
+            
+            /* ...and load it into the view hierarchy */
+            //pdfView.view.frame = self.view.bounds;
+            pdfViewContr.view.frame = hostView.bounds;
+            pdfViewContr.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+            
+            //If a pdf file is already in view, we need to remove the current views before adding the new view.
+            [hostView.subviews makeObjectsPerformSelector: @selector(removeFromSuperview)];
+            
+            [hostView addSubview:pdfViewContr.view];
+            
+            [pdfViewContr fitToWidth];
+            
+            //Create the annotation menu offscreen and lay it out.
+            [self createNewAnnotationMenu];
+            
+            
                 
-                for (AnnotationModel *am in annotsModelArray) {
-                    
-                    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"creationStamp == %d", am.pdfLibID];
-                    
-                    NSArray *matchingAnnot = [allLibAnnots filteredArrayUsingPredicate:predicate];
-                    
-                    am.annot = [matchingAnnot objectAtIndex:0];
-                    
-                }
-                
-                //Since the annotations are imported and associated with our data model, we can initialize the pdf document
-                APPDFDocument *pdfFile = [[APPDFDocument alloc] initWithPath:pdfPath information:self.info];
-                pdfDocument = pdfFile;
-                
-                /* create the view controller -- interactive on the iPad, read-only on the iPhone/iPod Touch... */
-                if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-                    pdfViewContr = [[APAnnotatingPDFViewController alloc] initWithPDF:pdfDocument];
-                else
-                    pdfViewContr = (id)[[APPDFViewController alloc] initWithPDF:pdfDocument];
-                
-                
-                pdfViewContr.delegate = self;
-                
-                /* ...and load it into the view hierarchy */
-                //pdfView.view.frame = self.view.bounds;
-                pdfViewContr.view.frame = hostView.bounds;
-                pdfViewContr.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-                
-                //If a pdf file is already in view, we need to remove the current views before adding the new view.
-                [hostView.subviews makeObjectsPerformSelector: @selector(removeFromSuperview)];
-                
-                [hostView addSubview:pdfViewContr.view];
-                
-                [pdfViewContr fitToWidth];
-                
-                
-                
-                //Add new annotation menu
-                self.annotCreationMenu = [MGBox boxWithSize:CGSizeMake(200, 0)];
-                
-                //self.annotCreationMenu.frame = CGRectMake(0, -40, 200, 40);
-                
-                self.annotCreationMenu.center = CGPointMake(hostView.width/2, -40);
-                self.annotCreationMenu.backgroundColor = [UIColor colorWithRed:0.94 green:0.94 blue:0.95 alpha:1];
-                
-                
-                UIImage *buttonImage = [[UIImage imageNamed:@"blueButton.png"]
-                                        resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
-                
-                MGButton *doneBtn = [[MGButton alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
-                
-                [doneBtn setBackgroundImage:buttonImage forState:UIControlStateNormal];
-                [doneBtn setTitle:@"Done" forState:UIControlStateNormal];
-                doneBtn.margin = UIEdgeInsetsMake(4, 20, 4, 20);
-                
-                [doneBtn onControlEvent:UIControlEventTouchUpInside do:^{
-                    
-                    [pdfViewContr finishCurrentAnnotation];
-                }];
-                
-                
-                
-                MGButton *cancelBtn = [[MGButton alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
-                
-                
-                [cancelBtn setBackgroundImage:buttonImage forState:UIControlStateNormal];
-                [cancelBtn setTitle:@"Cancel" forState:UIControlStateNormal];
-                cancelBtn.margin = UIEdgeInsetsMake(4, 20, 4, 20);
-                
-                [cancelBtn onControlEvent:UIControlEventTouchUpInside do:^{
-                    
-                    [pdfViewContr cancelAddAnnotation];
-                }];
-                [self.annotCreationMenu.boxes addObject:cancelBtn];
-                [self.annotCreationMenu.boxes addObject:doneBtn];
-                
-                [self.annotCreationMenu setContentLayoutMode:MGLayoutGridStyle];
-                
-                self.annotCreationMenu.margin = UIEdgeInsetsMake(4, 20, 4, 20);
-                
-                //self.annotCreationMenu.sizingMode = MGResizingExpandWidthToFill;
-                
-                [self.annotCreationMenu layout];
-                
-                
-                [hostView addSubview:self.annotCreationMenu];
-                
-                
-                
-            };
+        };
         
         
         [[APIHttpClient sharedClient] getPath:articlePath parameters:nil success:getArticleBlock  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -371,19 +322,84 @@
     return NO;
 }
 
+
+- (void)createNewAnnotationMenu
+{
+    //Add new annotation menu
+    self.annotCreationMenu = MGTableBoxStyled.box;
+    self.annotCreationMenu.width = 200;
+    
+    //self.annotCreationMenu.frame = CGRectMake(0, -40, 200, 40);
+    
+    self.annotCreationMenu.center = CGPointMake(hostView.width/2, -68);
+    self.annotCreationMenu.backgroundColor = [UIColor colorWithRed:0.94 green:0.94 blue:0.95 alpha:1];
+    
+    
+    UIImage *buttonImage = [[UIImage imageNamed:@"blueButton.png"]
+                            resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
+    
+    MGButton *doneBtn = [[MGButton alloc] initWithFrame:CGRectMake(0, 0, 60, 24)];
+    
+    [doneBtn setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    [doneBtn setTitle:@"Done" forState:UIControlStateNormal];
+    doneBtn.margin = UIEdgeInsetsMake(0, 20, 4, 20);
+    
+    [doneBtn onControlEvent:UIControlEventTouchUpInside do:^{
+        
+        [pdfViewContr finishCurrentAnnotation];
+    }];
+    
+    
+    MGButton *cancelBtn = [[MGButton alloc] initWithFrame:CGRectMake(0, 0, 60, 24)];
+    
+    
+    [cancelBtn setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    [cancelBtn setTitle:@"Cancel" forState:UIControlStateNormal];
+    cancelBtn.margin = UIEdgeInsetsMake(0, 20, 4, 20);
+    
+    [cancelBtn onControlEvent:UIControlEventTouchUpInside do:^{
+        
+        [pdfViewContr cancelAddAnnotation];
+    }];
+    
+    MGLine *buttonsLine = [MGLine lineWithLeft:cancelBtn right:doneBtn size:CGSizeMake(200, 30)];
+    
+    
+    MGLineStyled *addAnnotHeader = [MGLineStyled lineWithLeft:@"Add New Annotation" right:nil size:CGSizeMake(200, 30)];
+    addAnnotHeader.padding = UIEdgeInsetsMake(0, 27, 0, 0);
+    
+    
+    [self.annotCreationMenu.topLines addObject:addAnnotHeader];
+    [self.annotCreationMenu.bottomLines addObject:buttonsLine];
+    
+    [self.annotCreationMenu setContentLayoutMode:MGLayoutGridStyle];
+    
+    self.annotCreationMenu.margin = UIEdgeInsetsMake(4, 20, 4, 20);
+    //self.annotCreationMenu.borderStyle = MGBorderEtchedAll;
+    
+    //self.annotCreationMenu.sizingMode = MGResizingExpandWidthToFill;
+    
+    [self.annotCreationMenu layout];
+    
+    
+    [hostView addSubview:self.annotCreationMenu];
+}
+
+
 - (void)pdfController:(APAnnotatingPDFViewController *)controller didEnterAnnotationMode:(APAnnotationType)type
 {
     [UIView animateWithDuration:0.7 animations:^{
     
-        self.annotCreationMenu.center = CGPointMake(hostView.width/2, 20);
+        self.annotCreationMenu.center = CGPointMake(hostView.width/2, 34);
     }];
 }
+
 
 - (void)pdfController:(APAnnotatingPDFViewController *)controller didEndAnnotationMode:(APAnnotationType)type
 {
     [UIView animateWithDuration:0.7 animations:^{
         
-        self.annotCreationMenu.center = CGPointMake(hostView.width/2, -20);
+        self.annotCreationMenu.center = CGPointMake(hostView.width/2, -34);
     }];
 }
 

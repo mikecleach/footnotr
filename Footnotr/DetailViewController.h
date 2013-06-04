@@ -23,7 +23,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationBar;
 
-@property (strong, nonatomic) MGBox *annotCreationMenu;
+@property (strong, nonatomic) MGTableBox *annotCreationMenu;
 
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 @property (strong, nonatomic) NSMutableData *serverResponse;
