@@ -14,6 +14,8 @@
 #import "UserManager.h"
 #import <Foundation/Foundation.h>
 #import "FileMD5Hash.h"
+#import "WBErrorNoticeView.h"
+#import "WBSuccessNoticeView.h"
 
 
 @interface DetailViewController ()
@@ -211,12 +213,20 @@
                 [newArticle setObject:self.detailItem forKey:@"title"];
                 
                 NSString *path = @"articles/new";
-                [[APIHttpClient sharedClient] postPath:path parameters:newArticle success:getArticleBlock failure:nil];
+                [[APIHttpClient sharedClient] postPath:path parameters:newArticle success:getArticleBlock failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                
+                    WBErrorNoticeView *notice = [WBErrorNoticeView errorNoticeInView:self.view title:@"Article Request Failed" message:@"Server did not create article on server. Please try again."];
+                    notice.delay = 4.0;
+                    [notice show];
+                }];
                 
             }
-            //TODO: what if it failed because of an internet error? Need to deal with it
+            else {//TODO: what if it failed because of an internet error? Need to deal with it
             
-            
+                WBErrorNoticeView *notice = [WBErrorNoticeView errorNoticeInView:self.view title:@"Article Request Failed" message:@"Server did not return article data. Please try again."];
+                notice.delay = 4.0;
+                [notice show];
+            }
         }];
         
         //   END REMOTE LOADING OF ARTICLE INFORMATION
@@ -277,6 +287,9 @@
     
         NSLog(@"***FAILED*** to create new annotation");
         //TODO:undo highlight or else expext crashes
+        WBErrorNoticeView *notice = [WBErrorNoticeView errorNoticeInView:self.view title:@"Annotation Request Failed" message:@"Failed to save annotation. Please try again."];
+        notice.delay = 4.0;
+        [notice show];
     };
     
     

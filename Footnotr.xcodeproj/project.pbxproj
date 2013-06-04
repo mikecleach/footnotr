@@ -279,6 +279,17 @@
 		AE74BE93170E23200040F14A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE74BE92170E23200040F14A /* Security.framework */; };
 		AE74BE95170E23A70040F14A /* license.xml in Resources */ = {isa = PBXBuildFile; fileRef = AE74BE94170E23A70040F14A /* license.xml */; };
 		AE74BE99170E2AAC0040F14A /* test.pdf in Resources */ = {isa = PBXBuildFile; fileRef = AE74BE98170E2AAC0040F14A /* test.pdf */; };
+		AE85F58F175DC2240025BF4E /* NoticeView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AE85F579175DC2240025BF4E /* NoticeView.bundle */; };
+		AE85F590175DC2240025BF4E /* NSOperationQueue+WBNoticeExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = AE85F57B175DC2240025BF4E /* NSOperationQueue+WBNoticeExtensions.m */; };
+		AE85F591175DC2240025BF4E /* UILabel+WBExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = AE85F57D175DC2240025BF4E /* UILabel+WBExtensions.m */; };
+		AE85F592175DC2240025BF4E /* WBBlueGradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE85F57F175DC2240025BF4E /* WBBlueGradientView.m */; };
+		AE85F593175DC2240025BF4E /* WBErrorNoticeView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE85F581175DC2240025BF4E /* WBErrorNoticeView.m */; };
+		AE85F594175DC2240025BF4E /* WBGrayGradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE85F583175DC2240025BF4E /* WBGrayGradientView.m */; };
+		AE85F595175DC2240025BF4E /* WBNoticeOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = AE85F585175DC2240025BF4E /* WBNoticeOperation.m */; };
+		AE85F596175DC2240025BF4E /* WBNoticeView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE85F587175DC2240025BF4E /* WBNoticeView.m */; };
+		AE85F597175DC2240025BF4E /* WBRedGradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE85F58A175DC2240025BF4E /* WBRedGradientView.m */; };
+		AE85F598175DC2240025BF4E /* WBStickyNoticeView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE85F58C175DC2240025BF4E /* WBStickyNoticeView.m */; };
+		AE85F599175DC2240025BF4E /* WBSuccessNoticeView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE85F58E175DC2240025BF4E /* WBSuccessNoticeView.m */; };
 		AE884ACF175D5703009F17A8 /* Chicken_Thighs_with_Shallots_in_Red_Wine_Vinegar.pdf in Resources */ = {isa = PBXBuildFile; fileRef = AE884ACE175D5703009F17A8 /* Chicken_Thighs_with_Shallots_in_Red_Wine_Vinegar.pdf */; };
 		AE884AD1175D637C009F17A8 /* ECE361-Lecture1-DiscreteNatureOfInformation.pdf in Resources */ = {isa = PBXBuildFile; fileRef = AE884AD0175D637C009F17A8 /* ECE361-Lecture1-DiscreteNatureOfInformation.pdf */; };
 		AE908947173B6EBD00CCAB2F /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AE908946173B6EBD00CCAB2F /* UserModel.m */; };
@@ -664,6 +675,28 @@
 		AE74BE92170E23200040F14A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		AE74BE94170E23A70040F14A /* license.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = license.xml; path = "../../../Downloads/iAnnotate_PDF_SDK-2.4-RC2-demo/samples/MultipleDocumentSample/license.xml"; sourceTree = "<group>"; };
 		AE74BE98170E2AAC0040F14A /* test.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = test.pdf; sourceTree = "<group>"; };
+		AE85F579175DC2240025BF4E /* NoticeView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = NoticeView.bundle; sourceTree = "<group>"; };
+		AE85F57A175DC2240025BF4E /* NSOperationQueue+WBNoticeExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSOperationQueue+WBNoticeExtensions.h"; sourceTree = "<group>"; };
+		AE85F57B175DC2240025BF4E /* NSOperationQueue+WBNoticeExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSOperationQueue+WBNoticeExtensions.m"; sourceTree = "<group>"; };
+		AE85F57C175DC2240025BF4E /* UILabel+WBExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+WBExtensions.h"; sourceTree = "<group>"; };
+		AE85F57D175DC2240025BF4E /* UILabel+WBExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+WBExtensions.m"; sourceTree = "<group>"; };
+		AE85F57E175DC2240025BF4E /* WBBlueGradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBBlueGradientView.h; sourceTree = "<group>"; };
+		AE85F57F175DC2240025BF4E /* WBBlueGradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBBlueGradientView.m; sourceTree = "<group>"; };
+		AE85F580175DC2240025BF4E /* WBErrorNoticeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBErrorNoticeView.h; sourceTree = "<group>"; };
+		AE85F581175DC2240025BF4E /* WBErrorNoticeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBErrorNoticeView.m; sourceTree = "<group>"; };
+		AE85F582175DC2240025BF4E /* WBGrayGradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBGrayGradientView.h; sourceTree = "<group>"; };
+		AE85F583175DC2240025BF4E /* WBGrayGradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBGrayGradientView.m; sourceTree = "<group>"; };
+		AE85F584175DC2240025BF4E /* WBNoticeOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBNoticeOperation.h; sourceTree = "<group>"; };
+		AE85F585175DC2240025BF4E /* WBNoticeOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBNoticeOperation.m; sourceTree = "<group>"; };
+		AE85F586175DC2240025BF4E /* WBNoticeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBNoticeView.h; sourceTree = "<group>"; };
+		AE85F587175DC2240025BF4E /* WBNoticeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBNoticeView.m; sourceTree = "<group>"; };
+		AE85F588175DC2240025BF4E /* WBNoticeView+ForSubclassEyesOnly.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBNoticeView+ForSubclassEyesOnly.h"; sourceTree = "<group>"; };
+		AE85F589175DC2240025BF4E /* WBRedGradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBRedGradientView.h; sourceTree = "<group>"; };
+		AE85F58A175DC2240025BF4E /* WBRedGradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBRedGradientView.m; sourceTree = "<group>"; };
+		AE85F58B175DC2240025BF4E /* WBStickyNoticeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBStickyNoticeView.h; sourceTree = "<group>"; };
+		AE85F58C175DC2240025BF4E /* WBStickyNoticeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBStickyNoticeView.m; sourceTree = "<group>"; };
+		AE85F58D175DC2240025BF4E /* WBSuccessNoticeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBSuccessNoticeView.h; sourceTree = "<group>"; };
+		AE85F58E175DC2240025BF4E /* WBSuccessNoticeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBSuccessNoticeView.m; sourceTree = "<group>"; };
 		AE884ACE175D5703009F17A8 /* Chicken_Thighs_with_Shallots_in_Red_Wine_Vinegar.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Chicken_Thighs_with_Shallots_in_Red_Wine_Vinegar.pdf; sourceTree = "<group>"; };
 		AE884AD0175D637C009F17A8 /* ECE361-Lecture1-DiscreteNatureOfInformation.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "ECE361-Lecture1-DiscreteNatureOfInformation.pdf"; sourceTree = "<group>"; };
 		AE908945173B6EBD00CCAB2F /* UserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserModel.h; sourceTree = "<group>"; };
@@ -1193,6 +1226,35 @@
 			name = AjiPDF;
 			sourceTree = "<group>";
 		};
+		AE85F578175DC20C0025BF4E /* NoticeView */ = {
+			isa = PBXGroup;
+			children = (
+				AE85F579175DC2240025BF4E /* NoticeView.bundle */,
+				AE85F57A175DC2240025BF4E /* NSOperationQueue+WBNoticeExtensions.h */,
+				AE85F57B175DC2240025BF4E /* NSOperationQueue+WBNoticeExtensions.m */,
+				AE85F57C175DC2240025BF4E /* UILabel+WBExtensions.h */,
+				AE85F57D175DC2240025BF4E /* UILabel+WBExtensions.m */,
+				AE85F57E175DC2240025BF4E /* WBBlueGradientView.h */,
+				AE85F57F175DC2240025BF4E /* WBBlueGradientView.m */,
+				AE85F580175DC2240025BF4E /* WBErrorNoticeView.h */,
+				AE85F581175DC2240025BF4E /* WBErrorNoticeView.m */,
+				AE85F582175DC2240025BF4E /* WBGrayGradientView.h */,
+				AE85F583175DC2240025BF4E /* WBGrayGradientView.m */,
+				AE85F584175DC2240025BF4E /* WBNoticeOperation.h */,
+				AE85F585175DC2240025BF4E /* WBNoticeOperation.m */,
+				AE85F586175DC2240025BF4E /* WBNoticeView.h */,
+				AE85F587175DC2240025BF4E /* WBNoticeView.m */,
+				AE85F588175DC2240025BF4E /* WBNoticeView+ForSubclassEyesOnly.h */,
+				AE85F589175DC2240025BF4E /* WBRedGradientView.h */,
+				AE85F58A175DC2240025BF4E /* WBRedGradientView.m */,
+				AE85F58B175DC2240025BF4E /* WBStickyNoticeView.h */,
+				AE85F58C175DC2240025BF4E /* WBStickyNoticeView.m */,
+				AE85F58D175DC2240025BF4E /* WBSuccessNoticeView.h */,
+				AE85F58E175DC2240025BF4E /* WBSuccessNoticeView.m */,
+			);
+			name = NoticeView;
+			sourceTree = "<group>";
+		};
 		AEAED006172F982200665961 /* AFNetworking */ = {
 			isa = PBXGroup;
 			children = (
@@ -1222,6 +1284,7 @@
 		AEE6567A1703DEEB000D3C57 = {
 			isa = PBXGroup;
 			children = (
+				AE85F578175DC20C0025BF4E /* NoticeView */,
 				AE651F40175A8BD1005B85BB /* UIAlertViewBlocks */,
 				AE5B184D17585F7E009865D6 /* FileMD5 */,
 				AE1327B217330D9B00746654 /* CoreData.framework */,
@@ -1629,6 +1692,7 @@
 				AE6266D717546F48002A7FAF /* SimpleFontInfo.txt in Resources */,
 				AE884ACF175D5703009F17A8 /* Chicken_Thighs_with_Shallots_in_Red_Wine_Vinegar.pdf in Resources */,
 				AE884AD1175D637C009F17A8 /* ECE361-Lecture1-DiscreteNatureOfInformation.pdf in Resources */,
+				AE85F58F175DC2240025BF4E /* NoticeView.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1726,6 +1790,16 @@
 				AE62656E17546EE3002A7FAF /* EditableCommentView.m in Sources */,
 				AE5B185017586851009865D6 /* FileMD5Hash.c in Sources */,
 				AE651F43175A8BE7005B85BB /* UIAlertView+Blocks.m in Sources */,
+				AE85F590175DC2240025BF4E /* NSOperationQueue+WBNoticeExtensions.m in Sources */,
+				AE85F591175DC2240025BF4E /* UILabel+WBExtensions.m in Sources */,
+				AE85F592175DC2240025BF4E /* WBBlueGradientView.m in Sources */,
+				AE85F593175DC2240025BF4E /* WBErrorNoticeView.m in Sources */,
+				AE85F594175DC2240025BF4E /* WBGrayGradientView.m in Sources */,
+				AE85F595175DC2240025BF4E /* WBNoticeOperation.m in Sources */,
+				AE85F596175DC2240025BF4E /* WBNoticeView.m in Sources */,
+				AE85F597175DC2240025BF4E /* WBRedGradientView.m in Sources */,
+				AE85F598175DC2240025BF4E /* WBStickyNoticeView.m in Sources */,
+				AE85F599175DC2240025BF4E /* WBSuccessNoticeView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

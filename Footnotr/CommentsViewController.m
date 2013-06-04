@@ -17,6 +17,8 @@
 #import "UserManager.h"
 #import "UIControl+MGEvents.h"
 #import "UIAlertView+Blocks.h"
+#import "WBErrorNoticeView.h"
+#import "WBSuccessNoticeView.h"
 
 #import "APIHttpClient.h"
 
@@ -77,7 +79,10 @@
                     void (^failedDeleteAnnotationBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
                         
                         NSLog(@"***FAILED*** to delete annotation");
-                                            };
+                        WBErrorNoticeView *notice = [WBErrorNoticeView errorNoticeInView:self.view title:@"Annotation Request Failed" message:@"Annotation was not deleted. Please try again."];
+                        notice.delay = 4.0;
+                        [notice show];
+                    };
                     
                     
                     APIHttpClient *sharedClient = [APIHttpClient sharedClient];
@@ -182,6 +187,9 @@
                 void (^failedUpdateCommentBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
                     
                     NSLog(@"***FAILED*** to update comment");
+                    WBErrorNoticeView *notice = [WBErrorNoticeView errorNoticeInView:self.view title:@"Comment Request Failed" message:@"Comment was not updated. Please try again."];
+                    notice.delay = 4.0;
+                    [notice show];
                     
                 };
                 
@@ -193,7 +201,7 @@
                 
                 NSString *path = [NSString stringWithFormat:@"comments/%d/", commentModel.pk];
                 
-                [sharedClient patchPath:path parameters:updateCommentDict success:updateCommentBlock failure:nil];
+                [sharedClient patchPath:path parameters:updateCommentDict success:updateCommentBlock failure:failedUpdateCommentBlock];
                 
             }];
             
@@ -237,6 +245,9 @@
             void (^failedAddVoteBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
                 
                 NSLog(@"***FAILED*** to add vote");
+                WBErrorNoticeView *notice = [WBErrorNoticeView errorNoticeInView:self.view title:@"Vote Request Failed" message:@"Vote was not saved. Please try again."];
+                notice.delay = 4.0;
+                [notice show];
                 
             };
             
@@ -260,6 +271,9 @@
             void (^failedDeleteVoteBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
                 
                 NSLog(@"***FAILED*** to delete vote");
+                WBErrorNoticeView *notice = [WBErrorNoticeView errorNoticeInView:self.view title:@"Vote Request Failed" message:@"Vote was not deleted. Please try again."];
+                notice.delay = 4.0;
+                [notice show];
                 
             };
             
@@ -313,6 +327,9 @@
                     void (^failedDeleteCommentBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
                         
                         NSLog(@"***FAILED*** to delete comment");
+                        WBErrorNoticeView *notice = [WBErrorNoticeView errorNoticeInView:self.view title:@"Comment Request Failed" message:@"Comment was not deleted. Please try again."];
+                        notice.delay = 4.0;
+                        [notice show];
                         
                     };
                     
@@ -404,7 +421,10 @@
         
         void (^failedVoteForNewCommentBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
             
-            NSLog(@"***FAILED*** to update comment");
+            NSLog(@"***FAILED*** to add user vote for new comment");
+            WBErrorNoticeView *notice = [WBErrorNoticeView errorNoticeInView:self.view title:@"Vote Request Failed" message:@"Vote was not added. Please try again."];
+            notice.delay = 4.0;
+            [notice show];
             
         };
         
@@ -439,6 +459,9 @@
             void (^failedDeleteCommentBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
                 
                 NSLog(@"***FAILED*** to delete comment");
+                WBErrorNoticeView *notice = [WBErrorNoticeView errorNoticeInView:self.view title:@"Comment Request Failed" message:@"Comment was not deleted. Please try again."];
+                notice.delay = 4.0;
+                [notice show];
                 
             };
             
@@ -461,7 +484,10 @@
     
     void (^failedCreateCommentBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
         
-        NSLog(@"***FAILED*** to update comment");
+        NSLog(@"***FAILED*** to create comment");
+        WBErrorNoticeView *notice = [WBErrorNoticeView errorNoticeInView:self.view title:@"Comment Request Failed" message:@"Comment was not saved. Please try again."];
+        notice.delay = 4.0;
+        [notice show];
         
     };
     
