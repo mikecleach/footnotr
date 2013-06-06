@@ -52,26 +52,6 @@
     [self.commentTV setScrollEnabled:YES];
     
     
-    //TODO: this may not be neccesary
-    //        //Create done button for an input accessory view to the keyboard to finish editing a comment.
-    //        UIView *inputAccView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
-    //
-    //        UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    //        [doneButton setFrame:CGRectMake(0.0f, 0.0f, 60.0f, 30.0f)];
-    //        [doneButton setTitle:@"Done" forState:UIControlStateNormal];
-    //        [doneButton setBackgroundColor:[UIColor blueColor]];
-    //
-    //
-    //        [doneButton onControlEvent:UIControlEventTouchUpInside do:^{
-    //            [myTextView resignFirstResponder];
-    //
-    //        }];
-    //
-    //        [inputAccView addSubview:doneButton];
-    //
-    //        [myTextView setInputAccessoryView:inputAccView];
-    //
-    
     self.commentContent = [MGLine lineWithLeft:self.commentTV right:nil size:CGSizeMake(self.size.width, multilineCommentHeight)];
     
     //self.commentContent.margin = UIEdgeInsetsMake(16, 16, 16, 16);

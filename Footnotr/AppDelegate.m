@@ -20,7 +20,7 @@
     library = [[APLibrary alloc] initWithLicenseKey:@"FORSS-QSRWK-OIQEJ-KLQVL-GJKGT-HGVOU-OEROT-RPQTO" dataFolder:nil];
     NSAssert(nil != library, @"AjiPDFLib failed to initialize.");
     
-    //FIXME:Add proper login screen, and set user based on that
+    //TODO:Add proper login screen, and set user based on that
     UserManager *uManager = [UserManager sharedManager];
     
     NSError *error;

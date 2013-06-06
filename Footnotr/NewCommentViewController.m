@@ -53,7 +53,7 @@
 {
     [super viewWillAppear:animated];
     
-    self.view.superview.frame = CGRectMake(0, 0, 480, 360);//it's important to do this after presentModalViewController
+    self.view.superview.frame = CGRectMake(0, 0, 380, 360);//it's important to do this after presentModalViewController
     CGPoint windowCenter = [self presentingViewController].view.window.center;
     self.view.superview.center = windowCenter;
 }

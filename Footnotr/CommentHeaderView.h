@@ -24,6 +24,4 @@
 @property (strong, nonatomic) MGLine *commentHeaderBar;
 @property (strong, nonatomic) MGLine *commentSubheaderBar;
 
-//TODO: Add expand comments grid button
-
 @end

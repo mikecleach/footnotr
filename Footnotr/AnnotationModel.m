@@ -15,7 +15,6 @@
 {
     [self.comments addObject:commentToAdd];
     
-    //TODO:trigger add object event here, so ui knows to update??
 }
 
 - (void)removeComment:(CommentModel *)commentToRemove

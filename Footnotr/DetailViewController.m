@@ -172,7 +172,7 @@
                 }];
                 
             }
-            else {//TODO: what if it failed because of an internet error? Need to deal with it
+            else {
             
                 WBErrorNoticeView *notice = [WBErrorNoticeView errorNoticeInView:self.view title:@"Article Request Failed" message:@"Server did not return article data. Please try again."];
                 notice.delay = 4.0;
@@ -197,8 +197,8 @@
         
     }
     
-    //FIXME:Stop autoloading test pdf
-    _detailItem = @"test.pdf";
+    //FIXME: load last file loaded
+    _detailItem = @"GettingStartedWithFootnotr.pdf";
     
     
     UILongPressGestureRecognizer *longTapRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longTap:)];

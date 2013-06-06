@@ -66,7 +66,7 @@
                         
                         [self.parentArticle removeAnnotation:self.annot];
                         
-                        BOOL annotRemoved = [self.parentPdfInfo removeAnnotation:self.annot.annot];
+                        [self.parentPdfInfo removeAnnotation:self.annot.annot];
                         
                         
                         [self.parentPdfView reloadAnnotationViews];
@@ -230,8 +230,7 @@
                 createdVote.pk = [[JSON objectForKey:@"pk"] intValue];
                 createdVote.username = [JSON objectForKey:@"username"];
                 
-                //TODO:What if vote failed? This assumes it doesnt
-                //vote was successful, so we add to model, which should notify VC, which should update view button
+
                 [commentModel addVote:createdVote];
                 
                 [newCommentView.voteBtn setHighlighted:YES];
@@ -254,15 +253,11 @@
             
             void (^deleteVoteBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
                 
-                //TODO:what if delete fails? need to handle it
-                
-                
                 VoteModel *deletedVote = [commentModel getVoteForUser:loggedInUser];
                 
                 [commentModel removeVote:deletedVote];
                 
-                    
-
+                
                 [newCommentView.voteBtn setHighlighted:NO];
 
                 [newCommentView setVoteCount:commentModel.votes.count];
@@ -374,12 +369,13 @@
     [self setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
     
     NewCommentViewController *newCommVC = [self.storyboard instantiateViewControllerWithIdentifier:@"newCommentViewController"];
+    
+    //Fixing the form sheet size nonsense
+    ((NewCommentView *)newCommVC.view).editor.size = CGSizeMake(380, newCommVC.view.size.height);
     [newCommVC setDelegate:self];
     [newCommVC setTitle:@"Add A Comment"];
     
-    [self presentViewController:newCommVC animated:YES completion:^{
-        CommentsViewController *cvc = self;
-    }];
+    [self presentViewController:newCommVC animated:YES completion:nil];
     newCommVC.view.superview.frame = CGRectMake(0, 0, 380, 200);//it's important to do this after presentModalViewController
     newCommVC.view.superview.center = CGPointMake(roundf(self.view.superview.center.x), roundf(self.view.superview.center.y));
 
@@ -399,7 +395,7 @@
 - (void) newCommentViewController:(NewCommentViewController *)newCommVC didProvideComment:(NSString *)comment
 {
 
-    //TODO:veto dismissing the view controller if save to server fails
+
     void (^createCommentBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
         
         NSLog(@"create comment on server call succeeded");

@@ -48,6 +48,8 @@
     
     NSString *lectureFilePath = [NSString stringWithFormat:@"%@%@", documentsDir, @"ECE361-Lecture1-DiscreteNatureOfInformation.pdf"];
     
+        NSString *gettingStartedFilePath = [NSString stringWithFormat:@"%@%@", documentsDir, @"GettingStartedWithFootnotr.pdf"];
+    
     NSBundle *bundle = [NSBundle mainBundle];
     
     //Copy the recipe pdf to the documents dir if it doesn't exist
@@ -61,10 +63,17 @@
 
     //Copy the lecture pdf to the documents dir if it doesn't exist
     saveFilePath = [documentsDir stringByAppendingPathComponent:@"ECE361-Lecture1-DiscreteNatureOfInformation.pdf"];
-    if ([fileManager fileExistsAtPath:recipeFilePath] == NO)
-        [fileManager createDirectoryAtPath:recipeFilePath withIntermediateDirectories:YES attributes:nil error:nil];
+    if ([fileManager fileExistsAtPath:lectureFilePath] == NO)
+        [fileManager createDirectoryAtPath:lectureFilePath withIntermediateDirectories:YES attributes:nil error:nil];
     
     [fileManager copyItemAtPath:[bundle pathForResource:@"ECE361-Lecture1-DiscreteNatureOfInformation" ofType:@"pdf"] toPath:saveFilePath error:NULL];
+    
+    //Copy the getting started pdf to the documents dir if it doesn't exist
+    saveFilePath = [documentsDir stringByAppendingPathComponent:@"GettingStartedWithFootnotr.pdf"];
+    if ([fileManager fileExistsAtPath:gettingStartedFilePath] == NO)
+        [fileManager createDirectoryAtPath:gettingStartedFilePath withIntermediateDirectories:YES attributes:nil error:nil];
+    
+    [fileManager copyItemAtPath:[bundle pathForResource:@"GettingStartedWithFootnotr" ofType:@"pdf"] toPath:saveFilePath error:NULL];
     
     
     NSError *error;

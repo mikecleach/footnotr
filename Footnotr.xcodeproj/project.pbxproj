@@ -298,6 +298,7 @@
 		AE98B0CA171923A100807CB0 /* ArticleCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = AE98B0C9171923A100807CB0 /* ArticleCoordinator.m */; };
 		AEA1326717320656001AAEAC /* CommentView.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA1326617320656001AAEAC /* CommentView.m */; };
 		AEA1326A17321F25001AAEAC /* CommentHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA1326917321F25001AAEAC /* CommentHeaderView.m */; };
+		AEA7E4E8175F220900B33E72 /* GettingStartedWithFootnotr.pdf in Resources */ = {isa = PBXBuildFile; fileRef = AEA7E4E7175F220900B33E72 /* GettingStartedWithFootnotr.pdf */; };
 		AEAECFE4172F8BC600665961 /* ArticleModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AEAECFE3172F8BC500665961 /* ArticleModel.m */; };
 		AEAECFE7172F8D5400665961 /* APIHttpClient.m in Sources */ = {isa = PBXBuildFile; fileRef = AEAECFE6172F8D5400665961 /* APIHttpClient.m */; };
 		AEAECFE9172F950700665961 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEAECFE8172F950700665961 /* SystemConfiguration.framework */; };
@@ -710,6 +711,7 @@
 		AEA1326617320656001AAEAC /* CommentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentView.m; sourceTree = "<group>"; };
 		AEA1326817321F25001AAEAC /* CommentHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentHeaderView.h; sourceTree = "<group>"; };
 		AEA1326917321F25001AAEAC /* CommentHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentHeaderView.m; sourceTree = "<group>"; };
+		AEA7E4E7175F220900B33E72 /* GettingStartedWithFootnotr.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = GettingStartedWithFootnotr.pdf; sourceTree = "<group>"; };
 		AEAECFE2172F8BC500665961 /* ArticleModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArticleModel.h; sourceTree = "<group>"; };
 		AEAECFE3172F8BC500665961 /* ArticleModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArticleModel.m; sourceTree = "<group>"; };
 		AEAECFE5172F8D5400665961 /* APIHttpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIHttpClient.h; sourceTree = "<group>"; };
@@ -1374,6 +1376,7 @@
 		AEE6568D1703DEEC000D3C57 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				AEA7E4E7175F220900B33E72 /* GettingStartedWithFootnotr.pdf */,
 				AE884AD0175D637C009F17A8 /* ECE361-Lecture1-DiscreteNatureOfInformation.pdf */,
 				AE884ACE175D5703009F17A8 /* Chicken_Thighs_with_Shallots_in_Red_Wine_Vinegar.pdf */,
 				AE1327B41733353600746654 /* blackButton.png */,
@@ -1693,6 +1696,7 @@
 				AE884ACF175D5703009F17A8 /* Chicken_Thighs_with_Shallots_in_Red_Wine_Vinegar.pdf in Resources */,
 				AE884AD1175D637C009F17A8 /* ECE361-Lecture1-DiscreteNatureOfInformation.pdf in Resources */,
 				AE85F58F175DC2240025BF4E /* NoticeView.bundle in Resources */,
+				AEA7E4E8175F220900B33E72 /* GettingStartedWithFootnotr.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1901,6 +1905,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Footnotr/Footnotr-Prefix.pch";
 				INFOPLIST_FILE = "Footnotr/Footnotr-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1928,6 +1933,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Footnotr/Footnotr-Prefix.pch";
 				INFOPLIST_FILE = "Footnotr/Footnotr-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
