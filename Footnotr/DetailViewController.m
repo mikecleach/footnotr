@@ -81,6 +81,13 @@
         
         NSString *articlePath = [NSString stringWithFormat: @"articles/%@/",pdfFileMd5];
         
+        
+        UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+        spinner.center = CGPointMake(hostView.center.x, hostView.center.y);
+        spinner.color = [UIColor blueColor];
+        [spinner startAnimating];
+        [hostView addSubview:spinner];
+        
 
         void (^getArticleBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
             
@@ -131,6 +138,9 @@
             pdfViewContr.view.frame = hostView.bounds;
             pdfViewContr.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
             
+            //Cancel loading spinner
+            [spinner removeFromSuperview];
+            
             //If a pdf file is already in view, we need to remove the current views before adding the new view.
             [hostView.subviews makeObjectsPerformSelector: @selector(removeFromSuperview)];
             
@@ -145,8 +155,7 @@
                 
         };
         
-        
-        [[APIHttpClient sharedClient] getPath:articlePath parameters:nil success:getArticleBlock  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        void (^failedGetArticleBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, NSError *error) {
             
             NSLog(@"Initial article request failed. This may be because the pdf has never been seen before and returned 'Not found'");
             NSLog([error localizedDescription]);
@@ -154,7 +163,7 @@
             
             //If not found was returned, it's a new article and we need to add it to the server
             if ([[error localizedRecoverySuggestion] rangeOfString:@"Not found"].length > 0 ) {
-             
+                
                 UserManager *um = [UserManager sharedManager];
                 UserModel *loggedInUser = [um loggedInUser];
                 
@@ -166,7 +175,10 @@
                 
                 NSString *path = @"articles/new";
                 [[APIHttpClient sharedClient] postPath:path parameters:newArticle success:getArticleBlock failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                
+                    
+                    //Cancel loading spinner
+                    [spinner removeFromSuperview];
+                    
                     WBErrorNoticeView *notice = [WBErrorNoticeView errorNoticeInView:self.view title:@"Article Request Failed" message:@"Server did not create article on server. Please try again."];
                     notice.delay = 4.0;
                     [notice show];
@@ -174,12 +186,19 @@
                 
             }
             else {
-            
+                
+                //Cancel loading spinner
+                [spinner removeFromSuperview];
+                
                 WBErrorNoticeView *notice = [WBErrorNoticeView errorNoticeInView:self.view title:@"Article Request Failed" message:@"Server did not return article data. Please try again."];
                 notice.delay = 4.0;
                 [notice show];
+                
             }
-        }];
+        };
+        
+        
+        [[APIHttpClient sharedClient] getPath:articlePath parameters:nil success:getArticleBlock  failure:failedGetArticleBlock];
         
         //   END REMOTE LOADING OF ARTICLE INFORMATION
     
