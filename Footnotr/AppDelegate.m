@@ -16,7 +16,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-
+    [TestFlight takeOff:@"bd2edd0d-5b00-46ad-9567-b3b6c78f7475"];
+    
     library = [[APLibrary alloc] initWithLicenseKey:@"FORSS-QSRWK-OIQEJ-KLQVL-GJKGT-HGVOU-OEROT-RPQTO" dataFolder:nil];
     NSAssert(nil != library, @"AjiPDFLib failed to initialize.");
     
@@ -28,6 +29,9 @@
     uModel.password = @"mleach";
     
     uManager.loggedInUser = uModel;
+    
+    
+    TFLog([NSString stringWithFormat:@"%@%@", @"Logged in as: ", uManager.loggedInUser.username]);
     
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {

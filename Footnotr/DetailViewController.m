@@ -125,6 +125,7 @@
             
             pdfViewContr.delegate = self;
             
+            pdfViewContr.viewOptions.pulsateActiveAnnotation = NO;
             /* ...and load it into the view hierarchy */
             //pdfView.view.frame = self.view.bounds;
             pdfViewContr.view.frame = hostView.bounds;
@@ -277,6 +278,11 @@
     //get the annotation model associated with the tapped annotation, and set it's comments to the view controller.
     AnnotationModel *tappedAnnotModel = [self getAnnotModelForTimestampId:(int)[(APTextMarkup *)annotation creationStamp]];
     
+    if (tappedAnnotModel == nil) {
+        TFLog(@"ERROR:tapped annot was nil");
+        return;
+    }
+    
     self.commentsVC.annot = tappedAnnotModel;
     
     //initialize and present the popover
@@ -406,9 +412,15 @@
 
 -(AnnotationModel *)getAnnotModelForTimestampId:(int)tsId
 {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pdfLibID == %d", tsId];    
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pdfLibID == %d", tsId];
     
     NSArray *matchingAnnot = [self.article.annots filteredArrayUsingPredicate:predicate];
+    
+    //this can happen if user taps a new annotation before the creation request has successfully returned.
+    if (!matchingAnnot.count) {
+        return nil;
+    }
     
     return [matchingAnnot objectAtIndex:0];
 }

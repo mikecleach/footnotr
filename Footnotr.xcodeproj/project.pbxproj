@@ -299,6 +299,8 @@
 		AEA1326717320656001AAEAC /* CommentView.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA1326617320656001AAEAC /* CommentView.m */; };
 		AEA1326A17321F25001AAEAC /* CommentHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA1326917321F25001AAEAC /* CommentHeaderView.m */; };
 		AEA7E4E8175F220900B33E72 /* GettingStartedWithFootnotr.pdf in Resources */ = {isa = PBXBuildFile; fileRef = AEA7E4E7175F220900B33E72 /* GettingStartedWithFootnotr.pdf */; };
+		AEA7E4EC176196D300B33E72 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA7E4EA176196D300B33E72 /* libTestFlight.a */; };
+		AEA7E4EE1761970900B33E72 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA7E4ED1761970900B33E72 /* libz.dylib */; };
 		AEAECFE4172F8BC600665961 /* ArticleModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AEAECFE3172F8BC500665961 /* ArticleModel.m */; };
 		AEAECFE7172F8D5400665961 /* APIHttpClient.m in Sources */ = {isa = PBXBuildFile; fileRef = AEAECFE6172F8D5400665961 /* APIHttpClient.m */; };
 		AEAECFE9172F950700665961 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEAECFE8172F950700665961 /* SystemConfiguration.framework */; };
@@ -712,6 +714,9 @@
 		AEA1326817321F25001AAEAC /* CommentHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentHeaderView.h; sourceTree = "<group>"; };
 		AEA1326917321F25001AAEAC /* CommentHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentHeaderView.m; sourceTree = "<group>"; };
 		AEA7E4E7175F220900B33E72 /* GettingStartedWithFootnotr.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = GettingStartedWithFootnotr.pdf; sourceTree = "<group>"; };
+		AEA7E4EA176196D300B33E72 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		AEA7E4EB176196D300B33E72 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
+		AEA7E4ED1761970900B33E72 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		AEAECFE2172F8BC500665961 /* ArticleModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArticleModel.h; sourceTree = "<group>"; };
 		AEAECFE3172F8BC500665961 /* ArticleModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArticleModel.m; sourceTree = "<group>"; };
 		AEAECFE5172F8D5400665961 /* APIHttpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIHttpClient.h; sourceTree = "<group>"; };
@@ -762,6 +767,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AEA7E4EE1761970900B33E72 /* libz.dylib in Frameworks */,
 				AE1327B317330D9B00746654 /* CoreData.framework in Frameworks */,
 				AE97C6121730DF92007FC257 /* MobileCoreServices.framework in Frameworks */,
 				AEAECFE9172F950700665961 /* SystemConfiguration.framework in Frameworks */,
@@ -775,6 +781,7 @@
 				AEE656891703DEEB000D3C57 /* Foundation.framework in Frameworks */,
 				AEE6568B1703DEEC000D3C57 /* CoreGraphics.framework in Frameworks */,
 				AE6266E917546F89002A7FAF /* libAjiPDFLib.a in Frameworks */,
+				AEA7E4EC176196D300B33E72 /* libTestFlight.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1257,6 +1264,15 @@
 			name = NoticeView;
 			sourceTree = "<group>";
 		};
+		AEA7E4E91761969300B33E72 /* TestFlight */ = {
+			isa = PBXGroup;
+			children = (
+				AEA7E4EA176196D300B33E72 /* libTestFlight.a */,
+				AEA7E4EB176196D300B33E72 /* TestFlight.h */,
+			);
+			name = TestFlight;
+			sourceTree = "<group>";
+		};
 		AEAED006172F982200665961 /* AFNetworking */ = {
 			isa = PBXGroup;
 			children = (
@@ -1286,10 +1302,10 @@
 		AEE6567A1703DEEB000D3C57 = {
 			isa = PBXGroup;
 			children = (
+				AEA7E4E91761969300B33E72 /* TestFlight */,
 				AE85F578175DC20C0025BF4E /* NoticeView */,
 				AE651F40175A8BD1005B85BB /* UIAlertViewBlocks */,
 				AE5B184D17585F7E009865D6 /* FileMD5 */,
-				AE1327B217330D9B00746654 /* CoreData.framework */,
 				AE13276D17330A4100746654 /* HierarchyViewer */,
 				AEAED006172F982200665961 /* AFNetworking */,
 				AE70B160172BA4EF00DDD4C2 /* JSONModel */,
@@ -1313,6 +1329,8 @@
 		AEE656851703DEEB000D3C57 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AE1327B217330D9B00746654 /* CoreData.framework */,
+				AEA7E4ED1761970900B33E72 /* libz.dylib */,
 				AE97C6111730DF92007FC257 /* MobileCoreServices.framework */,
 				AEAECFE8172F950700665961 /* SystemConfiguration.framework */,
 				AE46D5271728CC5200500B33 /* CoreText.framework */,
