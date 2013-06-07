@@ -231,6 +231,11 @@
 - (void)longTap:(UIGestureRecognizer *)gr
 {
     NSLog(@"Long tap detected on pdf's hostview");
+    //If no text was selected, don't start annotation mode.
+    if ([pdfViewContr selectedText] == nil) {
+        return;
+    }
+    
     [pdfViewContr addAnnotationOfType:kAPAnnotationTypeHighlight];
 }
 
