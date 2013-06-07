@@ -90,6 +90,28 @@
     
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    NSLog(@"in master view's view did appear");
+    
+    NSArray *docPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDir = [docPaths objectAtIndex:0];
+    
+    NSError *error;
+    NSArray *docs = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsDir error:&error];
+    
+    NSString *match = @".pdf";
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF endswith %@", match];
+    NSArray *results = [docs filteredArrayUsingPredicate:predicate];
+
+    _objects = [[NSMutableArray alloc] initWithArray:results];
+    
+    [self.tableView reloadData];
+}
+
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
