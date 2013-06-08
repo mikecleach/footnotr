@@ -34,6 +34,5 @@
 @property (strong, nonatomic) APPDFInformation *parentPdfInfo;
 @property (strong, nonatomic) APAnnotatingPDFViewController *parentPdfView;
 
-- (void) addCommentTapped: (id) sender;
 
 @end

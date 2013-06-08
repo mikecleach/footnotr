@@ -336,6 +336,7 @@
                     [sharedClient deletePath:path parameters:nil success:deleteCommentBlock failure:failedDeleteCommentBlock];
                     
                 }
+                
             } cancelBlock:^{
                 
             }];
@@ -439,37 +440,46 @@
         //TODO:This is duplicate code. Refactor associating blocks with buttons.
         [newCommentView.deleteBtn onControlEvent:UIControlEventTouchUpInside do:^{
             
-            void (^deleteCommentBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
-                
-                
-                [self.annot removeComment:newlyCreatedComment];
-                
-                
-                [self.commentsScroller.boxes removeObject:newCommentView];
-                
-                [self.commentsScroller layoutWithSpeed:0.5 completion:nil];
-                
-                
-            };
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Delete Comment" message:@"Are you sure you want to delete this comment?" delegate:nil cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
             
-            void (^failedDeleteCommentBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
+            [alert showWithBlock:^(NSInteger buttonIndex) {
+                //If Yes was answered to "Delete this comment?"
+                if (buttonIndex == 1) {
+            
+                    void (^deleteCommentBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
+                        
+                        
+                        [self.annot removeComment:newlyCreatedComment];
+                        
+                        
+                        [self.commentsScroller.boxes removeObject:newCommentView];
+                        
+                        [self.commentsScroller layoutWithSpeed:0.5 completion:nil];
+                        
+                        
+                    };
+                    
+                    void (^failedDeleteCommentBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
+                        
+                        NSLog(@"***FAILED*** to delete comment");
+                        WBErrorNoticeView *notice = [WBErrorNoticeView errorNoticeInView:self.view title:@"Comment Request Failed" message:@"Comment was not deleted. Please try again."];
+                        notice.delay = 4.0;
+                        [notice show];
+                        
+                    };
+                    
+                    
+                    APIHttpClient *sharedClient = [APIHttpClient sharedClient];
+                    
+                    NSString *path = [NSString stringWithFormat:@"comments/%d/", newlyCreatedComment.pk];
+                    
+                    [sharedClient deletePath:path parameters:nil success:deleteCommentBlock failure:failedDeleteCommentBlock];
+                }
+            } cancelBlock:^{
                 
-                NSLog(@"***FAILED*** to delete comment");
-                WBErrorNoticeView *notice = [WBErrorNoticeView errorNoticeInView:self.view title:@"Comment Request Failed" message:@"Comment was not deleted. Please try again."];
-                notice.delay = 4.0;
-                [notice show];
-                
-            };
-            
-            
-            APIHttpClient *sharedClient = [APIHttpClient sharedClient];
-            
-            NSString *path = [NSString stringWithFormat:@"comments/%d/", newlyCreatedComment.pk];
-            
-            [sharedClient deletePath:path parameters:nil success:deleteCommentBlock failure:failedDeleteCommentBlock];
-            
-        }];
+            }];
         
+        }];
         
         [self.commentsScroller.boxes addObject:newCommentView];
         [self.commentsScroller layoutWithSpeed:0.4 completion:nil];

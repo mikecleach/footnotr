@@ -278,7 +278,6 @@
 		AE74BE91170E23160040F14A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE74BE90170E23160040F14A /* AVFoundation.framework */; };
 		AE74BE93170E23200040F14A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE74BE92170E23200040F14A /* Security.framework */; };
 		AE74BE95170E23A70040F14A /* license.xml in Resources */ = {isa = PBXBuildFile; fileRef = AE74BE94170E23A70040F14A /* license.xml */; };
-		AE74BE99170E2AAC0040F14A /* test.pdf in Resources */ = {isa = PBXBuildFile; fileRef = AE74BE98170E2AAC0040F14A /* test.pdf */; };
 		AE85F58F175DC2240025BF4E /* NoticeView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AE85F579175DC2240025BF4E /* NoticeView.bundle */; };
 		AE85F590175DC2240025BF4E /* NSOperationQueue+WBNoticeExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = AE85F57B175DC2240025BF4E /* NSOperationQueue+WBNoticeExtensions.m */; };
 		AE85F591175DC2240025BF4E /* UILabel+WBExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = AE85F57D175DC2240025BF4E /* UILabel+WBExtensions.m */; };
@@ -677,7 +676,6 @@
 		AE74BE90170E23160040F14A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		AE74BE92170E23200040F14A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		AE74BE94170E23A70040F14A /* license.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = license.xml; path = "../../../Downloads/iAnnotate_PDF_SDK-2.4-RC2-demo/samples/MultipleDocumentSample/license.xml"; sourceTree = "<group>"; };
-		AE74BE98170E2AAC0040F14A /* test.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = test.pdf; sourceTree = "<group>"; };
 		AE85F579175DC2240025BF4E /* NoticeView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = NoticeView.bundle; sourceTree = "<group>"; };
 		AE85F57A175DC2240025BF4E /* NSOperationQueue+WBNoticeExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSOperationQueue+WBNoticeExtensions.h"; sourceTree = "<group>"; };
 		AE85F57B175DC2240025BF4E /* NSOperationQueue+WBNoticeExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSOperationQueue+WBNoticeExtensions.m"; sourceTree = "<group>"; };
@@ -1349,7 +1347,6 @@
 		AEE6568C1703DEEC000D3C57 /* Footnotr */ = {
 			isa = PBXGroup;
 			children = (
-				AE74BE98170E2AAC0040F14A /* test.pdf */,
 				AEE656951703DEEC000D3C57 /* AppDelegate.h */,
 				AEE656961703DEEC000D3C57 /* AppDelegate.m */,
 				AEE6569E1703DEEC000D3C57 /* MainStoryboard_iPhone.storyboard */,
@@ -1499,7 +1496,6 @@
 				AEE656A01703DEEC000D3C57 /* MainStoryboard_iPhone.storyboard in Resources */,
 				AEE656A31703DEEC000D3C57 /* MainStoryboard_iPad.storyboard in Resources */,
 				AE74BE95170E23A70040F14A /* license.xml in Resources */,
-				AE74BE99170E2AAC0040F14A /* test.pdf in Resources */,
 				AE1327AD17330AFE00746654 /* index_core.html in Resources */,
 				AE1327AE17330AFE00746654 /* index_ui.html in Resources */,
 				AE1327B117330AFE00746654 /* style.css in Resources */,

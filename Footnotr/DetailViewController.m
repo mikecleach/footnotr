@@ -66,7 +66,7 @@
         
         self.navigationBar.title = [self.detailItem description];
         
-        //   THIS CODE IS FOR LOADING ARTICLE INFORMATION FROM A WEBSITE
+
         NSString *pdfPath = [self.documentDir stringByAppendingPathComponent:self.detailItem];
         
         //TODO:Cache the MD5 so we dont have to recalculate it each time a file is viewed.
@@ -81,7 +81,7 @@
         
         NSString *articlePath = [NSString stringWithFormat: @"articles/%@/",pdfFileMd5];
         
-        
+        //Prepare a spinner so user know what's happening even if http req goes long
         UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
         spinner.center = CGPointMake(hostView.center.x, hostView.center.y);
         spinner.color = [UIColor blueColor];
@@ -150,8 +150,6 @@
             
             //Create the annotation menu offscreen and lay it out.
             [self createNewAnnotationMenu];
-            
-            
                 
         };
         
@@ -197,11 +195,9 @@
             }
         };
         
-        
+        //Send the request for the article's data
         [[APIHttpClient sharedClient] getPath:articlePath parameters:nil success:getArticleBlock  failure:failedGetArticleBlock];
         
-        //   END REMOTE LOADING OF ARTICLE INFORMATION
-    
     }
 }
 
@@ -209,15 +205,14 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
     if (!_documentDir) {
         NSArray *docPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         
         _documentDir = [docPaths objectAtIndex:0];
-        
-        
     }
     
-    //FIXME: load last file loaded
+    //TODO: load last file loaded, even if app was terminated
     _detailItem = @"GettingStartedWithFootnotr.pdf";
     
     
@@ -230,7 +225,6 @@
 
 - (void)longTap:(UIGestureRecognizer *)gr
 {
-    NSLog(@"Long tap detected on pdf's hostview");
     //If no text was selected, don't start annotation mode.
     if ([pdfViewContr selectedText] == nil) {
         return;
@@ -241,12 +235,8 @@
 
 -(void)pdfController:(APAnnotatingPDFViewController *)controller didPlaceAnnotation:(APAnnotation *)annotation
 {
-    //get the annotations creation time and current identifier and store to mapping dictionary
-    NSLog(@"pdf lib did create annotation");
-    
-    
+
     void (^createAnnotationBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
-        
         
         NSError *error;
         AnnotationModel *newAnnotModel = [[AnnotationModel alloc] initWithDictionary:JSON error:&error];
@@ -268,7 +258,7 @@
         [notice show];
     };
     
-    
+    //Create and populate a directory with the info neccesary to save it to server
     NSMutableDictionary *newAnnotDict = [[NSMutableDictionary alloc] init];
     
     NSString *annotAsXml = [self getXmlStringForAnnotation:annotation];
@@ -303,7 +293,6 @@
     AnnotationModel *tappedAnnotModel = [self getAnnotModelForTimestampId:(int)[(APTextMarkup *)annotation creationStamp]];
     
     if (tappedAnnotModel == nil) {
-        TFLog(@"ERROR:tapped annot was nil");
         return;
     }
     
@@ -313,7 +302,6 @@
     FPPopoverController *pc = [[FPPopoverController alloc] initWithViewController:self.commentsVC];
     [pc setArrowDirection:FPPopoverArrowDirectionVertical];
 
-    
     self.commentsVC.parentPopoverController = pc;
     
     //TODO:This feels hacky. Comments VC has to know way too much to achieve delete annotation functionality
@@ -321,6 +309,7 @@
     self.commentsVC.parentPdfInfo = self.info;
     self.commentsVC.parentPdfView = pdfViewContr;
     
+    //TODO:Hardcoded layout stuff here
     pc.contentSize = CGSizeMake(380, 520);
     
     //FIXME:coordinates do not account for the 'Detail" Navigation Bar at top. Manually adjust for it here.
@@ -336,6 +325,7 @@
     [pc presentPopoverFromPoint:adjustedOffset];
     
 }
+
 
 - (UIColor *)pdfController:(APAnnotatingPDFViewController *)controller colorForNewAnnotationOfType:(APAnnotationType)annotType
 {
@@ -359,8 +349,6 @@
     self.annotCreationMenu = MGTableBoxStyled.box;
     self.annotCreationMenu.width = 200;
     
-    //self.annotCreationMenu.frame = CGRectMake(0, -40, 200, 40);
-    
     self.annotCreationMenu.center = CGPointMake(hostView.width/2, -68);
     self.annotCreationMenu.backgroundColor = [UIColor colorWithRed:0.94 green:0.94 blue:0.95 alpha:1];
     
@@ -368,12 +356,14 @@
     UIImage *buttonImage = [[UIImage imageNamed:@"blueButton.png"]
                             resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
     
+    //If user is done with annotation, tap this to finish and
     MGButton *doneBtn = [[MGButton alloc] initWithFrame:CGRectMake(0, 0, 60, 24)];
     
     [doneBtn setBackgroundImage:buttonImage forState:UIControlStateNormal];
     [doneBtn setTitle:@"Done" forState:UIControlStateNormal];
     doneBtn.margin = UIEdgeInsetsMake(0, 20, 4, 20);
     
+    //On tap this tells the pdfView controller to end editing mode. It also sends a message to the delegate(this controller), which is where we deal with saving to the server. See :didPlaceAnnotation.
     [doneBtn onControlEvent:UIControlEventTouchUpInside do:^{
         
         [pdfViewContr finishCurrentAnnotation];
@@ -387,6 +377,7 @@
     [cancelBtn setTitle:@"Cancel" forState:UIControlStateNormal];
     cancelBtn.margin = UIEdgeInsetsMake(0, 20, 4, 20);
     
+    //Similarly to Done, this tells the View controller to cancel editing annot.
     [cancelBtn onControlEvent:UIControlEventTouchUpInside do:^{
         
         [pdfViewContr cancelAddAnnotation];
@@ -405,10 +396,7 @@
     [self.annotCreationMenu setContentLayoutMode:MGLayoutGridStyle];
     
     self.annotCreationMenu.margin = UIEdgeInsetsMake(4, 20, 4, 20);
-    //self.annotCreationMenu.borderStyle = MGBorderEtchedAll;
-    
-    //self.annotCreationMenu.sizingMode = MGResizingExpandWidthToFill;
-    
+
     [self.annotCreationMenu layout];
     
     
@@ -448,6 +436,7 @@
     
     return [matchingAnnot objectAtIndex:0];
 }
+
 
 -(NSInputStream *)packageAnnotationsIntoXml:(NSArray *)annotsModelArray
 {
