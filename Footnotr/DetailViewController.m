@@ -252,7 +252,7 @@
     void (^failedCreateAnnotationBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id JSON) {
     
         NSLog(@"***FAILED*** to create new annotation");
-        //TODO:undo highlight or else expext crashes
+        //TODO:undo highlight or else expect crashes
         WBErrorNoticeView *notice = [WBErrorNoticeView errorNoticeInView:self.view title:@"Annotation Request Failed" message:@"Failed to save annotation. Please try again."];
         notice.delay = 4.0;
         [notice show];
