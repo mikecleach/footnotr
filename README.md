@@ -12,7 +12,8 @@ Version
 
 Installation
 -
-Git clone the url.
+Run command "git clone --recursive <github url>"
+*You must include the --recursive option so that the proper submodules are loaded as well. Expect missing file errors in Xcode otherwise.*
 Open the project file in Xcode.
 
 Usage Notes
