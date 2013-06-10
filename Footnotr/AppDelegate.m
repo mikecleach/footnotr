@@ -25,8 +25,8 @@
     UserManager *uManager = [UserManager sharedManager];
     
     NSError *error;
-    UserModel *uModel = [[UserModel alloc] initWithString:@"{\"pk\": 2, \"username\": \"mleach\"}" error:&error];
-    uModel.password = @"mleach";
+    UserModel *uModel = [[UserModel alloc] initWithString:@"{\"pk\": 3, \"username\": \"demo\"}" error:&error];
+    uModel.password = @"demo";
     
     uManager.loggedInUser = uModel;
     
