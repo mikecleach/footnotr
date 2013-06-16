@@ -8,11 +8,12 @@ Footnotr lets you read, highlight, and comment on PDF documents and stores your 
 Version
 -
 
-1.0
+1.0.1
 
 Installation
 -
-Run command "git clone --recursive <github url>"
+Run command "git clone --recursive footnotr_github_url"
+
 *You must include the --recursive option so that the proper submodules are loaded as well. Expect missing file errors in Xcode otherwise.*
 Open the project file in Xcode.
 
